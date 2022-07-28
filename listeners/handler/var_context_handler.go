@@ -7,6 +7,37 @@ import (
 	"quinn007.com/parser"
 )
 
+func VarDeclContextHandler(contextParser *parser.VarDeclContext) error {
+	children := contextParser.GetChildren()
+	for _, v := range children {
+		switch parserContext := v.(type) {
+		case *parser.VarSpecContext:
+			{
+				VarSpecContextHandler(parserContext)
+			}
+		}
+	}
+	return nil
+}
+
+func ShortVarDeclContextHandler(contextParser *parser.ShortVarDeclContext) error {
+	children := contextParser.GetChildren()
+	for _, v := range children {
+		switch parserContext := v.(type) {
+		case *parser.IdentifierListContext:
+			{
+				IdentifierListContextHandler(parserContext)
+			}
+		case *parser.ExpressionListContext:
+			{
+				ExpressionListContextHandler(parserContext)
+			}
+
+		}
+	}
+	return nil
+}
+
 func VarSpecContextHandler(contextParser *parser.VarSpecContext) error {
 	children := contextParser.GetChildren()
 
@@ -38,6 +69,8 @@ func IdentifierListContextHandler(contextParser *parser.IdentifierListContext) e
 			identifierListStrings = append(identifierListStrings, terminalString)
 		}
 	}
+	fmt.Println("55555555")
+	fmt.Println(identifierListStrings)
 
 	return nil
 }
@@ -54,6 +87,8 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 			identifierListStrings = append(identifierListStrings, terminalString)
 		}
 	}
+	fmt.Println("666666666")
+	fmt.Println(identifierListStrings)
 
 	return nil
 }

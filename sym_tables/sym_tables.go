@@ -3,21 +3,23 @@ package sym_tables
 import (
 	"errors"
 
+	"quinn007.com/procedures"
 	"quinn007.com/variables"
 )
 
-type symTable struct {
-	prev        *symTable
-	next        *symTable
+type SymTable struct {
+	prev        *SymTable
+	next        *SymTable
 	variableMap map[string]variables.Variable
+	functions   []*procedures.FFunction
 }
 
-func NewSymTable(prevSymTable *symTable) *symTable {
-	var newSymTable *symTable
+func NewSymTable(prevSymTable *SymTable) *SymTable {
+	var newSymTable *SymTable
 	if prevSymTable == nil {
-		newSymTable = &symTable{}
+		newSymTable = &SymTable{}
 	} else {
-		newSymTable = &symTable{
+		newSymTable = &SymTable{
 			prev: prevSymTable,
 		}
 		prevSymTable.next = newSymTable
@@ -26,7 +28,7 @@ func NewSymTable(prevSymTable *symTable) *symTable {
 	return newSymTable
 }
 
-func (this *symTable) InsertSymTable(newVariable *variables.Variable) error {
+func (this *SymTable) AddVariable(newVariable *variables.Variable) error {
 	if this == nil {
 		return errors.New("Nil symbol table assigned ...")
 	}
@@ -37,4 +39,17 @@ func (this *symTable) InsertSymTable(newVariable *variables.Variable) error {
 		this.variableMap[newVariable.GetVariableName()] = *newVariable
 		return nil
 	}
+}
+
+func (this *SymTable) AddFunction(newFunction *procedures.FFunction) error {
+	this.functions = append(this.functions, newFunction)
+	return nil
+}
+
+func (this *SymTable) GetPrev() *SymTable {
+	return this.prev
+}
+
+func (this *SymTable) GetNext() *SymTable {
+	return this.next
 }

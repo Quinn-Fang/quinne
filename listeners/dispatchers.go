@@ -8,12 +8,22 @@ import (
 )
 
 func LexDispatcher(goListener *GoListener, antlrCtx antlr.ParserRuleContext, ruleName string) error {
-	if ruleName == grammars.IdentifierList {
-		fmt.Println("33332222-------")
-	} else if ruleName == grammars.VarDecl {
-		VarDeclListener(goListener, antlrCtx)
-	} else if ruleName == grammars.ShortVarDecl {
-		ShortVarDeclListener(goListener, antlrCtx)
+	fmt.Println("33332222------- ", ruleName)
+	if ruleName == grammars.Statement {
+		StatementListener(goListener, antlrCtx)
 	}
 	return nil
 }
+
+//func LexDispatcher(goListener *GoListener, antlrCtx antlr.ParserRuleContext, ruleName string) error {
+//	fmt.Println("33332222------- ", ruleName)
+//	if ruleName == grammars.IdentifierList {
+//	} else if ruleName == grammars.VarDecl {
+//		VarDeclListener(goListener, antlrCtx)
+//	} else if ruleName == grammars.ShortVarDecl {
+//		ShortVarDeclListener(goListener, antlrCtx)
+//	} else if ruleName == grammars.PrimaryExpr {
+//		PrimaryExprListener(goListener, antlrCtx)
+//	}
+//	return nil
+//}

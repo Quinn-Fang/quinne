@@ -16,7 +16,7 @@ type Variable struct {
 	vValue interface{}
 }
 
-func InitVar(variableName string, variableType VTypeEnum, variableValue interface{}) *Variable {
+func NewVariable(variableName string, variableType VTypeEnum, variableValue interface{}) *Variable {
 	newVariable := Variable{
 		vName:  variableName,
 		vType:  variableType,

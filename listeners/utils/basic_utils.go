@@ -4,7 +4,19 @@ import (
 	"errors"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"quinn007.com/parser"
 )
+
+func IsFunction(children []antlr.Tree) bool {
+	if len(children) == 2 {
+		if _, ok := children[0].(*parser.PrimaryExprContext); ok {
+			if _, ok := children[1].(*parser.ArgumentsContext); ok {
+				return true
+			}
+		}
+	}
+	return false
+}
 
 func GetTerminalNodeText(antlrTree antlr.Tree) (string, error) {
 	subTree := antlrTree
