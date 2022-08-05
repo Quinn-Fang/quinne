@@ -50,5 +50,13 @@ func SimpleStmtContextHandler(contextParser *parser.SimpleStmtContext) error {
 
 	fmt.Println("##########################################################")
 
+	// assign values
+	curStatement.Assign()
+
+	// add assigned variable to symbol table
+	for _, variable := range rightValues {
+		curSymTable.AddVariable(variable)
+	}
+
 	return nil
 }

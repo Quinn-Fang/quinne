@@ -8,14 +8,23 @@ import (
 )
 
 var (
-	curSymTable *SymTable
+	rootSymTable *SymTable
+	curSymTable  *SymTable
 )
 
 type SymTable struct {
 	prev        *SymTable
 	children    []*SymTable
-	variableMap map[string]variables.Variable
+	variableMap map[string]*variables.Variable
 	functions   []*procedures.FFunction
+}
+
+func SetRootSymTale(symTable *SymTable) {
+	rootSymTable = symTable
+}
+
+func GetRootSymTale() *SymTable {
+	return rootSymTable
 }
 
 func SetCurSymTable(symTable *SymTable) {
@@ -29,13 +38,16 @@ func GetCurSymTable() *SymTable {
 func NewEntryTable() *SymTable {
 	newEntryTable := &SymTable{}
 	SetCurSymTable(newEntryTable)
+	SetRootSymTale(newEntryTable)
 	return newEntryTable
 }
 
 func NewSymTable(prevSymTable *SymTable) *SymTable {
 	var newSymTable *SymTable
 	newSymTable = &SymTable{
-		prev: prevSymTable,
+		prev:        prevSymTable,
+		variableMap: make(map[string]*variables.Variable),
+		functions:   make([]*procedures.FFunction, 0),
 	}
 	// prevSymTable.next = newSymTable
 	prevSymTable.children = append(prevSymTable.children, newSymTable)
@@ -47,9 +59,13 @@ func (this *SymTable) AddVariable(newVariable *variables.Variable) error {
 	if _, ok := this.variableMap[newVariable.GetVariableName()]; ok {
 		return errors.New("Variable exists")
 	} else {
-		this.variableMap[newVariable.GetVariableName()] = *newVariable
+		this.variableMap[newVariable.GetVariableName()] = newVariable
 		return nil
 	}
+}
+
+func (this *SymTable) GetVariables() map[string]*variables.Variable {
+	return this.variableMap
 }
 
 func (this *SymTable) AddFunction(newFunction *procedures.FFunction) error {

@@ -102,6 +102,7 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 			}
 		default:
 			{
+				// Splitter
 
 				terminalString, _ := utils.GetTerminalNodeText(nodeContext)
 				if terminalString != splitter {

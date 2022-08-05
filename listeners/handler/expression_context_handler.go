@@ -85,8 +85,22 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	curCursor, _ := navigator.GetCursor()
 	if curCursor.GetCursorContext() == navigator.ContextTypeFunctionName {
 		fmt.Println("Gettting Function Name: ", terminalString)
-		newFunction := procedures.NewFunction(terminalString)
 		curSymTable := sym_tables.GetCurSymTable()
+
+		var newValue interface{}
+		newReturnValue := variables.NewVariable(
+			"",
+			variables.VTypeFunctionReturned,
+			newValue,
+			curCursor.GetIndex())
+
+		curCursor.IncreaseIndex()
+
+		curStatement := curCursor.GetStatement()
+		curStatement.AddRightValue(newReturnValue)
+
+		newFunction := procedures.NewFunction(terminalString)
+		newFunction.SetReturnValue(newReturnValue)
 		curSymTable.AddFunction(newFunction)
 	}
 

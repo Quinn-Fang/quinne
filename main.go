@@ -8,6 +8,7 @@ import (
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
 	"quinn007.com/sym_tables"
+	"quinn007.com/sym_tables/utils"
 )
 
 func runListener() {
@@ -35,6 +36,7 @@ func runListener() {
 	tree := p.SourceFile()
 	// antlr.ParseTreeWalkerDefault.Walk(NewGoListener(p, tree), tree)
 	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(p, tree), tree)
+	utils.PrintAllSymTale()
 
 }
 
