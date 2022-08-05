@@ -4,7 +4,9 @@ import (
 	"fmt"
 
 	"quinn007.com/listeners/utils"
+	"quinn007.com/navigator"
 	"quinn007.com/parser"
+	"quinn007.com/variables"
 )
 
 func VarDeclContextHandler(contextParser *parser.VarDeclContext) error {
@@ -72,6 +74,12 @@ func IdentifierListContextHandler(contextParser *parser.IdentifierListContext) e
 	fmt.Println("55555555")
 	fmt.Println(identifierListStrings)
 
+	curCursor, _ := navigator.GetCursor()
+	curStatement := curCursor.GetStatement()
+	for _, variableName := range identifierListStrings {
+		curStatement.AddLeftValue(variableName)
+	}
+
 	return nil
 }
 
@@ -80,15 +88,40 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 	children := contextParser.GetChildren()
 	splitter := ","
 
-	identifierListStrings := make([]string, 0)
+	ExpressionListStrings := make([]string, 0)
+	curCursor, _ := navigator.GetCursor()
+	curStatement := curCursor.GetStatement()
 	for _, nodeContext := range children {
-		terminalString, _ := utils.GetTerminalNodeText(nodeContext)
-		if terminalString != splitter {
-			identifierListStrings = append(identifierListStrings, terminalString)
+		fmt.Println("*********************")
+		fmt.Printf("%T\n", nodeContext)
+		fmt.Printf("%+v\n", nodeContext)
+		switch parserContext := nodeContext.(type) {
+		case *parser.ExpressionContext:
+			{
+				ExpressionContextHandler(parserContext)
+			}
+		default:
+			{
+
+				terminalString, _ := utils.GetTerminalNodeText(nodeContext)
+				if terminalString != splitter {
+					newVariable := variables.NewVariable(
+						"",
+						variables.VTypeUndefined,
+						terminalString,
+						curCursor.GetIndex())
+
+					curStatement.AddRightValue(newVariable)
+					curCursor.IncreaseIndex()
+
+					ExpressionListStrings = append(ExpressionListStrings, terminalString)
+				}
+			}
 		}
+
 	}
 	fmt.Println("666666666")
-	fmt.Println(identifierListStrings)
+	fmt.Println(ExpressionListStrings)
 
 	return nil
 }

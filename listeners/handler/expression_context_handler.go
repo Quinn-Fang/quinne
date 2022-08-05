@@ -2,9 +2,14 @@ package handler
 
 import (
 	"fmt"
+	"strconv"
 
 	"quinn007.com/listeners/utils"
+	"quinn007.com/navigator"
 	"quinn007.com/parser"
+	"quinn007.com/procedures"
+	"quinn007.com/sym_tables"
+	"quinn007.com/variables"
 )
 
 func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) error {
@@ -14,9 +19,7 @@ func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) e
 		switch parserContext := child.(type) {
 		case *parser.ExpressionContext:
 			{
-				fmt.Println("123456")
 				ExpressionContextHandler(parserContext)
-
 			}
 		}
 	}
@@ -28,6 +31,10 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
+		fmt.Println("&&&&&&&&&&&&&&&")
+		fmt.Printf("%T\n", child)
+		fmt.Printf("%+v\n", child)
+
 		switch parserContext := child.(type) {
 		case *parser.PrimaryExprContext:
 			{
@@ -43,7 +50,7 @@ func PrimaryExprContextHandler(contextParser *parser.PrimaryExprContext) error {
 	children := contextParser.GetChildren()
 
 	if utils.IsFunction(children) {
-		fmt.Println("99999999")
+		// curStatement := curCursor.GetStatement()
 		FunctionHandler(children[0].(*parser.PrimaryExprContext), children[1].(*parser.ArgumentsContext))
 		return nil
 	}
@@ -74,27 +81,20 @@ func PrimaryExprContextHandler(contextParser *parser.PrimaryExprContext) error {
 
 func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	children := contextParser.GetChildren()
-	fmt.Println("777777777777777777777777")
 	terminalString, _ := utils.GetTerminalNodeText(children[0])
-	fmt.Println(terminalString)
+	curCursor, _ := navigator.GetCursor()
+	if curCursor.GetCursorContext() == navigator.ContextTypeFunctionName {
+		fmt.Println("Gettting Function Name: ", terminalString)
+		newFunction := procedures.NewFunction(terminalString)
+		curSymTable := sym_tables.GetCurSymTable()
+		curSymTable.AddFunction(newFunction)
+	}
 
 	//for _, child := range children {
-	//	fmt.Println("777777777777777777777777")
+	//	fmt.Println("7")
 	//	fmt.Printf("%T\n", child)
 	//	fmt.Printf("%+v\n", child)
-	//	fmt.Println("777777777777777777777777")
-	//	switch parserContext := child.(type) {
-	//	case *parser.IdentifierListContext:
-	//		{
-	//			IdentifierListContextHandler(parserContext)
-	//		}
-	//	case *parser.LiteralContext:
-	//		{
-	//			fmt.Println("998998998")
-	//			LiteralContextHandler(parserContext)
-	//		}
-
-	//	}
+	//	fmt.Println("7")
 	//}
 
 	return nil
@@ -145,10 +145,17 @@ func BasicLitContextHandler(contextParser *parser.BasicLitContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
+		//fmt.Println("^^^^^^^^^^^^^^^^^^^^^^^^^")
+		//fmt.Printf("%T\n", child)
+		//fmt.Printf("%+v\n", child)
 		switch parserContext := child.(type) {
 		case *parser.String_Context:
 			{
 				StringContextHandler(parserContext)
+			}
+		case *parser.IntegerContext:
+			{
+				IntegerContextHandler(parserContext)
 			}
 		}
 	}
@@ -156,25 +163,65 @@ func BasicLitContextHandler(contextParser *parser.BasicLitContext) error {
 	return nil
 }
 
-func StringContextHandler(contextParser *parser.String_Context) error {
+func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
 		fmt.Println("************************")
-		fmt.Printf("%T\n", child)
-		fmt.Printf("%+v\n", child)
-		fmt.Println("************************")
-		switch parserContext := child.(type) {
-		case *parser.IdentifierListContext:
-			{
-				IdentifierListContextHandler(parserContext)
-			}
-		case *parser.ExpressionListContext:
-			{
-				ExpressionListContextHandler(parserContext)
-			}
+		cursor, _ := navigator.GetCursor()
+		terminalString, _ := utils.GetTerminalNodeText(child)
+		curStatement := cursor.GetStatement()
+		intVal, _ := strconv.Atoi(terminalString)
+		curVariable := variables.NewVariable(
+			"",
+			variables.VTypeInt,
+			intVal,
+			cursor.GetIndex())
+
+		//cursor.IncreaseIndex()
+		curSymTable := sym_tables.GetCurSymTable()
+		if cursor.GetCursorContext() == navigator.ContextTypeFunctionArgs {
+			curFunction := curSymTable.GetLastFunction()
+			curFunction.AddParam(curVariable)
+
+			// curStatement.AddRightValue(curVariable)
+			// cursor.PrintStatement()
+		} else {
+			curStatement.AddRightValue(curVariable)
 
 		}
+	}
+
+	return nil
+}
+func StringContextHandler(contextParser *parser.String_Context) error {
+	children := contextParser.GetChildren()
+
+	for _, child := range children {
+		cursor, _ := navigator.GetCursor()
+		curStatement := cursor.GetStatement()
+		terminalString, _ := utils.GetTerminalNodeText(child)
+		// curStatement := cursor.GetStatement()
+		curVariable := variables.NewVariable(
+			"",
+			variables.VTypeString,
+			terminalString,
+			cursor.GetIndex())
+		curSymTable := sym_tables.GetCurSymTable()
+
+		if cursor.GetCursorContext() == navigator.ContextTypeFunctionArgs {
+			curFunction := curSymTable.GetLastFunction()
+			curFunction.AddParam(curVariable)
+
+			//cursor.IncreaseIndex()
+			//curStatement.AddRightValue(curVariable)
+			fmt.Println("++++++++++++++ String", curVariable)
+			//cursor.PrintStatement()
+		} else {
+			curStatement.AddRightValue(curVariable)
+		}
+
+		fmt.Println("************************")
 	}
 
 	return nil

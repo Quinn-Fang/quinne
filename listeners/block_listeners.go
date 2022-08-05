@@ -1,13 +1,20 @@
 package listeners
 
 import (
+	"fmt"
+
 	"quinn007.com/parser"
-	// "quinn007.com/sym_tables"
+	"quinn007.com/sym_tables"
 )
 
 func (this *GoListener) EnterBlock(c *parser.BlockContext) {
-
+	newSymTable := sym_tables.NewSymTable(sym_tables.GetCurSymTable())
+	sym_tables.SetCurSymTable(newSymTable)
+	fmt.Println("ENTERING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 }
 
 func (this *GoListener) ExitBlock(c *parser.BlockContext) {
+	curSymTable := sym_tables.GetCurSymTable()
+	sym_tables.SetCurSymTable(curSymTable.GetPrev())
+	fmt.Println("ExitingBlock BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 }

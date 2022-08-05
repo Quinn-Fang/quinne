@@ -15,11 +15,12 @@ func ArgumentsContextHandler(contextParser *parser.ArgumentsContext) error {
 		fmt.Printf("%T\n", child)
 		fmt.Printf("%+v\n", child)
 		fmt.Println("                  ")
-		//switch parserContext := child.(type) {
-		//case *parser.IdentifierListContext:
-		//	{
-		//	}
-		//}
+		switch parserContext := child.(type) {
+		case *parser.ExpressionListContext:
+			{
+				ExpressionListContextHandler(parserContext)
+			}
+		}
 	}
 
 	return nil

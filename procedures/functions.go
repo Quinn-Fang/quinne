@@ -5,7 +5,26 @@ import (
 )
 
 type FFunction struct {
-	FName   string
-	FParams []variables.Variable
-	FReturn []variables.Variable
+	FName    string
+	FParams  []*variables.Variable
+	FReturn  *variables.Variable
+	Assigned bool
+}
+
+func NewFunction(functionName string) *FFunction {
+	newFunction := &FFunction{
+		FName:    functionName,
+		FParams:  make([]*variables.Variable, 0),
+		Assigned: false,
+	}
+
+	return newFunction
+}
+
+func (this *FFunction) AddParam(param *variables.Variable) {
+	this.FParams = append(this.FParams, param)
+}
+
+func (this *FFunction) SetReturnValue(returnValue *variables.Variable) {
+	this.FReturn = returnValue
 }

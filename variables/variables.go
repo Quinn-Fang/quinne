@@ -3,24 +3,29 @@ package variables
 type VTypeEnum int
 
 const (
-	vTypeInt     VTypeEnum = 0
-	vTypeString            = 1
-	vTypeFloat64           = 2
-	vTypeBool              = 3
-	vTypeMap               = 4
+	VTypeUndefined        VTypeEnum = 0
+	VTypeInt                        = 1
+	VTypeString                     = 2
+	VTypeFloat                      = 3
+	VTypeBool                       = 4
+	VTypeMap                        = 5
+	VTypeFunctionReturned           = 6
 )
 
 type Variable struct {
-	vName  string
-	vType  VTypeEnum
-	vValue interface{}
+	vName                  string
+	vType                  VTypeEnum
+	vValue                 interface{}
+	vIndex                 int
+	vFunctionReturnedIndex int
 }
 
-func NewVariable(variableName string, variableType VTypeEnum, variableValue interface{}) *Variable {
+func NewVariable(variableName string, variableType VTypeEnum, variableValue interface{}, index int) *Variable {
 	newVariable := Variable{
 		vName:  variableName,
 		vType:  variableType,
 		vValue: variableValue,
+		vIndex: index,
 	}
 
 	return &newVariable
@@ -30,10 +35,18 @@ func (this *Variable) GetVariableName() string {
 	return this.vName
 }
 
+func (this *Variable) SetVariableName(variableName string) {
+	this.vName = variableName
+}
+
 func (this *Variable) GetVariableType() VTypeEnum {
 	return this.vType
 }
 
 func (this *Variable) GetVariableValue() interface{} {
 	return this.vValue
+}
+
+func (this *Variable) GetVariableIndex() int {
+	return this.vIndex
 }

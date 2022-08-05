@@ -41,7 +41,6 @@ func PrimaryExprListener(goListener *GoListener, antlrCtx antlr.ParserRuleContex
 			}
 		case *parser.PrimaryExprContext:
 			{
-				fmt.Println("212121313131*********-------")
 				handler.PrimaryExprContextHandler(parserContext)
 			}
 		}
