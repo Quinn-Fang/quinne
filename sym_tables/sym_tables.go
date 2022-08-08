@@ -2,6 +2,7 @@ package sym_tables
 
 import (
 	"errors"
+	"fmt"
 
 	"quinn007.com/procedures"
 	"quinn007.com/variables"
@@ -64,6 +65,23 @@ func (this *SymTable) AddVariable(newVariable *variables.Variable) error {
 	}
 }
 
+func (this *SymTable) GetVariableByName(variableName string) (*variables.Variable, error) {
+	// look for the variable up chain
+	if this == rootSymTable {
+		return variables.NewEmptyVariable(), errors.New("variable does not exist")
+	}
+	if variable, ok := this.variableMap[variableName]; !ok {
+		prevSymTable := this.GetPrev()
+		if parentVariable, err := prevSymTable.GetVariableByName(variableName); err != nil {
+			return variables.NewEmptyVariable(), err
+		} else {
+			return parentVariable, nil
+		}
+	} else {
+		return variable, nil
+	}
+}
+
 func (this *SymTable) GetVariables() map[string]*variables.Variable {
 	return this.variableMap
 }
@@ -87,4 +105,10 @@ func (this *SymTable) GetPrev() *SymTable {
 
 func (this *SymTable) GetChildren() []*SymTable {
 	return this.children
+}
+
+func (this *SymTable) PrintFunctions() {
+	for _, v := range this.GetFunctions() {
+		fmt.Printf("%+v\n", v)
+	}
 }

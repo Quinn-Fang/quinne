@@ -71,8 +71,8 @@ func IdentifierListContextHandler(contextParser *parser.IdentifierListContext) e
 			identifierListStrings = append(identifierListStrings, terminalString)
 		}
 	}
-	fmt.Println("55555555")
-	fmt.Println(identifierListStrings)
+	//	fmt.Println("55555555")
+	//	fmt.Println(identifierListStrings)
 
 	curCursor, _ := navigator.GetCursor()
 	curStatement := curCursor.GetStatement()
@@ -92,9 +92,9 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 	curCursor, _ := navigator.GetCursor()
 	curStatement := curCursor.GetStatement()
 	for _, nodeContext := range children {
-		fmt.Println("*********************")
-		fmt.Printf("%T\n", nodeContext)
-		fmt.Printf("%+v\n", nodeContext)
+		//		fmt.Println("*********************")
+		//		fmt.Printf("%T\n", nodeContext)
+		//		fmt.Printf("%+v\n", nodeContext)
 		switch parserContext := nodeContext.(type) {
 		case *parser.ExpressionContext:
 			{
@@ -121,8 +121,8 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 		}
 
 	}
-	fmt.Println("666666666")
-	fmt.Println(ExpressionListStrings)
+	//	fmt.Println("666666666")
+	//	fmt.Println(ExpressionListStrings)
 
 	return nil
 }

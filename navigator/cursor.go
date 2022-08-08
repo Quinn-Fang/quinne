@@ -32,7 +32,7 @@ type Statement struct {
 	rightValues []*variables.Variable
 }
 
-func Init() {
+func InitCursor() {
 	newCursor := NewCursor()
 	cursor = newCursor
 }
@@ -99,9 +99,9 @@ func NewStatement() *Statement {
 }
 
 func (this *Statement) AddLeftValue(leftValue string) {
-	fmt.Println("                            adding leftValue")
-	fmt.Println(this.leftValues)
-	fmt.Println("leftValue is : ", leftValue)
+	//	fmt.Println("                            adding leftValue")
+	//	fmt.Println(this.leftValues)
+	//	fmt.Println("leftValue is : ", leftValue)
 	this.leftValues = append(this.leftValues, leftValue)
 }
 

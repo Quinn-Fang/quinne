@@ -1,24 +1,62 @@
 package navigator
 
 import (
-	"quinn007.com/procedures"
-	"quinn007.com/sym_tables"
+	"fmt"
+
+	"quinn007.com/navigator/utils"
+)
+
+var (
+	curNavigator *Navigator
 )
 
 type Navigator struct {
-	curFunction *procedures.FFunction
-	curSymTable *sym_tables.SymTable
+	symTableCursorStack *utils.SymTableCursorStack
+	codeSegment         *utils.CodeSegment
 }
 
 func NewNavigator() *Navigator {
-	newNavigator := &Navigator{}
+	newNavigator := &Navigator{
+		symTableCursorStack: utils.NewStack(),
+		codeSegment:         utils.NewCodeSegment(),
+	}
 	return newNavigator
 }
 
-func (this *Navigator) GetCurFunction() *procedures.FFunction {
-	return this.curFunction
+func SetCurNavigator(navigator *Navigator) {
+	curNavigator = navigator
 }
 
-func (this *Navigator) GetCurTable() *sym_tables.SymTable {
-	return this.curSymTable
+func GetNavigator() *Navigator {
+	return curNavigator
+}
+
+func GetCurNavigator() *Navigator {
+	return curNavigator
+}
+
+func (this *Navigator) GetSymTableCursorStack() *utils.SymTableCursorStack {
+	return this.symTableCursorStack
+}
+
+func (this *Navigator) GetCodeSegment() *utils.CodeSegment {
+	return this.codeSegment
+}
+
+func (this *Navigator) PrintStack() {
+	fmt.Println("^^^^^^^^^^^^^^^^^ Symbol Table Stack : ^^^^^^^^^^^^^^^^^^")
+	for _, v := range this.GetSymTableCursorStack().GetStack() {
+		fmt.Println()
+		fmt.Println(v)
+		v.GetSymTable().PrintFunctions()
+	}
+}
+
+func (this *Navigator) PrintCodeSegments() {
+	fmt.Println("^^^^^^^^^^^^^^^^^ Code Segment : ^^^^^^^^^^^^^^^^^^")
+	for _, v := range this.GetCodeSegment().GetQueue() {
+		fmt.Println()
+		fmt.Println(v)
+		v.GetSymTable().PrintFunctions()
+	}
 }

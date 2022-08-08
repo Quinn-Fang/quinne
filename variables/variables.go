@@ -20,6 +20,12 @@ type Variable struct {
 	vFunctionReturnedIndex int
 }
 
+func NewEmptyVariable() *Variable {
+	newVariable := Variable{}
+
+	return &newVariable
+}
+
 func NewVariable(variableName string, variableType VTypeEnum, variableValue interface{}, index int) *Variable {
 	newVariable := Variable{
 		vName:  variableName,

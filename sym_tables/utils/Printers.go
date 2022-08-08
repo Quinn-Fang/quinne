@@ -22,12 +22,17 @@ func PrintSymbolTable(symTable *sym_tables.SymTable, index int) {
 		fmt.Printf("%+v\n", v)
 	}
 	fmt.Println("*************** Functions : ******************")
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-	for _, v := range symTable.GetFunctions() {
-		fmt.Printf("%+v\n", v)
+	curFunctions := symTable.GetFunctions()
+	for _, v := range curFunctions {
+		fmt.Printf("%+v ", v)
+		for _, v1 := range v.GetParams() {
+			fmt.Printf("%+v ", v1)
+		}
+		fmt.Println()
 	}
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
 	for _, child := range symTable.GetChildren() {
 		index++
 		PrintSymbolTable(child, index)

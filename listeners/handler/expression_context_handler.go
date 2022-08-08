@@ -31,9 +31,9 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		fmt.Println("&&&&&&&&&&&&&&&")
-		fmt.Printf("%T\n", child)
-		fmt.Printf("%+v\n", child)
+		//		fmt.Println("&&&&&&&&&&&&&&&")
+		//		fmt.Printf("%T\n", child)
+		//		fmt.Printf("%+v\n", child)
 
 		switch parserContext := child.(type) {
 		case *parser.PrimaryExprContext:
@@ -83,9 +83,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	children := contextParser.GetChildren()
 	terminalString, _ := utils.GetTerminalNodeText(children[0])
 	curCursor, _ := navigator.GetCursor()
+	curSymTable := sym_tables.GetCurSymTable()
+	curStatement := curCursor.GetStatement()
+
 	if curCursor.GetCursorContext() == navigator.ContextTypeFunctionName {
-		fmt.Println("Gettting Function Name: ", terminalString)
-		curSymTable := sym_tables.GetCurSymTable()
+		//		fmt.Println("Gettting Function Name: ", terminalString)
 
 		var newValue interface{}
 		newReturnValue := variables.NewVariable(
@@ -96,12 +98,20 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 
 		curCursor.IncreaseIndex()
 
-		curStatement := curCursor.GetStatement()
 		curStatement.AddRightValue(newReturnValue)
 
 		newFunction := procedures.NewFunction(terminalString)
 		newFunction.SetReturnValue(newReturnValue)
 		curSymTable.AddFunction(newFunction)
+	} else if curCursor.GetCursorContext() == navigator.ContextTypeFunctionArgs {
+		variable, err := curSymTable.GetVariableByName(terminalString)
+		if err != nil {
+			errMsg := fmt.Sprintf("variable: %s does not exist", terminalString)
+			panic(errMsg)
+		}
+
+		curFunction := curSymTable.GetLastFunction()
+		curFunction.AddParam(variable)
 	}
 
 	//for _, child := range children {
@@ -115,7 +125,7 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 }
 
 func OperandContextHandler(contextParser *parser.OperandContext) error {
-	fmt.Println("123456***")
+	//	fmt.Println("123456***")
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
@@ -181,7 +191,7 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		fmt.Println("************************")
+		//		fmt.Println("************************")
 		cursor, _ := navigator.GetCursor()
 		terminalString, _ := utils.GetTerminalNodeText(child)
 		curStatement := cursor.GetStatement()
@@ -229,13 +239,13 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 
 			//cursor.IncreaseIndex()
 			//curStatement.AddRightValue(curVariable)
-			fmt.Println("++++++++++++++ String", curVariable)
+			//			fmt.Println("++++++++++++++ String", curVariable)
 			//cursor.PrintStatement()
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
 
-		fmt.Println("************************")
+		//		fmt.Println("************************")
 	}
 
 	return nil
