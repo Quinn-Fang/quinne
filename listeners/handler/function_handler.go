@@ -16,5 +16,9 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	ArgumentsContextHandler(argumentsContext)
 
 	curCursor.SetCursorContext(navigator.ContextTypeDefault)
+	// add new event to user space queue
+	curNavigator := navigator.GetCurNavigator()
+	event := navigator.NewEvent(navigator.EventTypeFunction)
+	curNavigator.AddNewEvent(event)
 	return nil
 }

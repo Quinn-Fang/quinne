@@ -13,12 +13,16 @@ var (
 type Navigator struct {
 	symTableCursorStack *utils.SymTableCursorStack
 	codeSegment         *utils.CodeSegment
+	eventQueue          *EventQueue
+	iterator            *Iterator
 }
 
 func NewNavigator() *Navigator {
 	newNavigator := &Navigator{
 		symTableCursorStack: utils.NewStack(),
 		codeSegment:         utils.NewCodeSegment(),
+		eventQueue:          NewEventQueue(),
+		iterator:            NewIterator(),
 	}
 	return newNavigator
 }
@@ -41,6 +45,10 @@ func (this *Navigator) GetSymTableCursorStack() *utils.SymTableCursorStack {
 
 func (this *Navigator) GetCodeSegment() *utils.CodeSegment {
 	return this.codeSegment
+}
+
+func (this *Navigator) AddNewEvent(event *Event) {
+	this.eventQueue.Enqueue(event)
 }
 
 func (this *Navigator) PrintStack() {

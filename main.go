@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"quinn007.com/listeners"
 	"quinn007.com/navigator"
@@ -36,5 +38,11 @@ func runListener() {
 
 func main() {
 	runListener()
-
+	fmt.Println("................... Start testing .......................")
+	newNavigator := navigator.GetNavigator()
+	event, err := newNavigator.GetNextEvent()
+	for err == nil {
+		fmt.Printf("%+v %+v\n", event, event.GetFunction())
+		event, err = newNavigator.GetNextEvent()
+	}
 }

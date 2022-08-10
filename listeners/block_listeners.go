@@ -17,14 +17,6 @@ func (this *GoListener) EnterBlock(c *parser.BlockContext) {
 	curNavigator := navigator.GetCurNavigator()
 	symTableCursorStack := curNavigator.GetSymTableCursorStack()
 
-	fmt.Println("11111111111111111111")
-	fmt.Printf("%p\n", sym_tables.GetCurSymTable())
-	sym_tables.GetCurSymTable().PrintFunctions()
-	for _, vvv := range symTableCursorStack.GetStack() {
-		fmt.Printf("%p %+v ", vvv.GetSymTable(), vvv)
-	}
-	fmt.Println()
-
 	curSymTableCursor, err := symTableCursorStack.Peek()
 	if err == nil {
 		curSymTableCursor.SetFuncEndIndex(
@@ -51,27 +43,14 @@ func (this *GoListener) ExitBlock(c *parser.BlockContext) {
 	symTableCursorStack := curNavigator.GetSymTableCursorStack()
 	codeSegment := curNavigator.GetCodeSegment()
 
-	fmt.Println("2222222222222222222")
-	fmt.Printf("%p\n", sym_tables.GetCurSymTable())
-	sym_tables.GetCurSymTable().PrintFunctions()
-	for _, vvv := range symTableCursorStack.GetStack() {
-		fmt.Printf("%p %+v ", vvv.GetSymTable(), vvv)
-	}
-	fmt.Println()
-	fmt.Println()
-
 	if curSymTableCursor, err := symTableCursorStack.Peek(); err != nil {
 		panic("Unknown err stack empty")
 	} else {
-		// curSymTableCursor.SetFuncEndIndex(curSymTableCursor.GetFuncStartIndex() + len(curSymTable.GetFunctions()) - 1)
-		// curSymTableCursor.SetFuncEndIndex(curSymTableCursor.GetFuncStartIndex() + len(curSymTable.GetFunctions()) - 1)
 		newEnd := len(curSymTable.GetFunctions()) - 1
-
-		fmt.Println("------------------------------")
-		fmt.Printf("%+v %+v\n\n", curSymTableCursor, newEnd)
 
 		curSymTableCursor.SetFuncEndIndex(newEnd)
 		codeSegment.InsertBack(curSymTableCursor)
+
 		_, err_2 := symTableCursorStack.Pop()
 		if err_2 != nil {
 			panic("err_2")
