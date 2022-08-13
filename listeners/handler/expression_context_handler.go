@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"quinn007.com/listeners/utils"
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
@@ -30,15 +31,34 @@ func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) e
 func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 	children := contextParser.GetChildren()
 
+	curCursor, _ := navigator.GetCursor()
+	cursorContext := curCursor.GetCursorContext()
 	for _, child := range children {
-		//		fmt.Println("&&&&&&&&&&&&&&&")
-		//		fmt.Printf("%T\n", child)
-		//		fmt.Printf("%+v\n", child)
-
+		fmt.Println("10001 ]]]]]]]]]]")
+		fmt.Println(cursorContext)
+		fmt.Printf("%T\n", child)
+		if cursorContext == navigator.ContextTypeIfBlock || cursorContext == navigator.ContextTypeElseBlock {
+		}
 		switch parserContext := child.(type) {
 		case *parser.PrimaryExprContext:
 			{
 				PrimaryExprContextHandler(parserContext)
+			}
+		case *parser.ExpressionContext:
+			{
+				ExpressionContextHandler(parserContext)
+			}
+		case *antlr.TerminalNodeImpl:
+			{
+				if curCursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					// curExpr := curCursor.GetExpr()
+					// curExpr.SetOperator(navigator.OperatorType(terminalString))
+					curCursor.PushExpr(terminalString)
+				}
+				fmt.Println("10002 ]]]]]]]]]]")
+				terminalString, _ := utils.GetTerminalNodeText(parserContext)
+				fmt.Println(terminalString)
 			}
 		}
 	}
@@ -56,6 +76,14 @@ func PrimaryExprContextHandler(contextParser *parser.PrimaryExprContext) error {
 	}
 
 	for _, child := range children {
+		//curCursor, _ := navigator.GetCursor()
+		//if curCursor.GetCursorContext()
+		//fmt.Println("####################################################")
+		//fmt.Println()
+		//fmt.Printf("%T\n", child)
+		//fmt.Printf("%+v\n", child)
+		//fmt.Println()
+
 		switch parserContext := child.(type) {
 		case *parser.IdentifierListContext:
 			{
@@ -86,6 +114,13 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	curSymTable := sym_tables.GetCurSymTable()
 	curStatement := curCursor.GetStatement()
 
+	for _, child := range children {
+		fmt.Println("7----7")
+		fmt.Printf("%T\n", child)
+		fmt.Printf("%+v\n", child)
+		fmt.Println("7----7")
+	}
+
 	if curCursor.GetCursorContext() == navigator.ContextTypeFunctionName {
 		//		fmt.Println("Gettting Function Name: ", terminalString)
 
@@ -112,14 +147,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
+	} else if curCursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+		curCursor.PushExpr(terminalString)
+		//curExpr := curCursor.GetExpr()
+		//curExpr.PushValue(curVariable)
 	}
-
-	//for _, child := range children {
-	//	fmt.Println("7")
-	//	fmt.Printf("%T\n", child)
-	//	fmt.Printf("%+v\n", child)
-	//	fmt.Println("7")
-	//}
 
 	return nil
 }
@@ -129,6 +161,8 @@ func OperandContextHandler(contextParser *parser.OperandContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
+		fmt.Println("oooooooooooooooo")
+		fmt.Printf("%T\n", child)
 		switch parserContext := child.(type) {
 		case *parser.IdentifierListContext:
 			{
@@ -210,6 +244,8 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 
 			// curStatement.AddRightValue(curVariable)
 			// cursor.PrintStatement()
+		} else if cursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 
@@ -218,6 +254,7 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 
 	return nil
 }
+
 func StringContextHandler(contextParser *parser.String_Context) error {
 	children := contextParser.GetChildren()
 
@@ -241,6 +278,8 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 			//curStatement.AddRightValue(curVariable)
 			//			fmt.Println("++++++++++++++ String", curVariable)
 			//cursor.PrintStatement()
+		} else if cursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}

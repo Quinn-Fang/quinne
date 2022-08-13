@@ -2,14 +2,12 @@ package navigator
 
 import (
 	"errors"
-	"fmt"
 )
 
 func (this *Navigator) GetNextEvent() (*Event, error) {
 	//fmt.Println("33333")
 	//fmt.Printf("%+v \n", this.eventQueue.queue)
 
-	fmt.Println("---------------------- ", this.iterator.GetFuncIndex(), this.iterator.GetCodeSegmentIndex())
 	if this.eventQueue.curIndex == len(this.eventQueue.queue) {
 		return NewEmptyEvent(), errors.New("Reached end of queue")
 	}
@@ -19,9 +17,6 @@ func (this *Navigator) GetNextEvent() (*Event, error) {
 		curNavigator := GetCurNavigator()
 		curCodeSegment := curNavigator.GetCodeSegment()
 		codeSegmentQueue := curCodeSegment.GetQueue()
-		for _, v := range codeSegmentQueue {
-			fmt.Printf("%+v\n", v)
-		}
 		funcIndex := this.iterator.GetFuncIndex()
 		curCursor := codeSegmentQueue[this.iterator.GetCodeSegmentIndex()]
 
@@ -40,7 +35,6 @@ func (this *Navigator) GetNextEvent() (*Event, error) {
 
 		this.iterator.IncFuncIndex()
 		this.eventQueue.curIndex++
-		fmt.Println("---------------------- ", this.iterator.GetFuncIndex(), this.iterator.GetCodeSegmentIndex())
 
 		return event, nil
 

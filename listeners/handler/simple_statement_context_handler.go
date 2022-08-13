@@ -28,27 +28,8 @@ func SimpleStmtContextHandler(contextParser *parser.SimpleStmtContext) error {
 			}
 		}
 	}
-	//fmt.Println("##########################################################")
-	//left_values := curStatement.GetLeftValues()
 	rightValues := curStatement.GetRightValues()
-	//fmt.Println(left_values)
-	//// fmt.Println(rightValues)
-	//fmt.Println("--------------------   Separator -------------------------")
-	//for _, rightValue := range rightValues {
-	//	fmt.Printf("%+v ", *rightValue)
-	//}
-	//fmt.Println()
-	//fmt.Println("--------------------   Separator -------------------------")
 	curSymTable := sym_tables.GetCurSymTable()
-	//curFunctions := curSymTable.GetFunctions()
-	//for _, curFunction := range curFunctions {
-	//	fmt.Printf("%+v ", curFunction)
-	//}
-	//fmt.Println()
-
-	//fmt.Println("##########################################################")
-
-	// assign values
 	curStatement.Assign()
 
 	// add assigned variable to symbol table

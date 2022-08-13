@@ -17,6 +17,10 @@ func StatementListener(goListener *GoListener, antlrCtx antlr.ParserRuleContext)
 			{
 				handler.SimpleStmtContextHandler(parserContext)
 			}
+		case *parser.IfStmtContext:
+			{
+				handler.IfElseStmtContextHandler(parserContext)
+			}
 		}
 	}
 	return nil

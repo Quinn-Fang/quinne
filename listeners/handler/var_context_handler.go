@@ -92,9 +92,9 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 	curCursor, _ := navigator.GetCursor()
 	curStatement := curCursor.GetStatement()
 	for _, nodeContext := range children {
-		//		fmt.Println("*********************")
-		//		fmt.Printf("%T\n", nodeContext)
-		//		fmt.Printf("%+v\n", nodeContext)
+		fmt.Println("*********************")
+		fmt.Printf("%T\n", nodeContext)
+		fmt.Printf("%+v\n", nodeContext)
 		switch parserContext := nodeContext.(type) {
 		case *parser.ExpressionContext:
 			{

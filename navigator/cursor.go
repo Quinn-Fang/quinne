@@ -18,6 +18,22 @@ const (
 	ContextTypeDefault      ContextType = 1
 	ContextTypeFunctionName             = 2
 	ContextTypeFunctionArgs             = 3
+	ContextTypeIfExpr                   = 4
+	ContextTypeIfBlock                  = 5
+	ContextTypeElseIfBlock              = 6
+	ContextTypeElseBlock                = 7
+)
+
+type OperatorType string
+
+const (
+	OperatorTypeAnd         OperatorType = "&&"
+	OperatorTypeOR                       = "||"
+	OperatorTypeEqual                    = "=="
+	OperatorTypeLarger                   = ">"
+	OperatorTypeLargerEqual              = ">="
+	OperatorTypeLess                     = "<"
+	OperatorTypeLessEqual                = "<="
 )
 
 type Cursor struct {
@@ -25,12 +41,118 @@ type Cursor struct {
 	curStatement *Statement
 	curIndex     int
 	curContext   ContextType
+	curJudge     bool
+	// curExpr      *Expr
+	curExpr        string
+	curIfElseStack []ContextType
 }
 
 type Statement struct {
 	leftValues  []string
 	rightValues []*variables.Variable
 }
+
+//type ExprState int
+//
+//const (
+//	ExprStateEmpty    ExprState = 1
+//	ExprStateLeftSet            = 2
+//	ExprStateOpSet              = 3
+//	ExprStateRightSet           = 4
+//)
+//
+//type Expr struct {
+//	leftValue  interface{}
+//	operator   OperatorType
+//	rightValue interface{}
+//
+//	exprState ExprState
+//}
+//
+//func NewExpr() *Expr {
+//	newExpr := &Expr{
+//		exprState: ExprStateEmpty,
+//	}
+//	return newExpr
+//}
+//
+//func (this *Cursor) SetExpr(expr *Expr) {
+//	this.curExpr = expr
+//}
+//
+//func (this *Cursor) GetExpr() *Expr {
+//	return this.curExpr
+//}
+//
+//func (this *Cursor) GetExprRes() (bool, error) {
+//	exprRes, err := this.curExpr.Parse()
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	return exprRes, nil
+//}
+//
+//func (this *Expr) ToExprString() string {
+//	// TODO: exclude uncomparable types like map, slice etc...
+//	var stringBuilder strings.Builder
+//	leftV, okLeft := this.leftValue.(*variables.Variable)
+//	rightV, okRight := this.leftValue.(*variables.Variable)
+//	if okLeft && okRight {
+//		leftString, err := leftV.ToString()
+//		if err != nil {
+//			panic(err)
+//		}
+//
+//		rightString, err := rightV.ToString()
+//		if err != nil {
+//			panic(err)
+//		}
+//		stringBuilder.WriteString(leftString)
+//		stringBuilder.WriteString(string(this.operator))
+//		stringBuilder.WriteString(rightString)
+//	}
+//	return stringBuilder.String()
+//}
+//
+//func (this *Expr) Parse() (bool, error) {
+//	if this.exprState != ExprStateRightSet {
+//		return false, errors.New("Expr not full set")
+//	}
+//
+//	exprString := this.ToExprString()
+//
+//	return false, errors.New("Unknown error")
+//}
+//
+//func (this *Expr) PushValue(value interface{}) error {
+//	if this.exprState == ExprStateRightSet {
+//		return errors.New("Expr already full set")
+//	}
+//
+//	if this.exprState == ExprStateEmpty {
+//		this.SetLeft(value)
+//	} else if this.exprState == ExprStateOpSet {
+//		this.SetRight(value)
+//	}
+//
+//	return nil
+//}
+
+//func (this *Expr) SetLeft(value interface{}) {
+//	this.leftValue = value
+//	this.exprState = ExprStateLeftSet
+//}
+//
+//func (this *Expr) SetRight(value interface{}) {
+//	this.rightValue = value
+//	this.exprState = ExprStateRightSet
+//}
+//
+//func (this *Expr) SetOperator(opType OperatorType) {
+//	this.operator = opType
+//	this.exprState = ExprStateOpSet
+//}
 
 func InitCursor() {
 	newCursor := NewCursor()
@@ -53,12 +175,32 @@ func NewCursor() *Cursor {
 	return newCursor
 }
 
+func (this *Cursor) GetExpr() string {
+	return this.curExpr
+}
+
+func (this *Cursor) PushExpr(exprComponent string) {
+	this.curExpr += exprComponent
+}
+
+func (this *Cursor) ClearExpr() {
+	this.curExpr = ""
+}
+
 func (this *Cursor) SetCursorContext(contextType ContextType) {
 	this.curContext = contextType
 }
 
 func (this *Cursor) GetCursorContext() ContextType {
 	return this.curContext
+}
+
+func (this *Cursor) SetCurJudge(judgeRes bool) {
+	this.curJudge = judgeRes
+}
+
+func (this *Cursor) GetCurJudge() bool {
+	return this.curJudge
 }
 
 func (this *Cursor) PrintStatement() {

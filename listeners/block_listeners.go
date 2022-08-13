@@ -11,6 +11,20 @@ import (
 
 func (this *GoListener) EnterBlock(c *parser.BlockContext) {
 	fmt.Println("ENTERING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	// curCursor, _ := navigator.GetCursor()
+	fmt.Println()
+	fmt.Println()
+
+	//fmt.Println(curCursor.GetIfElseStack())
+	//fmt.Println(curCursor.GetExpr())
+
+	// ***********************************************
+	// curCursor.PopFrontIfElseStack()
+	// ***********************************************
+
+	fmt.Println()
+	fmt.Println()
+
 	newSymTable := sym_tables.NewSymTable(sym_tables.GetCurSymTable())
 	// Navigator start
 
@@ -30,6 +44,9 @@ func (this *GoListener) EnterBlock(c *parser.BlockContext) {
 	// Navigator end
 
 	sym_tables.SetCurSymTable(newSymTable)
+
+	// Setting Executable
+
 }
 
 func (this *GoListener) ExitBlock(c *parser.BlockContext) {

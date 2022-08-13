@@ -1,5 +1,10 @@
 package variables
 
+import (
+	"errors"
+	"fmt"
+)
+
 type VTypeEnum int
 
 const (
@@ -35,6 +40,47 @@ func NewVariable(variableName string, variableType VTypeEnum, variableValue inte
 	}
 
 	return &newVariable
+}
+
+func (this *Variable) GetInt() (int, error) {
+	if this.vType == VTypeInt {
+		return this.vValue.(int), nil
+	} else {
+		return -1, errors.New("Wrong type")
+	}
+}
+
+func (this *Variable) GetString() (string, error) {
+	if this.vType == VTypeString {
+		return this.vValue.(string), nil
+	} else {
+		return "", errors.New("Wrong type")
+	}
+}
+
+func (this *Variable) GetFloat() (float64, error) {
+	if this.vType == VTypeFloat {
+		return this.vValue.(float64), nil
+	} else {
+		return -1.1, errors.New("Wrong type")
+	}
+}
+
+func (this *Variable) GetBool() (bool, error) {
+	if this.vType == VTypeFloat {
+		return this.vValue.(bool), nil
+	} else {
+		return false, errors.New("Wrong type")
+	}
+}
+
+func (this *Variable) ToString() string {
+	if this.vType == VTypeInt || this.vType == VTypeBool || this.vType == VTypeString || this.vType == VTypeFloat {
+		return fmt.Sprintf("%v", this.vValue)
+	} else {
+		errStr := fmt.Sprintf("can not convert %v %v to string", this.vType, this.vValue)
+		panic(errStr)
+	}
 }
 
 func (this *Variable) GetVariableName() string {
