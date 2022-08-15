@@ -148,7 +148,14 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
 	} else if curCursor.GetCursorContext() == navigator.ContextTypeIfBlock {
-		curCursor.PushExpr(terminalString)
+		// curCursor.PushExpr(terminalString)
+
+		//curVariable, err := curSymTable.GetVariableByName(terminalString)
+		//if err != nil {
+		//	panic(err)
+		//}
+		//curCursor.AddExprVariable(curVariable)
+
 		//curExpr := curCursor.GetExpr()
 		//curExpr.PushValue(curVariable)
 	}

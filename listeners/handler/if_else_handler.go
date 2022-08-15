@@ -24,6 +24,7 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 		case *parser.BlockContext:
 			{
 
+				fmt.Println("Context BLOCK .................")
 				curCursor.SetCursorContext(navigator.ContextTypeDefault)
 			}
 		case *parser.ExpressionContext:

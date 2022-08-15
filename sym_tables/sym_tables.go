@@ -6,20 +6,28 @@ import (
 
 	"github.com/Knetic/govaluate"
 	"quinn007.com/procedures"
+	"quinn007.com/utils"
 	"quinn007.com/variables"
 )
+
+type ScopeType int
+
+type ScopeContext struct {
+	scopeType    ScopeType
+	scopeContext interface{}
+}
+
+func (this *ScopeContext) GetScopeType() ScopeType {
+	return this.scopeType
+}
+
+func (this *ScopeContext) GetScope() interface{} {
+	return this.scopeContext
+}
 
 var (
 	rootSymTable *SymTable
 	curSymTable  *SymTable
-)
-
-type LogicSymbol string
-
-const (
-	LogicSymbolError LogicSymbol = "logicSymbolError"
-	LogicSymbolIf                = "if"
-	LogicSymbolElse              = "else"
 )
 
 type SymTable struct {
@@ -33,8 +41,83 @@ type SymTable struct {
 	ifElseExprStack         []string
 	ifElseExprVariableStack []map[string]interface{}
 	hasTrueBranch           bool
+
+	// process only
+	scopeQueue *utils.Queue
+
+	ifElseClauseList *utils.Queue
+	curScope         *ScopeContext
 }
 
+// convert scopeQueue to ifElseClause
+func (this *SymTable) ParseIfElseBranch() {
+	prev := this.GetPrev()
+	if prev == nil {
+		return
+	}
+
+}
+
+// check if this symTable executable, should be called after table context being parsed
+func (this *SymTable) CheckExecutable() bool {
+	parent := this.GetPrev()
+	// root sym table always executable
+	if parent == nil {
+		return true
+	}
+
+	// check parents executable
+	if !this.CheckPrevExecutable() {
+		return false
+	}
+
+	// check ifElseClause currently resides executable
+	return false
+}
+
+// simply check if all parents are executable
+func (this *SymTable) CheckPrevExecutable() bool {
+	prev := this.GetPrev()
+	for prev != nil {
+		if !prev.GetExecutable() {
+			return false
+		}
+	}
+	return true
+}
+
+type ScopeQueue struct {
+	queue *utils.Queue
+}
+
+func (this *ScopeQueue) PushBack(scopeContext *ScopeContext) {
+	this.queue.PushBack(scopeContext)
+}
+
+func (this *ScopeQueue) PopFront() (*ScopeContext, error) {
+	ret, err := this.queue.PopFront()
+	return ret.(*ScopeContext), err
+}
+
+func (this *ScopeQueue) GetFront() (*ScopeContext, error) {
+	ret, err := this.queue.PopFront()
+	return ret.(*ScopeContext), err
+}
+
+type IfElseClauseQueue struct {
+	queue *utils.Queue
+}
+
+func (this *IfElseClauseQueue) PushBack(ifElseClause *IfElseClause) {
+	this.queue.PushBack(ifElseClause)
+}
+
+func (this *IfElseClauseQueue) PopFront() (*IfElseClause, error) {
+	ret, err := this.queue.PopFront()
+	return ret.(*IfElseClause), err
+}
+
+//////////////////////////////////////
 func (this *SymTable) LookUpAndSetExecutable() bool {
 	// parents up chain not executable
 	if !this.GetChainExecutable() {
@@ -46,7 +129,7 @@ func (this *SymTable) LookUpAndSetExecutable() bool {
 			// root symtable
 			return true
 		} else {
-			prev.ParseIfElseClause()
+			prev.ParseIfElseClause_1()
 			if prev.ExecutableStackEmpty() {
 				return true
 			} else {
@@ -69,7 +152,7 @@ func (this *SymTable) GetChainExecutable() bool {
 }
 
 // Called when entering block, on parent table
-func (this *SymTable) ParseIfElseClause() {
+func (this *SymTable) ParseIfElseClause_1() {
 	for !this.IfElseStackEmpty() {
 		ifElseSymbol := this.PopFrontIfElseStack()
 		if ifElseSymbol == LogicSymbolIf {
@@ -226,9 +309,15 @@ func NewEntryTable() *SymTable {
 func NewSymTable(prevSymTable *SymTable) *SymTable {
 	var newSymTable *SymTable
 	newSymTable = &SymTable{
-		prev:        prevSymTable,
-		variableMap: make(map[string]*variables.Variable),
-		functions:   make([]*procedures.FFunction, 0),
+		prev:                    prevSymTable,
+		variableMap:             make(map[string]*variables.Variable),
+		functions:               make([]*procedures.FFunction, 0),
+		executableStack:         make([]bool, 0),
+		ifElseStack:             make([]LogicSymbol, 0),
+		ifElseExprStack:         make([]string, 0),
+		ifElseExprVariableStack: make([]map[string]interface{}, 0),
+
+		scopeQueue: utils.NewQueue(),
 	}
 	// prevSymTable.next = newSymTable
 	prevSymTable.children = append(prevSymTable.children, newSymTable)

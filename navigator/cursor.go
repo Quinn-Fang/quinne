@@ -43,116 +43,14 @@ type Cursor struct {
 	curContext   ContextType
 	curJudge     bool
 	// curExpr      *Expr
-	curExpr        string
-	curIfElseStack []ContextType
+	curExpr         string
+	curExprVariable []*variables.Variable
 }
 
 type Statement struct {
 	leftValues  []string
 	rightValues []*variables.Variable
 }
-
-//type ExprState int
-//
-//const (
-//	ExprStateEmpty    ExprState = 1
-//	ExprStateLeftSet            = 2
-//	ExprStateOpSet              = 3
-//	ExprStateRightSet           = 4
-//)
-//
-//type Expr struct {
-//	leftValue  interface{}
-//	operator   OperatorType
-//	rightValue interface{}
-//
-//	exprState ExprState
-//}
-//
-//func NewExpr() *Expr {
-//	newExpr := &Expr{
-//		exprState: ExprStateEmpty,
-//	}
-//	return newExpr
-//}
-//
-//func (this *Cursor) SetExpr(expr *Expr) {
-//	this.curExpr = expr
-//}
-//
-//func (this *Cursor) GetExpr() *Expr {
-//	return this.curExpr
-//}
-//
-//func (this *Cursor) GetExprRes() (bool, error) {
-//	exprRes, err := this.curExpr.Parse()
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	return exprRes, nil
-//}
-//
-//func (this *Expr) ToExprString() string {
-//	// TODO: exclude uncomparable types like map, slice etc...
-//	var stringBuilder strings.Builder
-//	leftV, okLeft := this.leftValue.(*variables.Variable)
-//	rightV, okRight := this.leftValue.(*variables.Variable)
-//	if okLeft && okRight {
-//		leftString, err := leftV.ToString()
-//		if err != nil {
-//			panic(err)
-//		}
-//
-//		rightString, err := rightV.ToString()
-//		if err != nil {
-//			panic(err)
-//		}
-//		stringBuilder.WriteString(leftString)
-//		stringBuilder.WriteString(string(this.operator))
-//		stringBuilder.WriteString(rightString)
-//	}
-//	return stringBuilder.String()
-//}
-//
-//func (this *Expr) Parse() (bool, error) {
-//	if this.exprState != ExprStateRightSet {
-//		return false, errors.New("Expr not full set")
-//	}
-//
-//	exprString := this.ToExprString()
-//
-//	return false, errors.New("Unknown error")
-//}
-//
-//func (this *Expr) PushValue(value interface{}) error {
-//	if this.exprState == ExprStateRightSet {
-//		return errors.New("Expr already full set")
-//	}
-//
-//	if this.exprState == ExprStateEmpty {
-//		this.SetLeft(value)
-//	} else if this.exprState == ExprStateOpSet {
-//		this.SetRight(value)
-//	}
-//
-//	return nil
-//}
-
-//func (this *Expr) SetLeft(value interface{}) {
-//	this.leftValue = value
-//	this.exprState = ExprStateLeftSet
-//}
-//
-//func (this *Expr) SetRight(value interface{}) {
-//	this.rightValue = value
-//	this.exprState = ExprStateRightSet
-//}
-//
-//func (this *Expr) SetOperator(opType OperatorType) {
-//	this.operator = opType
-//	this.exprState = ExprStateOpSet
-//}
 
 func InitCursor() {
 	newCursor := NewCursor()
@@ -169,10 +67,23 @@ func GetCursor() (*Cursor, error) {
 
 func NewCursor() *Cursor {
 	newCursor := &Cursor{
-		curIndex: 1,
+		curIndex:        1,
+		curExprVariable: make([]*variables.Variable, 0),
 	}
 
 	return newCursor
+}
+
+func (this *Cursor) GetExprVariable() []*variables.Variable {
+	return this.curExprVariable
+}
+
+func (this *Cursor) AddExprVariable(param *variables.Variable) {
+	this.curExprVariable = append(this.curExprVariable, param)
+}
+
+func (this *Cursor) ClearExprVariable() {
+	this.curExprVariable = make([]*variables.Variable, 0)
 }
 
 func (this *Cursor) GetExpr() string {
