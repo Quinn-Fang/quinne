@@ -7,8 +7,9 @@ import (
 
 type GoListener struct {
 	*parser.BaseGoParserListener
-	p *parser.GoParser
-	t antlr.Tree
+	p      *parser.GoParser
+	t      antlr.Tree
+	Test_1 bool
 }
 
 func NewGoListener(p *parser.GoParser, t antlr.Tree) *GoListener {
