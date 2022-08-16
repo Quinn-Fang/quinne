@@ -24,8 +24,12 @@ func (this *Queue) PushFront(item interface{}) {
 	this.queue.PushFront(item)
 }
 
-func (this *Queue) GetFront() interface{} {
+func (this *Queue) GetFront() *list.Element {
 	return this.queue.Front()
+}
+
+func (this *Queue) GetBack() *list.Element {
+	return this.queue.Back()
 }
 
 func (this *Queue) PopFront() (interface{}, error) {

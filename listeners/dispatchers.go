@@ -20,7 +20,7 @@ func LexDispatcher(goListener *GoListener, antlrCtx antlr.ParserRuleContext, rul
 			return nil
 		}
 		goListener.Test_1 = true
-		handler.BlockContextHandler(antlrCtx)
+		handler.BlockContextHandler(antlrCtx, nil)
 	}
 	return nil
 }

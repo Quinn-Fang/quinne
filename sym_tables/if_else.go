@@ -17,25 +17,26 @@ const (
 )
 
 type IfElseClause struct {
-	ifElseBranch  []*IfElseBranch
-	hasTrueBranch bool
-	symTable      *SymTable
+	ifElseBranches []*IfElseBranch
+	hasTrueBranch  bool
+	symTable       *SymTable
 }
 
-// pass in where this if else clause resides
-func NewIfElseClause(curSymTable *SymTable) *IfElseClause {
-	newIfElseClause := &IfElseClause{
-		symTable: curSymTable,
-	}
+func NewIfElseClause() *IfElseClause {
+	newIfElseClause := &IfElseClause{}
 	return newIfElseClause
 }
 
 func (this *IfElseClause) AddBranch(curIfElseBranch *IfElseBranch) {
-	this.ifElseBranch = append(this.ifElseBranch, curIfElseBranch)
+	this.ifElseBranches = append(this.ifElseBranches, curIfElseBranch)
 }
 
 func (this *IfElseClause) SetHasTrueBranch(hasTrueBranch bool) {
 	this.hasTrueBranch = hasTrueBranch
+}
+
+func (this *IfElseClause) GetBranches() []*IfElseBranch {
+	return this.ifElseBranches
 }
 
 type IfElseBranch struct {
@@ -52,10 +53,22 @@ func NewIfElseBranch(curBranchType BranchType) *IfElseBranch {
 	return newIfElseBranch
 }
 
+func (this *IfElseBranch) GetBranchType() BranchType {
+	return this.branchType
+}
+
 func (this *IfElseBranch) SetExpr(curExpr string) {
 	this.expr = curExpr
 }
 
+func (this *IfElseBranch) GetExpr() string {
+	return this.expr
+}
+
 func (this *IfElseBranch) SetExprVarNames(varNames []string) {
 	this.exprVarNames = varNames
+}
+
+func (this *IfElseBranch) GetExprVarNames() []string {
+	return this.exprVarNames
 }

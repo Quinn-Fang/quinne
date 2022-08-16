@@ -12,18 +12,6 @@ var (
 	cursor *Cursor
 )
 
-type ContextType int
-
-const (
-	ContextTypeDefault      ContextType = 1
-	ContextTypeFunctionName             = 2
-	ContextTypeFunctionArgs             = 3
-	ContextTypeIfExpr                   = 4
-	ContextTypeIfBlock                  = 5
-	ContextTypeElseIfBlock              = 6
-	ContextTypeElseBlock                = 7
-)
-
 type OperatorType string
 
 const (
@@ -36,15 +24,17 @@ const (
 	OperatorTypeLessEqual                = "<="
 )
 
+// record useful current context information
 type Cursor struct {
 	curSymTable  *sym_tables.SymTable
 	curStatement *Statement
 	curIndex     int
-	curContext   ContextType
+	curContext   sym_tables.ContextType
 	curJudge     bool
 	// curExpr      *Expr
 	curExpr         string
-	curExprVariable []*variables.Variable
+	curExprVarNames []string
+	curIfElseClause *sym_tables.IfElseClause
 }
 
 type Statement struct {
@@ -67,23 +57,36 @@ func GetCursor() (*Cursor, error) {
 
 func NewCursor() *Cursor {
 	newCursor := &Cursor{
-		curIndex:        1,
-		curExprVariable: make([]*variables.Variable, 0),
+		curIndex: 1,
+		//////////////////////////////////
+
 	}
 
 	return newCursor
 }
 
-func (this *Cursor) GetExprVariable() []*variables.Variable {
-	return this.curExprVariable
+func (this *Cursor) SetIfElseClause(ifElseClause *sym_tables.IfElseClause) {
+	this.curIfElseClause = ifElseClause
 }
 
-func (this *Cursor) AddExprVariable(param *variables.Variable) {
-	this.curExprVariable = append(this.curExprVariable, param)
+func (this *Cursor) GetIfElseClause() *sym_tables.IfElseClause {
+	return this.curIfElseClause
 }
 
-func (this *Cursor) ClearExprVariable() {
-	this.curExprVariable = make([]*variables.Variable, 0)
+func (this *Cursor) InitIfElseClause() {
+	this.curIfElseClause = sym_tables.NewIfElseClause()
+}
+
+func (this *Cursor) GetExprVarNames() []string {
+	return this.curExprVarNames
+}
+
+func (this *Cursor) AddExprVarNames(varName string) {
+	this.curExprVarNames = append(this.curExprVarNames, varName)
+}
+
+func (this *Cursor) InitExprVarNames() {
+	this.curExprVarNames = make([]string, 0)
 }
 
 func (this *Cursor) GetExpr() string {
@@ -98,11 +101,11 @@ func (this *Cursor) ClearExpr() {
 	this.curExpr = ""
 }
 
-func (this *Cursor) SetCursorContext(contextType ContextType) {
+func (this *Cursor) SetCursorContext(contextType sym_tables.ContextType) {
 	this.curContext = contextType
 }
 
-func (this *Cursor) GetCursorContext() ContextType {
+func (this *Cursor) GetCursorContext() sym_tables.ContextType {
 	return this.curContext
 }
 

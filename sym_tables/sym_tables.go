@@ -10,18 +10,23 @@ import (
 	"quinn007.com/variables"
 )
 
-type ScopeType int
-
 type ScopeContext struct {
-	scopeType    ScopeType
+	scopeType    ContextType
 	scopeContext interface{}
 }
 
-func (this *ScopeContext) GetScopeType() ScopeType {
+func NewScopeContext(scopeType ContextType) *ScopeContext {
+	newScopeContext := &ScopeContext{
+		scopeType: scopeType,
+	}
+	return newScopeContext
+}
+
+func (this *ScopeContext) GetScopeType() ContextType {
 	return this.scopeType
 }
 
-func (this *ScopeContext) GetScope() interface{} {
+func (this *ScopeContext) GetScopeContext() interface{} {
 	return this.scopeContext
 }
 
@@ -49,13 +54,36 @@ type SymTable struct {
 	curScope         *ScopeContext
 }
 
-// convert scopeQueue to ifElseClause
-func (this *SymTable) ParseIfElseBranch() {
-	prev := this.GetPrev()
-	if prev == nil {
-		return
+func (this *SymTable) PrintIfElseClauseList() {
+	fmt.Printf("------------------------ %+v --------------------------\n", "IfElseClauseList Start")
+
+	for elem_1 := this.ifElseClauseList.GetFront(); elem_1 != nil; elem_1 = elem_1.Next() {
+		ifElseClause := elem_1.Value.(*IfElseClause)
+		for _, v1 := range ifElseClause.GetBranches() {
+			fmt.Println()
+			fmt.Printf("%+v  %+v  %+v \n", v1.GetBranchType(), v1.GetExpr(), v1.GetExprVarNames())
+			fmt.Println()
+		}
 	}
 
+	fmt.Printf("------------------------ %+v --------------------------\n", "IfElseClauseList End")
+
+}
+
+func (this *SymTable) AddIfElseClause(ifElseClause *IfElseClause) {
+	this.ifElseClauseList.PushBack(ifElseClause)
+}
+
+func (this *SymTable) GetLastIfElseClause() *IfElseClause {
+	return this.ifElseClauseList.GetBack().Value.(*IfElseClause)
+}
+
+func (this *SymTable) SetScope(scopeContext *ScopeContext) {
+	this.curScope = scopeContext
+}
+
+func (this *SymTable) GetScope() *ScopeContext {
+	return this.curScope
 }
 
 // check if this symTable executable, should be called after table context being parsed
@@ -279,6 +307,17 @@ func (this *SymTable) PopFrontIfElseStack() LogicSymbol {
 	}
 }
 
+func (this *SymTable) PopBackIfElseStack() LogicSymbol {
+	if !this.IfElseStackEmpty() {
+		logicSymbol := this.ifElseStack[len(this.ifElseStack)-1]
+		this.ifElseStack = this.ifElseStack[:len(this.ifElseStack)-1]
+		return logicSymbol
+
+	} else {
+		return LogicSymbolError
+	}
+}
+
 func (this *SymTable) IfElseStackEmpty() bool {
 	return len(this.ifElseStack) == 0
 }
@@ -316,6 +355,7 @@ func NewSymTable(prevSymTable *SymTable) *SymTable {
 		ifElseStack:             make([]LogicSymbol, 0),
 		ifElseExprStack:         make([]string, 0),
 		ifElseExprVariableStack: make([]map[string]interface{}, 0),
+		ifElseClauseList:        utils.NewQueue(),
 
 		scopeQueue: utils.NewQueue(),
 	}

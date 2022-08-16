@@ -8,7 +8,7 @@ func ForStatementContextHandler(contextParser *parser.ForStmtContext) error {
 		switch parserContext := v.(type) {
 		case *parser.BlockContext:
 			{
-				BlockContextHandler(parserContext)
+				BlockContextHandler(parserContext, nil)
 			}
 		}
 	}

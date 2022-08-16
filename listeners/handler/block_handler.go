@@ -10,8 +10,8 @@ import (
 	"quinn007.com/sym_tables"
 )
 
-func BlockContextHandler(antlrCtx antlr.ParserRuleContext) {
-	EnterBlockHandler()
+func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tables.ScopeContext) {
+	EnterBlockHandler(blockContext)
 	children := antlrCtx.GetChildren()
 
 	for _, child := range children {
@@ -26,13 +26,24 @@ func BlockContextHandler(antlrCtx antlr.ParserRuleContext) {
 		}
 	}
 	ExitBlockHandler()
+
+	/////////////////////////
+	//curSymTable := sym_tables.GetCurSymTable()
+	//if curSymTable != nil {
+	//	curSymTable.PrintIfElseClauseList()
+	//}
 }
 
-func EnterBlockHandler() {
+func EnterBlockHandler(blockContext *sym_tables.ScopeContext) {
 	fmt.Println("ENTERING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	curCursor, _ := navigator.GetCursor()
+	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	fmt.Printf("%+v\n", curCursor.GetCursorContext())
+	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
 	newSymTable := sym_tables.NewSymTable(sym_tables.GetCurSymTable())
 	// Navigator start
+	newSymTable.SetScope(blockContext)
 
 	curNavigator := navigator.GetCurNavigator()
 	symTableCursorStack := curNavigator.GetSymTableCursorStack()

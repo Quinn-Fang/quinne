@@ -3,19 +3,20 @@ package handler
 import (
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
+	"quinn007.com/sym_tables"
 )
 
 func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext *parser.ArgumentsContext) error {
 	curCursor, _ := navigator.GetCursor()
-	curCursor.SetCursorContext(navigator.ContextTypeFunctionName)
+	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionName)
 
 	PrimaryExprContextHandler(operandContext)
 
-	curCursor.SetCursorContext(navigator.ContextTypeFunctionArgs)
+	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionArgs)
 
 	ArgumentsContextHandler(argumentsContext)
 
-	curCursor.SetCursorContext(navigator.ContextTypeDefault)
+	curCursor.SetCursorContext(sym_tables.ContextTypeDefault)
 	// add new event to user space queue
 	curNavigator := navigator.GetCurNavigator()
 	event := navigator.NewEvent(navigator.EventTypeFunction)

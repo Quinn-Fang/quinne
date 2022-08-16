@@ -32,13 +32,8 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 	children := contextParser.GetChildren()
 
 	curCursor, _ := navigator.GetCursor()
-	cursorContext := curCursor.GetCursorContext()
 	for _, child := range children {
 		fmt.Println("10001 ]]]]]]]]]]")
-		fmt.Println(cursorContext)
-		fmt.Printf("%T\n", child)
-		if cursorContext == navigator.ContextTypeIfBlock || cursorContext == navigator.ContextTypeElseBlock {
-		}
 		switch parserContext := child.(type) {
 		case *parser.PrimaryExprContext:
 			{
@@ -50,10 +45,9 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 			}
 		case *antlr.TerminalNodeImpl:
 			{
-				if curCursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+				if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
-					// curExpr := curCursor.GetExpr()
-					// curExpr.SetOperator(navigator.OperatorType(terminalString))
+
 					curCursor.PushExpr(terminalString)
 				}
 				fmt.Println("10002 ]]]]]]]]]]")
@@ -116,12 +110,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 
 	for _, child := range children {
 		fmt.Println("7----7")
-		fmt.Printf("%T\n", child)
 		fmt.Printf("%+v\n", child)
 		fmt.Println("7----7")
 	}
 
-	if curCursor.GetCursorContext() == navigator.ContextTypeFunctionName {
+	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
 		//		fmt.Println("Gettting Function Name: ", terminalString)
 
 		var newValue interface{}
@@ -138,7 +131,7 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 		newFunction := procedures.NewFunction(terminalString)
 		newFunction.SetReturnValue(newReturnValue)
 		curSymTable.AddFunction(newFunction)
-	} else if curCursor.GetCursorContext() == navigator.ContextTypeFunctionArgs {
+	} else if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
 		variable, err := curSymTable.GetVariableByName(terminalString)
 		if err != nil {
 			errMsg := fmt.Sprintf("variable: %s does not exist", terminalString)
@@ -147,8 +140,9 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
-	} else if curCursor.GetCursorContext() == navigator.ContextTypeIfBlock {
-		// curCursor.PushExpr(terminalString)
+	} else if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+		curCursor.PushExpr(terminalString)
+		curCursor.AddExprVarNames(terminalString)
 
 		//curVariable, err := curSymTable.GetVariableByName(terminalString)
 		//if err != nil {
@@ -245,13 +239,16 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 
 		//cursor.IncreaseIndex()
 		curSymTable := sym_tables.GetCurSymTable()
-		if cursor.GetCursorContext() == navigator.ContextTypeFunctionArgs {
+		if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
 			// curStatement.AddRightValue(curVariable)
 			// cursor.PrintStatement()
-		} else if cursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+			fmt.Println("7---------7\n")
+			fmt.Println(terminalString)
+			fmt.Println("7---------7\n")
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
@@ -277,7 +274,7 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 			cursor.GetIndex())
 		curSymTable := sym_tables.GetCurSymTable()
 
-		if cursor.GetCursorContext() == navigator.ContextTypeFunctionArgs {
+		if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
@@ -285,7 +282,10 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 			//curStatement.AddRightValue(curVariable)
 			//			fmt.Println("++++++++++++++ String", curVariable)
 			//cursor.PrintStatement()
-		} else if cursor.GetCursorContext() == navigator.ContextTypeIfBlock {
+		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+			fmt.Println("7---------7\n")
+			fmt.Println(terminalString)
+			fmt.Println("7---------7\n")
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
