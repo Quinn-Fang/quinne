@@ -8,10 +8,13 @@ import (
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
 	"quinn007.com/sym_tables"
+	"quinn007.com/uspace"
 )
 
 func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 	fmt.Println("Inside IfElseStmtContextHandler .........................")
+
+	curNavigator := navigator.GetCurNavigator()
 
 	curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
@@ -41,6 +44,8 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 						newIfBranch.SetExprVarNames(curCursor.GetExprVarNames())
 
 						ifElseClause.AddBranch(newIfBranch)
+						// add user space event
+						curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newIfBranch)
 
 						curEvent = sym_tables.ContextTypeIf
 					} else {
@@ -54,6 +59,8 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 						newElseIfBranch.SetExprVarNames(curCursor.GetExprVarNames())
 
 						ifElseClause.AddBranch(newElseIfBranch)
+						// add user space event
+						curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newElseIfBranch)
 
 						curEvent = sym_tables.ContextTypeElseIf
 					}

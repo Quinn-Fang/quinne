@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"quinn007.com/navigator/utils"
+	"quinn007.com/uspace"
 )
 
 var (
@@ -13,18 +14,31 @@ var (
 type Navigator struct {
 	symTableCursorStack *utils.SymTableCursorStack
 	codeSegment         *utils.CodeSegment
-	eventQueue          *EventQueue
-	iterator            *Iterator
+	eventQueue          *uspace.EventQueue
+	//eventQueue          *EventQueue
+	//iterator            *Iterator
 }
 
 func NewNavigator() *Navigator {
 	newNavigator := &Navigator{
 		symTableCursorStack: utils.NewStack(),
 		codeSegment:         utils.NewCodeSegment(),
-		eventQueue:          NewEventQueue(),
-		iterator:            NewIterator(),
+		//eventQueue:          NewEventQueue(),
+		//iterator:            NewIterator(),
+		eventQueue: uspace.NewEventQueue(),
 	}
 	return newNavigator
+}
+
+func (this *Navigator) AddEvent(eventType uspace.EventType, event interface{}) {
+	newEvent := uspace.NewEvent(eventType)
+	newEvent.SetEvent(event)
+	this.eventQueue.AddEvent(newEvent)
+}
+
+func (this *Navigator) GetNextEvent() (*uspace.Event, error) {
+	event, err := this.eventQueue.PopFront()
+	return event, err
 }
 
 func SetCurNavigator(navigator *Navigator) {
@@ -47,9 +61,9 @@ func (this *Navigator) GetCodeSegment() *utils.CodeSegment {
 	return this.codeSegment
 }
 
-func (this *Navigator) AddNewEvent(event *Event) {
-	this.eventQueue.Enqueue(event)
-}
+//func (this *Navigator) AddNewEvent(event *Event) {
+//	this.eventQueue.Enqueue(event)
+//}
 
 func (this *Navigator) PrintStack() {
 	fmt.Println("^^^^^^^^^^^^^^^^^ Symbol Table Stack : ^^^^^^^^^^^^^^^^^^")

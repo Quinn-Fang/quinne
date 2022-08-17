@@ -64,20 +64,11 @@ func PrimaryExprContextHandler(contextParser *parser.PrimaryExprContext) error {
 	children := contextParser.GetChildren()
 
 	if utils.IsFunction(children) {
-		// curStatement := curCursor.GetStatement()
 		FunctionHandler(children[0].(*parser.PrimaryExprContext), children[1].(*parser.ArgumentsContext))
 		return nil
 	}
 
 	for _, child := range children {
-		//curCursor, _ := navigator.GetCursor()
-		//if curCursor.GetCursorContext()
-		//fmt.Println("####################################################")
-		//fmt.Println()
-		//fmt.Printf("%T\n", child)
-		//fmt.Printf("%+v\n", child)
-		//fmt.Println()
-
 		switch parserContext := child.(type) {
 		case *parser.IdentifierListContext:
 			{

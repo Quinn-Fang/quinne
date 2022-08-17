@@ -12,7 +12,7 @@ import (
 )
 
 func runListener() {
-	input, _ := antlr.NewFileStream("samples/sample_4.go")
+	input, _ := antlr.NewFileStream("samples/sample_5.go")
 	// Create First SymTable
 	sym_tables.NewEntryTable()
 	// Create Cursor
@@ -42,7 +42,14 @@ func main() {
 	newNavigator := navigator.GetNavigator()
 	event, err := newNavigator.GetNextEvent()
 	for err == nil {
-		fmt.Printf("%+v %+v\n", event, event.GetFunction())
+		fmt.Printf("%+v  |  %+v\n", event, event.GetEventContext())
+		//fmt.Printf("%+v ", event.GetEventType())
+		//if event.GetEventType() == uspace.EventTypeFunction {
+		//	fmt.Printf("%+v \n", event.GetFunction(event))
+		//} else if event.GetEventType() == uspace.EventTypeIfElseExpr {
+		//	v1, v2 := event.GetExpr(event)
+		//	fmt.Printf("%+v %+v \n", v1, v2)
+		//}
 		event, err = newNavigator.GetNextEvent()
 	}
 }
