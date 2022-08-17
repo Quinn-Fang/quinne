@@ -35,6 +35,10 @@ func (this *IfElseClause) SetHasTrueBranch(hasTrueBranch bool) {
 	this.hasTrueBranch = hasTrueBranch
 }
 
+func (this *IfElseClause) HasTrueBranch() bool {
+	return this.hasTrueBranch
+}
+
 func (this *IfElseClause) GetBranches() []*IfElseBranch {
 	return this.ifElseBranches
 }
@@ -44,6 +48,15 @@ type IfElseBranch struct {
 	expr         string
 	exprVarNames []string
 	ifElseClause *IfElseClause
+	judgeRes     bool
+}
+
+func (this *IfElseBranch) SetJudgeRes(judgeRes bool) {
+	this.judgeRes = judgeRes
+}
+
+func (this *IfElseBranch) GetJudgeRes() bool {
+	return this.judgeRes
 }
 
 func NewIfElseBranch(curBranchType BranchType) *IfElseBranch {
@@ -51,6 +64,14 @@ func NewIfElseBranch(curBranchType BranchType) *IfElseBranch {
 		branchType: curBranchType,
 	}
 	return newIfElseBranch
+}
+
+func (this *IfElseBranch) SetParent(ifElseClause *IfElseClause) {
+	this.ifElseClause = ifElseClause
+}
+
+func (this *IfElseBranch) GetParent() *IfElseClause {
+	return this.ifElseClause
 }
 
 func (this *IfElseBranch) GetBranchType() BranchType {

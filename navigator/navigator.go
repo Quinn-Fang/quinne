@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"quinn007.com/navigator/utils"
+	"quinn007.com/sym_tables"
 	"quinn007.com/uspace"
 )
 
@@ -30,8 +31,8 @@ func NewNavigator() *Navigator {
 	return newNavigator
 }
 
-func (this *Navigator) AddEvent(eventType uspace.EventType, event interface{}) {
-	newEvent := uspace.NewEvent(eventType)
+func (this *Navigator) AddEvent(eventType uspace.EventType, event interface{}, symTable *sym_tables.SymTable) {
+	newEvent := uspace.NewEvent(eventType, symTable)
 	newEvent.SetEvent(event)
 	this.eventQueue.AddEvent(newEvent)
 }

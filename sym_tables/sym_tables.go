@@ -30,6 +30,10 @@ func (this *ScopeContext) GetScopeContext() interface{} {
 	return this.scopeContext
 }
 
+func (this *ScopeContext) SetScopeContext(scopeContext interface{}) {
+	this.scopeContext = scopeContext
+}
+
 var (
 	rootSymTable *SymTable
 	curSymTable  *SymTable
@@ -47,11 +51,44 @@ type SymTable struct {
 	ifElseExprVariableStack []map[string]interface{}
 	hasTrueBranch           bool
 
-	// process only
 	scopeQueue *utils.Queue
 
 	ifElseClauseList *utils.Queue
 	curScope         *ScopeContext
+}
+
+func (this *SymTable) IsExecutable() bool {
+	fmt.Println("111")
+	checkPrevExecutable := this.CheckPrevExecutable()
+	if !checkPrevExecutable {
+		return false
+	}
+
+	if this.curScope == nil {
+		return true
+	}
+	fmt.Println("222")
+	if !(this.curScope.GetScopeType() == ContextTypeElseIf || this.curScope.GetScopeType() == ContextTypeElseIf) {
+		fmt.Println("11111111 2222222222 33333333")
+		return true
+	}
+
+	ifElseBranch, ok := this.curScope.GetScopeContext().(*IfElseBranch)
+	if !ok {
+		panic("Not IfElseBranch ... \n")
+	}
+	fmt.Println("333")
+
+	ifElseClause := ifElseBranch.GetParent()
+
+	if ifElseClause.HasTrueBranch() {
+		return false
+	} else {
+		// map unset !!!!!
+		// exprRes := this.JudgeIfElseExpr(ifElseBranch.GetExpr(), make)
+		canExecute := ifElseBranch.GetJudgeRes()
+		return canExecute
+	}
 }
 
 func (this *SymTable) PrintIfElseClauseList() {
@@ -109,7 +146,10 @@ func (this *SymTable) CheckPrevExecutable() bool {
 	prev := this.GetPrev()
 	for prev != nil {
 		if !prev.GetExecutable() {
+			fmt.Println("55555")
 			return false
+		} else {
+			prev = prev.GetPrev()
 		}
 	}
 	return true
@@ -340,7 +380,9 @@ func GetCurSymTable() *SymTable {
 }
 
 func NewEntryTable() *SymTable {
-	newEntryTable := &SymTable{}
+	newEntryTable := &SymTable{
+		executable: true,
+	}
 	SetCurSymTable(newEntryTable)
 	SetRootSymTale(newEntryTable)
 	return newEntryTable

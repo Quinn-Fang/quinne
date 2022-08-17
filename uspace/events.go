@@ -20,6 +20,7 @@ type EventQueue struct {
 type Event struct {
 	eventType    EventType
 	eventPointer interface{}
+	symTable     *sym_tables.SymTable
 }
 
 func NewEventQueue() *EventQueue {
@@ -29,11 +30,16 @@ func NewEventQueue() *EventQueue {
 	return NewEventQueue
 }
 
-func NewEvent(eventType EventType) *Event {
+func NewEvent(eventType EventType, curSymTable *sym_tables.SymTable) *Event {
 	newEvent := &Event{
 		eventType: eventType,
+		symTable:  curSymTable,
 	}
 	return newEvent
+}
+
+func (this *Event) GetSymTable() *sym_tables.SymTable {
+	return this.symTable
 }
 
 func (this *Event) SetEvent(eventPointer interface{}) {

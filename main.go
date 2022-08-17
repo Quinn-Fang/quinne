@@ -9,6 +9,7 @@ import (
 	"quinn007.com/parser"
 	"quinn007.com/sym_tables"
 	"quinn007.com/sym_tables/utils"
+	"quinn007.com/uspace"
 )
 
 func runListener() {
@@ -42,7 +43,16 @@ func main() {
 	newNavigator := navigator.GetNavigator()
 	event, err := newNavigator.GetNextEvent()
 	for err == nil {
-		fmt.Printf("%+v  |  %+v\n", event, event.GetEventContext())
+		fmt.Println("------------------  ***  --------------------")
+		fmt.Printf("%+v ", event)
+		if event.GetEventType() == uspace.EventTypeFunction {
+			fFunction := event.GetFunction(event.GetEventContext())
+			// fmt.Printf("| %+v %+v Executable: %+v\n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
+			fmt.Printf("| %+v %+v SymTable: %+v \n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
+		} else if event.GetEventType() == uspace.EventTypeIfElseExpr {
+			ifElseExpr, ifElseExprVarNames := event.GetExpr(event.GetEventContext())
+			fmt.Printf("| %+v %+v \n", ifElseExpr, ifElseExprVarNames)
+		}
 		//fmt.Printf("%+v ", event.GetEventType())
 		//if event.GetEventType() == uspace.EventTypeFunction {
 		//	fmt.Printf("%+v \n", event.GetFunction(event))

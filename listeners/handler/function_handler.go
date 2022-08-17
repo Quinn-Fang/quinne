@@ -22,7 +22,7 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	curSymTable := sym_tables.GetCurSymTable()
 	fFunction := curSymTable.GetLastFunction()
 	curNavigator := navigator.GetCurNavigator()
-	curNavigator.AddEvent(uspace.EventTypeFunction, fFunction)
+	curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
 	// add new event to user space queue
 
 	// curNavigator := navigator.GetCurNavigator()

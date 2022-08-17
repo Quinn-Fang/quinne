@@ -34,7 +34,10 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 
 				// check stack see what event are we facing here
 				firstSymbol := curSymTable.PopBackIfElseStack()
-				var curEvent sym_tables.ContextType
+				// Event
+				var curEventType sym_tables.ContextType
+				var curEventContext *sym_tables.IfElseBranch
+
 				if firstSymbol == sym_tables.LogicSymbolIf {
 
 					if curSymTable.IfElseStackEmpty() {
@@ -42,12 +45,15 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 						newIfBranch := sym_tables.NewIfElseBranch(sym_tables.BranchTypeIf)
 						newIfBranch.SetExpr(curCursor.GetExpr())
 						newIfBranch.SetExprVarNames(curCursor.GetExprVarNames())
+						newIfBranch.SetParent(ifElseClause)
 
 						ifElseClause.AddBranch(newIfBranch)
 						// add user space event
-						curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newIfBranch)
+						curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newIfBranch, curSymTable)
 
-						curEvent = sym_tables.ContextTypeIf
+						curEventType = sym_tables.ContextTypeIf
+						curEventContext = newIfBranch
+
 					} else {
 						// else-if event
 						secondSymbol := curSymTable.PopBackIfElseStack()
@@ -57,26 +63,34 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 						newElseIfBranch := sym_tables.NewIfElseBranch(sym_tables.BranchTypeElseIf)
 						newElseIfBranch.SetExpr(curCursor.GetExpr())
 						newElseIfBranch.SetExprVarNames(curCursor.GetExprVarNames())
+						newElseIfBranch.SetParent(ifElseClause)
 
 						ifElseClause.AddBranch(newElseIfBranch)
 						// add user space event
-						curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newElseIfBranch)
+						curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newElseIfBranch, curSymTable)
 
-						curEvent = sym_tables.ContextTypeElseIf
+						curEventType = sym_tables.ContextTypeElseIf
+						curEventContext = newElseIfBranch
 					}
 				} else if firstSymbol == sym_tables.LogicSymbolElse {
 					// else event
 					newElseBranch := sym_tables.NewIfElseBranch(sym_tables.BranchTypeElse)
+					newElseBranch.SetParent(ifElseClause)
 
 					ifElseClause.AddBranch(newElseBranch)
 
-					curEvent = sym_tables.ContextTypeElse
+					curEventType = sym_tables.ContextTypeElse
+					curEventContext = newElseBranch
 
 				} else {
 					panic("Unknown error")
 				}
+				fmt.Println("9999999999999999999999999999999999999")
+				fmt.Printf("%+v\n", curEventContext)
 
-				blockContext := sym_tables.NewScopeContext(curEvent)
+				blockContext := sym_tables.NewScopeContext(curEventType)
+				blockContext.SetScopeContext(curEventContext)
+
 				curCursor.InitIfElseClause()
 				curCursor.ClearExpr()
 				curCursor.InitExprVarNames()
@@ -118,6 +132,6 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 	fmt.Println("Exiting IfElseStmtContextHandler .........................")
 	curSymTable := sym_tables.GetCurSymTable()
 	curSymTable.PrintFunctions()
-	curSymTable.PrintIfElseClauseList()
+	// curSymTable.PrintIfElseClauseList()
 	return nil
 }

@@ -36,13 +36,12 @@ func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tab
 
 func EnterBlockHandler(blockContext *sym_tables.ScopeContext) {
 	fmt.Println("ENTERING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-	curCursor, _ := navigator.GetCursor()
-	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-	fmt.Printf("%+v\n", curCursor.GetCursorContext())
-	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
 	newSymTable := sym_tables.NewSymTable(sym_tables.GetCurSymTable())
 	// Navigator start
+	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	fmt.Printf("%p %+v\n", newSymTable, blockContext)
+	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 	newSymTable.SetScope(blockContext)
 
 	curNavigator := navigator.GetCurNavigator()
