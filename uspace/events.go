@@ -1,6 +1,8 @@
 package uspace
 
 import (
+	"fmt"
+
 	"quinn007.com/procedures"
 	"quinn007.com/sym_tables"
 	"quinn007.com/utils"
@@ -9,8 +11,10 @@ import (
 type EventType int
 
 const (
-	EventTypeIfElseExpr EventType = 1
-	EventTypeFunction             = 2
+	EventTypeIfElseExpr   EventType = 1
+	EventTypeFunction               = 2
+	EventTypeFunctionDecl           = 3
+	EventTypeForLoop                = 4
 )
 
 type EventQueue struct {
@@ -59,6 +63,21 @@ func (this *Event) GetExpr(eventContext interface{}) (string, []string) {
 		return ifElseBranch.GetExpr(), ifElseBranch.GetExprVarNames()
 	} else {
 		panic("Getting ifelse expr error ")
+	}
+}
+
+func (this *Event) SetExpr(varMap map[string]interface{}) {
+	if ifElseBranch, ok := this.eventPointer.(*sym_tables.IfElseBranch); ok {
+		for _, varName := range ifElseBranch.GetExprVarNames() {
+			if _, in := varMap[varName]; !in {
+				err := fmt.Sprintf("Variable: %+v Unset", varName)
+				panic(err)
+			}
+		}
+		res := utils.ParseExpr(ifElseBranch.GetExpr(), varMap)
+		ifElseBranch.SetJudgeRes(res)
+	} else {
+		panic("Not ifelse expr error ")
 	}
 }
 

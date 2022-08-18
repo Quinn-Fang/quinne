@@ -217,7 +217,8 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		//		fmt.Println("************************")
+		fmt.Println("************************")
+		fmt.Printf("%T\n", child)
 		cursor, _ := navigator.GetCursor()
 		terminalString, _ := utils.GetTerminalNodeText(child)
 		curStatement := cursor.GetStatement()

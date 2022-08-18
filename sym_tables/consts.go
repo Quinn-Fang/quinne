@@ -10,4 +10,6 @@ const (
 	ContextTypeElseIf                   = 5
 	ContextTypeElse                     = 6
 	ContextTypeBlock                    = 7
+	ContextTypeFuncDecl                 = 8
+	ContextTypeForLoop                  = 9
 )

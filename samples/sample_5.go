@@ -23,7 +23,7 @@ func main() {
 	//	if_var_4 := BodylessFunction_1130(name)
 	//}
 
-	if 5 > 6 {
+	if age > 6 {
 		if !true {
 
 		} else {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"quinn007.com/listeners"
@@ -32,9 +33,9 @@ func runListener() {
 	tree := p.SourceFile()
 	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(p, tree), tree)
 	utils.PrintAllSymTale()
-	curNavigator.PrintStack()
+	//curNavigator.PrintStack()
 
-	curNavigator.PrintCodeSegments()
+	//curNavigator.PrintCodeSegments()
 }
 
 func main() {
@@ -48,10 +49,19 @@ func main() {
 		if event.GetEventType() == uspace.EventTypeFunction {
 			fFunction := event.GetFunction(event.GetEventContext())
 			// fmt.Printf("| %+v %+v Executable: %+v\n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
-			fmt.Printf("| %+v %+v SymTable: %+v \n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
+			fmt.Printf("| %+v %+v is executable ? : %+v \n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
 		} else if event.GetEventType() == uspace.EventTypeIfElseExpr {
 			ifElseExpr, ifElseExprVarNames := event.GetExpr(event.GetEventContext())
 			fmt.Printf("| %+v %+v \n", ifElseExpr, ifElseExprVarNames)
+			if strings.Contains(ifElseExpr, "age>6") {
+				varMap := make(map[string]interface{}, 8)
+				varMap["age"] = 29
+				event.SetExpr(varMap)
+			}
+		} else if event.GetEventType() == uspace.EventTypeForLoop {
+			event.GetSymTable().IsExecutable()
+		} else if event.GetEventType() == uspace.EventTypeFunctionDecl {
+			event.GetSymTable().IsExecutable()
 		}
 		//fmt.Printf("%+v ", event.GetEventType())
 		//if event.GetEventType() == uspace.EventTypeFunction {

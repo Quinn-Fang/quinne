@@ -58,37 +58,68 @@ type SymTable struct {
 }
 
 func (this *SymTable) IsExecutable() bool {
-	fmt.Println("111")
+	// temporary handle scope unhandled like for loop ...
+	if this.curScope == nil {
+		return true
+	}
+
+	functionDecl, ok := this.curScope.GetScopeContext().(*procedures.FFunctionDecl)
+	if ok {
+		if functionDecl.GetFunctionName() == "main" {
+			if this.GetExecutable() != true {
+				this.SetExecutable(true)
+			}
+			return true
+		}
+	}
+
+	_, ok = this.curScope.GetScopeContext().(*ForLoop)
+	if ok {
+		if this.GetExecutable() != true {
+			this.SetExecutable(true)
+		}
+		return true
+	}
+
+	fmt.Println("0000")
 	checkPrevExecutable := this.CheckPrevExecutable()
 	if !checkPrevExecutable {
 		return false
 	}
+	fmt.Println(checkPrevExecutable)
 
+	fmt.Println("1111")
 	if this.curScope == nil {
 		return true
 	}
-	fmt.Println("222")
+	fmt.Println("4444")
+
 	if !(this.curScope.GetScopeType() == ContextTypeElseIf || this.curScope.GetScopeType() == ContextTypeElseIf) {
-		fmt.Println("11111111 2222222222 33333333")
 		return true
 	}
 
+	fmt.Println("2222")
 	ifElseBranch, ok := this.curScope.GetScopeContext().(*IfElseBranch)
 	if !ok {
 		panic("Not IfElseBranch ... \n")
 	}
-	fmt.Println("333")
 
+	fmt.Println("3333")
 	ifElseClause := ifElseBranch.GetParent()
-
+	ifElseExecutable := false
 	if ifElseClause.HasTrueBranch() {
-		return false
+		ifElseExecutable = false
 	} else {
 		// map unset !!!!!
 		// exprRes := this.JudgeIfElseExpr(ifElseBranch.GetExpr(), make)
 		canExecute := ifElseBranch.GetJudgeRes()
-		return canExecute
+		ifElseExecutable = canExecute
 	}
+	if this.GetExecutable() != ifElseExecutable {
+		this.SetExecutable(ifElseExecutable)
+	}
+
+	return ifElseExecutable
 }
 
 func (this *SymTable) PrintIfElseClauseList() {
@@ -146,7 +177,6 @@ func (this *SymTable) CheckPrevExecutable() bool {
 	prev := this.GetPrev()
 	for prev != nil {
 		if !prev.GetExecutable() {
-			fmt.Println("55555")
 			return false
 		} else {
 			prev = prev.GetPrev()

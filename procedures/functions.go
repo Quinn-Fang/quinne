@@ -4,6 +4,23 @@ import (
 	"quinn007.com/variables"
 )
 
+type FFunctionDecl struct {
+	fName   string
+	fParams []*variables.Variable
+	fReturn []variables.VTypeEnum
+}
+
+func NewFunctionDecl(functionName string) *FFunctionDecl {
+	newFunctionDecl := &FFunctionDecl{
+		fName: functionName,
+	}
+	return newFunctionDecl
+}
+
+func (this *FFunctionDecl) GetFunctionName() string {
+	return this.fName
+}
+
 type FFunction struct {
 	FName    string
 	FParams  []*variables.Variable

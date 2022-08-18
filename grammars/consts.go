@@ -9,4 +9,5 @@ const (
 	PrimaryExpr            = "primaryExpr"
 	Statement              = "statement"
 	SimpleStatement        = "simpleStmt"
+	SourceFile             = "sourceFile"
 )

@@ -21,6 +21,8 @@ func LexDispatcher(goListener *GoListener, antlrCtx antlr.ParserRuleContext, rul
 		}
 		goListener.Test_1 = true
 		handler.BlockContextHandler(antlrCtx, nil)
+	} else if ruleName == grammars.SourceFile {
+		handler.SourceFileHandler(antlrCtx)
 	}
 	return nil
 }

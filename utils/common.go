@@ -3,6 +3,8 @@ package utils
 import (
 	"container/list"
 	"errors"
+
+	"github.com/Knetic/govaluate"
 )
 
 type Queue struct {
@@ -46,4 +48,21 @@ func (this *Queue) PopFront() (interface{}, error) {
 
 func (this *Queue) Clear() {
 	this.queue.Init()
+}
+
+func ParseExpr(expr string, parameters map[string]interface{}) bool {
+	expression, err := govaluate.NewEvaluableExpression(expr)
+
+	// parameters := make(map[string]interface{}, 8)
+
+	result, err := expression.Evaluate(parameters)
+	if err != nil {
+		panic(err)
+	}
+
+	if ret, ok := result.(bool); ok {
+		return ret
+	} else {
+		panic("result is not bool")
+	}
 }
