@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"fmt"
-
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"quinn007.com/navigator"
 	"quinn007.com/navigator/utils"
@@ -35,13 +33,10 @@ func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tab
 }
 
 func EnterBlockHandler(blockContext *sym_tables.ScopeContext) {
-	fmt.Println("ENTERING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	// fmt.Println("ENTERING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
 	newSymTable := sym_tables.NewSymTable(sym_tables.GetCurSymTable())
 	// Navigator start
-	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-	fmt.Printf("%p %+v\n", newSymTable, blockContext)
-	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 	newSymTable.SetScope(blockContext)
 
 	curNavigator := navigator.GetCurNavigator()
@@ -66,7 +61,7 @@ func EnterBlockHandler(blockContext *sym_tables.ScopeContext) {
 }
 
 func ExitBlockHandler() {
-	fmt.Println("EXITING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	// 	fmt.Println("EXITING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 	curSymTable := sym_tables.GetCurSymTable()
 	// Navigator start
 	// 1: Extend the last code block
@@ -89,7 +84,7 @@ func ExitBlockHandler() {
 			panic("err_2")
 		}
 		curSymTableCursor, _ := symTableCursorStack.Peek()
-		curSymTable.PrintFunctions()
+		// curSymTable.PrintFunctions()
 
 		newSymTableCursor := utils.NewSymTableCursor()
 		newSymTableCursor.SetSymTable(curSymTable.GetPrev())

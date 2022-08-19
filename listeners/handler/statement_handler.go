@@ -1,13 +1,11 @@
 package handler
 
 import (
-	"fmt"
-
 	"quinn007.com/parser"
 )
 
 func StatementListHandler(contextParser *parser.StatementListContext) error {
-	fmt.Println("inside StatementListener ... .......")
+	//fmt.Println("inside StatementListener ... .......")
 	children := contextParser.GetChildren()
 	for _, v := range children {
 		switch parserContext := v.(type) {
@@ -22,7 +20,7 @@ func StatementListHandler(contextParser *parser.StatementListContext) error {
 }
 
 func StatementHandler(contextParser *parser.StatementContext) error {
-	fmt.Println("inside StatementListener ... .......")
+	//fmt.Println("inside StatementListener ... .......")
 	children := contextParser.GetChildren()
 	for _, v := range children {
 		switch parserContext := v.(type) {

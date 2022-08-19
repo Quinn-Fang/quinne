@@ -33,7 +33,6 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 
 	curCursor, _ := navigator.GetCursor()
 	for _, child := range children {
-		fmt.Println("10001 ]]]]]]]]]]")
 		switch parserContext := child.(type) {
 		case *parser.PrimaryExprContext:
 			{
@@ -50,9 +49,8 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 
 					curCursor.PushExpr(terminalString)
 				}
-				fmt.Println("10002 ]]]]]]]]]]")
-				terminalString, _ := utils.GetTerminalNodeText(parserContext)
-				fmt.Println(terminalString)
+				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
+				//fmt.Println(terminalString)
 			}
 		}
 	}
@@ -99,11 +97,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	curSymTable := sym_tables.GetCurSymTable()
 	curStatement := curCursor.GetStatement()
 
-	for _, child := range children {
-		fmt.Println("7----7")
-		fmt.Printf("%+v\n", child)
-		fmt.Println("7----7")
-	}
+	//for _, child := range children {
+	//	fmt.Println("7----7")
+	//	fmt.Printf("%+v\n", child)
+	//	fmt.Println("7----7")
+	//}
 
 	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
 		//		fmt.Println("Gettting Function Name: ", terminalString)
@@ -154,8 +152,6 @@ func OperandContextHandler(contextParser *parser.OperandContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		fmt.Println("oooooooooooooooo")
-		fmt.Printf("%T\n", child)
 		switch parserContext := child.(type) {
 		case *parser.IdentifierListContext:
 			{
@@ -218,8 +214,6 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		fmt.Println("************************")
-		fmt.Printf("%T\n", child)
 		cursor, _ := navigator.GetCursor()
 		terminalString, _ := utils.GetTerminalNodeText(child)
 		curStatement := cursor.GetStatement()
@@ -239,9 +233,6 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 			// curStatement.AddRightValue(curVariable)
 			// cursor.PrintStatement()
 		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-			fmt.Println("7---------7\n")
-			fmt.Println(terminalString)
-			fmt.Println("7---------7\n")
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
@@ -276,9 +267,6 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 			//			fmt.Println("++++++++++++++ String", curVariable)
 			//cursor.PrintStatement()
 		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-			fmt.Println("7---------7\n")
-			fmt.Println(terminalString)
-			fmt.Println("7---------7\n")
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)

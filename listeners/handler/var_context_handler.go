@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"fmt"
-
 	"quinn007.com/listeners/utils"
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
@@ -84,7 +82,6 @@ func IdentifierListContextHandler(contextParser *parser.IdentifierListContext) e
 }
 
 func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) error {
-	fmt.Println("inside ExpressionListContextHandler... ")
 	children := contextParser.GetChildren()
 	splitter := ","
 
@@ -92,9 +89,6 @@ func ExpressionListContextHandler(contextParser *parser.ExpressionListContext) e
 	curCursor, _ := navigator.GetCursor()
 	curStatement := curCursor.GetStatement()
 	for _, nodeContext := range children {
-		fmt.Println("*********************")
-		fmt.Printf("%T\n", nodeContext)
-		fmt.Printf("%+v\n", nodeContext)
 		switch parserContext := nodeContext.(type) {
 		case *parser.ExpressionContext:
 			{

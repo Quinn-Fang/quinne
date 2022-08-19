@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"fmt"
-
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"quinn007.com/listeners/utils"
 	"quinn007.com/navigator"
@@ -12,7 +10,7 @@ import (
 )
 
 func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
-	fmt.Println("Inside IfElseStmtContextHandler .........................")
+	// fmt.Println("Inside IfElseStmtContextHandler .........................")
 
 	curNavigator := navigator.GetCurNavigator()
 
@@ -85,8 +83,6 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 				} else {
 					panic("Unknown error")
 				}
-				fmt.Println("9999999999999999999999999999999999999")
-				fmt.Printf("%+v\n", curEventContext)
 
 				blockContext := sym_tables.NewScopeContext(curEventType)
 				blockContext.SetScopeContext(curEventContext)
@@ -110,7 +106,7 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 
 				terminalString, _ := utils.GetTerminalNodeText(child)
 				if terminalString == string(sym_tables.LogicSymbolIf) {
-					fmt.Println("Context IF ........................")
+					//					fmt.Println("Context IF ........................")
 					if curSymTable.IfElseStackEmpty() {
 						// if event
 						// create if-else clause
@@ -123,15 +119,15 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 
 					curSymTable.PushIfElseStack(sym_tables.LogicSymbolIf)
 				} else if terminalString == string(sym_tables.LogicSymbolElse) {
-					fmt.Println("Context ELSE ......................")
+					//					fmt.Println("Context ELSE ......................")
 					curSymTable.PushIfElseStack(sym_tables.LogicSymbolElse)
 				}
 			}
 		}
 	}
-	fmt.Println("Exiting IfElseStmtContextHandler .........................")
-	curSymTable := sym_tables.GetCurSymTable()
-	curSymTable.PrintFunctions()
+	//	fmt.Println("Exiting IfElseStmtContextHandler .........................")
+	// curSymTable := sym_tables.GetCurSymTable()
+	// curSymTable.PrintFunctions()
 	// curSymTable.PrintIfElseClauseList()
 	return nil
 }

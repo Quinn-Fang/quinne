@@ -121,7 +121,6 @@ func (this *SymTable) PrintIfElseClauseList() {
 	fmt.Printf("------------------------ %+v --------------------------\n", "IfElseClauseList Start")
 
 	for elem_1 := this.ifElseClauseList.GetFront(); elem_1 != nil; elem_1 = elem_1.Next() {
-		fmt.Println("********* Separator **********")
 		ifElseClause := elem_1.Value.(*IfElseClause)
 		for _, v1 := range ifElseClause.GetBranches() {
 			fmt.Println()

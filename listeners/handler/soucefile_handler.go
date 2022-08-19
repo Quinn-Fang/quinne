@@ -1,10 +1,7 @@
 package handler
 
 import (
-	"fmt"
-
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"quinn007.com/listeners/utils"
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
 	"quinn007.com/procedures"
@@ -16,14 +13,11 @@ func SourceFileHandler(antlrCtx antlr.ParserRuleContext) {
 	children := antlrCtx.GetChildren()
 
 	for _, child := range children {
-		fmt.Println()
-		fmt.Printf("%T\n", child)
-		fmt.Println()
 		switch parserContext := child.(type) {
 		case *antlr.TerminalNodeImpl:
 			{
-				terminalString, _ := utils.GetTerminalNodeText(parserContext)
-				fmt.Println(terminalString)
+				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
+				//fmt.Println(terminalString)
 			}
 		case *parser.FunctionDeclContext:
 			{
@@ -35,16 +29,12 @@ func SourceFileHandler(antlrCtx antlr.ParserRuleContext) {
 }
 
 func FunctionDeclHandler(contextParser *parser.FunctionDeclContext) error {
-	fmt.Println("Inside FunctionDeclHandler.........................")
 
 	curNavigator := navigator.GetCurNavigator()
 	curSymTable := sym_tables.GetCurSymTable()
 
 	children := contextParser.GetChildren()
 	for _, child := range children {
-		fmt.Println()
-		fmt.Printf("%T\n", child)
-		fmt.Println()
 		switch parserContext := child.(type) {
 		case *parser.BlockContext:
 			{

@@ -9,7 +9,6 @@ import (
 	"quinn007.com/navigator"
 	"quinn007.com/parser"
 	"quinn007.com/sym_tables"
-	"quinn007.com/sym_tables/utils"
 	"quinn007.com/uspace"
 )
 
@@ -32,7 +31,7 @@ func runListener() {
 	//listen := GoListener{}
 	tree := p.SourceFile()
 	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(p, tree), tree)
-	utils.PrintAllSymTale()
+	// utils.PrintAllSymTale()
 	//curNavigator.PrintStack()
 
 	//curNavigator.PrintCodeSegments()
@@ -51,20 +50,19 @@ func main() {
 			fFunction := event.GetFunction(event.GetEventContext())
 			// fmt.Printf("| %+v %+v Executable: %+v\n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
 			fmt.Printf("| %+v %+v is executable ? : %+v \n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
-			//if fFunction.GetFunctionName() == "BodylessFunction_3" {
-			//	st := event.GetSymTable()
-			//	x, err := st.GetVariableByName("var_2")
-			//	if err != nil {
-			//		panic(err)
-			//	}
-			//	fmt.Println(x)
-			//	fFunction.SetReturnValue("returnValue 111")
-			//	fmt.Println("9999999999")
-			//	fmt.Println(x)
-			//}
+			if fFunction.GetFunctionName() == "BodylessFunction_3" {
+				st := event.GetSymTable()
+				x, err := st.GetVariableByName("var_2")
+				if err != nil {
+					panic(err)
+				}
+				fmt.Println(x)
+				fFunction.SetReturnValue("returnValue 111")
+				fmt.Println("9999999999")
+				fmt.Println(x)
+			}
 
 			if fFunction.GetFunctionName() == "secondLastFunction" {
-				fmt.Println("9999999999")
 				event.GetSymTable().IsExecutable()
 			}
 		} else if event.GetEventType() == uspace.EventTypeIfElseExpr {
