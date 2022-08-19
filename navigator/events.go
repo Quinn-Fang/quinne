@@ -2,7 +2,7 @@ package navigator
 
 //
 //import (
-//	"quinn007.com/procedures"
+//	"github.com/Quinn-Fang/Quinne/procedures"
 //)
 //
 //type EventType int

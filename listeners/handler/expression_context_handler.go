@@ -5,12 +5,12 @@ import (
 	"strconv"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"quinn007.com/listeners/utils"
-	"quinn007.com/navigator"
-	"quinn007.com/parser"
-	"quinn007.com/procedures"
-	"quinn007.com/sym_tables"
-	"quinn007.com/variables"
+	"github.com/Quinn-Fang/Quinne/listeners/utils"
+	"github.com/Quinn-Fang/Quinne/navigator"
+	"github.com/Quinn-Fang/Quinne/parser"
+	"github.com/Quinn-Fang/Quinne/procedures"
+	"github.com/Quinn-Fang/Quinne/sym_tables"
+	"github.com/Quinn-Fang/Quinne/variables"
 )
 
 func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) error {

@@ -3,9 +3,9 @@ package navigator
 import (
 	"fmt"
 
-	"quinn007.com/navigator/utils"
-	"quinn007.com/sym_tables"
-	"quinn007.com/uspace"
+	"github.com/Quinn-Fang/Quinne/navigator/utils"
+	"github.com/Quinn-Fang/Quinne/sym_tables"
+	"github.com/Quinn-Fang/Quinne/uspace"
 )
 
 var (

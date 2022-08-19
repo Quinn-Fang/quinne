@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"quinn007.com/parser"
+	"github.com/Quinn-Fang/Quinne/parser"
 )
 
 func ArgumentsContextHandler(contextParser *parser.ArgumentsContext) error {

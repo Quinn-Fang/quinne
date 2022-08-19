@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 
-	"quinn007.com/sym_tables"
+	"github.com/Quinn-Fang/Quinne/sym_tables"
 )
 
 func PrintAllSymTale() {

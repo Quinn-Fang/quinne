@@ -2,7 +2,7 @@ package listeners
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"quinn007.com/parser"
+	"github.com/Quinn-Fang/Quinne/parser"
 )
 
 type GoListener struct {

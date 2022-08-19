@@ -5,11 +5,11 @@ import (
 	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"quinn007.com/listeners"
-	"quinn007.com/navigator"
-	"quinn007.com/parser"
-	"quinn007.com/sym_tables"
-	"quinn007.com/uspace"
+	"github.com/Quinn-Fang/Quinne/listeners"
+	"github.com/Quinn-Fang/Quinne/navigator"
+	"github.com/Quinn-Fang/Quinne/parser"
+	"github.com/Quinn-Fang/Quinne/sym_tables"
+	"github.com/Quinn-Fang/Quinne/uspace"
 )
 
 func runListener() {

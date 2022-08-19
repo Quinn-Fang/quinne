@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"quinn007.com/parser"
+	"github.com/Quinn-Fang/Quinne/parser"
 )
 
 func IsFunction(children []antlr.Tree) bool {

@@ -1,7 +1,7 @@
 package procedures
 
 import (
-	"quinn007.com/variables"
+	"github.com/Quinn-Fang/Quinne/variables"
 )
 
 type FFunctionDecl struct {
