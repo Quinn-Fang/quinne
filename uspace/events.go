@@ -66,6 +66,23 @@ func (this *Event) GetExpr(eventContext interface{}) (string, []string) {
 	}
 }
 
+func (this *Event) FillExpr() {
+	if ifElseBranch, ok := this.eventPointer.(*sym_tables.IfElseBranch); ok {
+		varMap := make(map[string]interface{})
+		for _, varName := range ifElseBranch.GetExprVarNames() {
+			if variable, err := this.GetSymTable().GetVariableByName(varName); err != nil {
+				panic(err)
+			} else {
+				varMap[varName] = variable.GetVariableValue()
+			}
+		}
+		res := utils.ParseExpr(ifElseBranch.GetExpr(), varMap)
+		ifElseBranch.SetJudgeRes(res)
+	} else {
+		panic("Not ifelse expr error ")
+	}
+}
+
 func (this *Event) SetExpr(varMap map[string]interface{}) {
 	if ifElseBranch, ok := this.eventPointer.(*sym_tables.IfElseBranch); ok {
 		for _, varName := range ifElseBranch.GetExprVarNames() {

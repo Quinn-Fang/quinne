@@ -108,11 +108,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
 		//		fmt.Println("Gettting Function Name: ", terminalString)
 
-		var newValue interface{}
+		var emptyValue interface{}
 		newReturnValue := variables.NewVariable(
 			"",
 			variables.VTypeFunctionReturned,
-			newValue,
+			emptyValue,
 			curCursor.GetIndex())
 
 		curCursor.IncreaseIndex()
@@ -120,7 +120,8 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 		curStatement.AddRightValue(newReturnValue)
 
 		newFunction := procedures.NewFunction(terminalString)
-		newFunction.SetReturnValue(newReturnValue)
+		// newFunction.SetReturnValue(newReturnValue)
+		newFunction.InitReturnValue(newReturnValue)
 		curSymTable.AddFunction(newFunction)
 	} else if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
 		variable, err := curSymTable.GetVariableByName(terminalString)

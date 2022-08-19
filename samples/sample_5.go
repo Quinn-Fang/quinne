@@ -3,7 +3,7 @@ package samples
 var a, b int = 5, 122
 
 func main() {
-	name, age := "naveen", 29
+	name, age := "naveen", 5
 	test_1 := testFunction_1(333, age, name)
 	test1 := 16
 	for i := 0; i < 9; i++ {

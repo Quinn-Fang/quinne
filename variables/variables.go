@@ -91,6 +91,10 @@ func (this *Variable) SetVariableName(variableName string) {
 	this.vName = variableName
 }
 
+func (this *Variable) SetVariableValue(variableValue interface{}) {
+	this.vValue = variableValue
+}
+
 func (this *Variable) GetVariableType() VTypeEnum {
 	return this.vType
 }

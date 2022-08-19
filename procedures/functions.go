@@ -38,6 +38,10 @@ func NewFunction(functionName string) *FFunction {
 	return newFunction
 }
 
+func (this *FFunction) GetFunctionName() string {
+	return this.FName
+}
+
 func (this *FFunction) GetParams() []*variables.Variable {
 	return this.FParams
 }
@@ -46,10 +50,15 @@ func (this *FFunction) AddParam(param *variables.Variable) {
 	this.FParams = append(this.FParams, param)
 }
 
-func (this *FFunction) GetReturnValue() *variables.Variable {
-	return this.FReturn
+func (this *FFunction) GetReturnValue() interface{} {
+	return this.FReturn.GetVariableValue()
 }
 
-func (this *FFunction) SetReturnValue(returnValue *variables.Variable) {
-	this.FReturn = returnValue
+func (this *FFunction) SetReturnValue(returnValue interface{}) {
+	fReturnVar := this.FReturn
+	fReturnVar.SetVariableValue(returnValue)
+}
+
+func (this *FFunction) InitReturnValue(variable *variables.Variable) {
+	this.FReturn = variable
 }

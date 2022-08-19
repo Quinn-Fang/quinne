@@ -15,14 +15,27 @@ func LexDispatcher(goListener *GoListener, antlrCtx antlr.ParserRuleContext, rul
 	//} else if ruleName == grammars.Block {
 	//	handler.
 	//}
-	if ruleName == grammars.Block {
-		if goListener.Test_1 {
-			return nil
-		}
-		goListener.Test_1 = true
-		handler.BlockContextHandler(antlrCtx, nil)
-	} else if ruleName == grammars.SourceFile {
+	//if ruleName == grammars.Block {
+	//	fmt.Println("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
+	//	if goListener.Test_1 {
+	//		return nil
+	//	}
+	//	goListener.Test_1 = true
+	//	handler.BlockContextHandler(antlrCtx, nil)
+	//} else if ruleName == grammars.SourceFile {
+	//	fmt.Println("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222")
+	//	handler.SourceFileHandler(antlrCtx)
+	//}
+	if ruleName == grammars.SourceFile {
+		fmt.Println("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
 		handler.SourceFileHandler(antlrCtx)
+	} else if ruleName == grammars.Block {
+		//if goListener.Test_1 {
+		//	return nil
+		//}
+		//goListener.Test_1 = true
+		fmt.Println("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222")
+		//handler.BlockContextHandler(antlrCtx, nil)
 	}
 	return nil
 }
