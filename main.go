@@ -51,18 +51,22 @@ func main() {
 			fFunction := event.GetFunction(event.GetEventContext())
 			// fmt.Printf("| %+v %+v Executable: %+v\n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
 			fmt.Printf("| %+v %+v is executable ? : %+v \n", fFunction, fFunction.GetReturnValue(), event.GetSymTable().IsExecutable())
-			if fFunction.GetFunctionName() == "BodylessFunction_3" {
-				st := event.GetSymTable()
-				x, err := st.GetVariableByName("var_2")
-				if err != nil {
-					panic(err)
-				}
-				fmt.Println(x)
-				fFunction.SetReturnValue("returnValue 111")
-				fmt.Println("9999999999")
-				fmt.Println(x)
-			}
+			//if fFunction.GetFunctionName() == "BodylessFunction_3" {
+			//	st := event.GetSymTable()
+			//	x, err := st.GetVariableByName("var_2")
+			//	if err != nil {
+			//		panic(err)
+			//	}
+			//	fmt.Println(x)
+			//	fFunction.SetReturnValue("returnValue 111")
+			//	fmt.Println("9999999999")
+			//	fmt.Println(x)
+			//}
 
+			if fFunction.GetFunctionName() == "secondLastFunction" {
+				fmt.Println("9999999999")
+				event.GetSymTable().IsExecutable()
+			}
 		} else if event.GetEventType() == uspace.EventTypeIfElseExpr {
 			ifElseExpr, ifElseExprVarNames := event.GetExpr(event.GetEventContext())
 			fmt.Printf("| %+v %+v \n", ifElseExpr, ifElseExprVarNames)
