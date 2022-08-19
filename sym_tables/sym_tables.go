@@ -87,10 +87,6 @@ func (this *SymTable) IsExecutable() bool {
 	}
 	fmt.Println(checkPrevExecutable)
 
-	if this.curScope == nil {
-		return true
-	}
-
 	if !(this.curScope.GetScopeType() == ContextTypeIf || this.curScope.GetScopeType() == ContextTypeElseIf) {
 		return true
 	}
