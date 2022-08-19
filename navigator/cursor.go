@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Quinn-Fang/Quinne/sym_tables"
-	"github.com/Quinn-Fang/Quinne/variables"
+	"github.com/Quinn-Fang/quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 var (

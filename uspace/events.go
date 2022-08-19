@@ -3,9 +3,9 @@ package uspace
 import (
 	"fmt"
 
-	"github.com/Quinn-Fang/Quinne/procedures"
-	"github.com/Quinn-Fang/Quinne/sym_tables"
-	"github.com/Quinn-Fang/Quinne/utils"
+	"github.com/Quinn-Fang/quinne/procedures"
+	"github.com/Quinn-Fang/quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/utils"
 )
 
 type EventType int

@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/Knetic/govaluate"
-	"github.com/Quinn-Fang/Quinne/procedures"
-	"github.com/Quinn-Fang/Quinne/utils"
-	"github.com/Quinn-Fang/Quinne/variables"
+	"github.com/Quinn-Fang/quinne/procedures"
+	"github.com/Quinn-Fang/quinne/utils"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 type ScopeContext struct {

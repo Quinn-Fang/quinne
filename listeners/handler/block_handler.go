@@ -2,10 +2,10 @@ package handler
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/Quinn-Fang/Quinne/navigator"
-	"github.com/Quinn-Fang/Quinne/navigator/utils"
-	"github.com/Quinn-Fang/Quinne/parser"
-	"github.com/Quinn-Fang/Quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/navigator"
+	"github.com/Quinn-Fang/quinne/navigator/utils"
+	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/Quinn-Fang/quinne/sym_tables"
 )
 
 func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tables.ScopeContext) {

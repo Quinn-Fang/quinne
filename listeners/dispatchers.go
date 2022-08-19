@@ -2,8 +2,8 @@ package listeners
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/Quinn-Fang/Quinne/grammars"
-	"github.com/Quinn-Fang/Quinne/listeners/handler"
+	"github.com/Quinn-Fang/quinne/grammars"
+	"github.com/Quinn-Fang/quinne/listeners/handler"
 )
 
 func LexDispatcher(goListener *GoListener, antlrCtx antlr.ParserRuleContext, ruleName string) error {

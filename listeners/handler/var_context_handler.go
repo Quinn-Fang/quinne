@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"github.com/Quinn-Fang/Quinne/listeners/utils"
-	"github.com/Quinn-Fang/Quinne/navigator"
-	"github.com/Quinn-Fang/Quinne/parser"
-	"github.com/Quinn-Fang/Quinne/variables"
+	"github.com/Quinn-Fang/quinne/listeners/utils"
+	"github.com/Quinn-Fang/quinne/navigator"
+	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 func VarDeclContextHandler(contextParser *parser.VarDeclContext) error {

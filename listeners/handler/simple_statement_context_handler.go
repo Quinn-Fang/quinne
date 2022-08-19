@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"github.com/Quinn-Fang/Quinne/navigator"
-	"github.com/Quinn-Fang/Quinne/parser"
-	"github.com/Quinn-Fang/Quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/navigator"
+	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/Quinn-Fang/quinne/sym_tables"
 )
 
 func SimpleStmtContextHandler(contextParser *parser.SimpleStmtContext) error {

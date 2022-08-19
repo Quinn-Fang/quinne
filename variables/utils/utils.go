@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/Quinn-Fang/Quinne/variables"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 func TypeOf(v interface{}) variables.VTypeEnum {

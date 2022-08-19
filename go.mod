@@ -1,4 +1,4 @@
-module github.com/Quinn-Fang/Quinne
+module github.com/Quinn-Fang/quinne
 
 go 1.18
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Quinn-Fang/Quinne/quinne"
-	"github.com/Quinn-Fang/Quinne/uspace"
+	"github.com/Quinn-Fang/quinne/quinne"
+	"github.com/Quinn-Fang/quinne/uspace"
 )
 
 //func runListener() {
