@@ -103,7 +103,7 @@ func (this *SymTable) IsExecutable() bool {
 	if ifElseClause.HasTrueBranch() {
 		ifElseExecutable = false
 	} else if ifElseBranch.GetBranchType() == BranchTypeElse {
-		return true
+		ifElseExecutable = true
 	} else {
 		// map unset !!!!!
 		// exprRes := this.JudgeIfElseExpr(ifElseBranch.GetExpr(), make)
@@ -112,6 +112,10 @@ func (this *SymTable) IsExecutable() bool {
 	}
 	if this.GetExecutable() != ifElseExecutable {
 		this.SetExecutable(ifElseExecutable)
+	}
+
+	if ifElseExecutable && !ifElseClause.HasTrueBranch() {
+		ifElseClause.SetHasTrueBranch(true)
 	}
 
 	return ifElseExecutable
