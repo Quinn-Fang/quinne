@@ -1,4 +1,4 @@
-package main
+package samples_001
 
 func main() {
 	create_battery()

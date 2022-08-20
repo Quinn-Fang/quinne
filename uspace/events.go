@@ -71,7 +71,8 @@ func (this *Event) FillExpr() {
 		varMap := make(map[string]interface{})
 		for _, varName := range ifElseBranch.GetExprVarNames() {
 			if variable, err := this.GetSymTable().GetVariableByName(varName); err != nil {
-				panic(err)
+				errInfo := fmt.Sprintf("Variable: '%s' does not exist.", varName)
+				panic(errInfo)
 			} else {
 				varMap[varName] = variable.GetVariableValue()
 			}

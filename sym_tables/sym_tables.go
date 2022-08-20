@@ -87,7 +87,9 @@ func (this *SymTable) IsExecutable() bool {
 	}
 	fmt.Println(checkPrevExecutable)
 
-	if !(this.curScope.GetScopeType() == ContextTypeIf || this.curScope.GetScopeType() == ContextTypeElseIf) {
+	if !(this.curScope.GetScopeType() == ContextTypeIf ||
+		this.curScope.GetScopeType() == ContextTypeElseIf ||
+		this.curScope.GetScopeType() == ContextTypeElse) {
 		return true
 	}
 
@@ -100,6 +102,8 @@ func (this *SymTable) IsExecutable() bool {
 	ifElseExecutable := false
 	if ifElseClause.HasTrueBranch() {
 		ifElseExecutable = false
+	} else if ifElseBranch.GetBranchType() == BranchTypeElse {
+		return true
 	} else {
 		// map unset !!!!!
 		// exprRes := this.JudgeIfElseExpr(ifElseBranch.GetExpr(), make)
