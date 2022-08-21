@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) error {
@@ -133,15 +133,6 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	} else if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
 		curCursor.PushExpr(terminalString)
 		curCursor.AddExprVarNames(terminalString)
-
-		//curVariable, err := curSymTable.GetVariableByName(terminalString)
-		//if err != nil {
-		//	panic(err)
-		//}
-		//curCursor.AddExprVariable(curVariable)
-
-		//curExpr := curCursor.GetExpr()
-		//curExpr.PushValue(curVariable)
 	}
 
 	return nil
@@ -250,7 +241,8 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 		cursor, _ := navigator.GetCursor()
 		curStatement := cursor.GetStatement()
 		terminalString, _ := utils.GetTerminalNodeText(child)
-		// curStatement := cursor.GetStatement()
+		// strip out quotes
+		terminalString = terminalString[1 : len(terminalString)-1]
 		curVariable := variables.NewVariable(
 			"",
 			variables.VTypeString,
@@ -262,17 +254,12 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
-			//cursor.IncreaseIndex()
-			//curStatement.AddRightValue(curVariable)
-			//			fmt.Println("++++++++++++++ String", curVariable)
-			//cursor.PrintStatement()
 		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
 
-		//		fmt.Println("************************")
 	}
 
 	return nil

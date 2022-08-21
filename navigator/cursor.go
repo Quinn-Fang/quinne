@@ -172,7 +172,12 @@ func (this *Statement) GetRightValues() []*variables.Variable {
 
 func (this *Statement) Assign() error {
 	if len(this.leftValues) != len(this.rightValues) {
-		return errors.New("number of left values and right values does not Match")
+		// return errors.New("number of left values and right values does not Match")
+		if len(this.leftValues) == 0 && len(this.rightValues) == 1 {
+			// function call, continue
+		} else {
+			panic("number of left values and right values does not Match")
+		}
 	}
 
 	for i := 0; i < len(this.leftValues); i++ {
@@ -182,4 +187,9 @@ func (this *Statement) Assign() error {
 	}
 	return nil
 
+}
+
+func (this *Statement) Clear() {
+	this.leftValues = make([]string, 0)
+	this.rightValues = make([]*variables.Variable, 0)
 }

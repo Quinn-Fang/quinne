@@ -1,8 +1,8 @@
 package listeners
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 type GoListener struct {

@@ -40,21 +40,3 @@ func StatementHandler(contextParser *parser.StatementContext) error {
 	}
 	return nil
 }
-
-//func StatementListener(antlrCtx antlr.ParserRuleContext) error {
-//	fmt.Println("inside StatementListener ... .......")
-//	children := antlrCtx.GetChildren()
-//	for _, v := range children {
-//		switch parserContext := v.(type) {
-//		case *parser.SimpleStmtContext:
-//			{
-//				SimpleStmtContextHandler(parserContext)
-//			}
-//		case *parser.IfStmtContext:
-//			{
-//				IfElseStmtContextHandler(parserContext)
-//			}
-//		}
-//	}
-//	return nil
-//}
