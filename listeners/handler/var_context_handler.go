@@ -69,8 +69,6 @@ func IdentifierListContextHandler(contextParser *parser.IdentifierListContext) e
 			identifierListStrings = append(identifierListStrings, terminalString)
 		}
 	}
-	//	fmt.Println("55555555")
-	//	fmt.Println(identifierListStrings)
 
 	curCursor, _ := navigator.GetCursor()
 	curStatement := curCursor.GetStatement()

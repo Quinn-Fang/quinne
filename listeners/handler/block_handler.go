@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/navigator/utils"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/sym_tables"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tables.ScopeContext) {
@@ -13,9 +13,6 @@ func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tab
 	children := antlrCtx.GetChildren()
 
 	for _, child := range children {
-		//fmt.Println()
-		//fmt.Printf("%T\n", child)
-		//fmt.Println()
 		switch parserContext := child.(type) {
 		case *parser.StatementListContext:
 			{
@@ -24,12 +21,6 @@ func BlockContextHandler(antlrCtx antlr.ParserRuleContext, blockContext *sym_tab
 		}
 	}
 	ExitBlockHandler()
-
-	/////////////////////////
-	//curSymTable := sym_tables.GetCurSymTable()
-	//if curSymTable != nil {
-	//	curSymTable.PrintIfElseClauseList()
-	//}
 }
 
 func EnterBlockHandler(blockContext *sym_tables.ScopeContext) {

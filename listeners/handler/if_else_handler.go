@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/uspace"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
@@ -21,8 +21,6 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 		switch parserContext := child.(type) {
 		case *parser.BlockContext:
 			{
-				// cursorContext := curCursor.GetCursorContext()
-
 				// Set up current block context without creating new sym table
 				curSymTable := sym_tables.GetCurSymTable()
 				if curSymTable.IfElseStackEmpty() {
@@ -106,7 +104,6 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 
 				terminalString, _ := utils.GetTerminalNodeText(child)
 				if terminalString == string(sym_tables.LogicSymbolIf) {
-					//					fmt.Println("Context IF ........................")
 					if curSymTable.IfElseStackEmpty() {
 						// if event
 						// create if-else clause
@@ -119,15 +116,11 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 
 					curSymTable.PushIfElseStack(sym_tables.LogicSymbolIf)
 				} else if terminalString == string(sym_tables.LogicSymbolElse) {
-					//					fmt.Println("Context ELSE ......................")
 					curSymTable.PushIfElseStack(sym_tables.LogicSymbolElse)
 				}
 			}
 		}
 	}
-	//	fmt.Println("Exiting IfElseStmtContextHandler .........................")
-	// curSymTable := sym_tables.GetCurSymTable()
-	// curSymTable.PrintFunctions()
-	// curSymTable.PrintIfElseClauseList()
+
 	return nil
 }
