@@ -9,10 +9,16 @@ import (
 )
 
 const (
-	funcReturnNotEqual string = "Func Return Not Equal: %+v != %+v \n"
-	paramNotEqual             = "Parameter Not Equal: %+v != %+v \n"
-	variablesNotEqual         = "Variables Not Equal: %+v != %+v"
+	funcReturnNotEqual     string = "Func Return Not Equal: %+v != %+v \n"
+	paramNotEqual                 = "Parameter Not Equal: %+v != %+v \n"
+	variablesNotEqual             = "Variables Not Equal: %+v != %+v\n"
+	ifElseExprDoesNotMatch        = "If-else expression Not Equal: %+v != %+v\n"
 )
+
+func formatError(errFormat string, value interface{}, expected interface{}) string {
+	errMsg := fmt.Sprintf(errFormat, value, expected)
+	return errMsg
+}
 
 func MakeSlice(elems ...interface{}) []interface{} {
 	ret := make([]interface{}, 0)

@@ -82,6 +82,17 @@ func Test_3(t *testing.T) {
 				event.SetExpr(varMap)
 
 				//event.FillExpr()
+			} else if strings.Contains(ifElseExpr, "566") {
+				expected := "566>test1"
+				if ifElseExpr != expected {
+					t.Error(formatError(ifElseExprDoesNotMatch, ifElseExpr, expected))
+				}
+			} else if strings.Contains(ifElseExpr, "naveen") {
+				expected := "name==naveen"
+				if ifElseExpr != expected {
+					t.Error(formatError(ifElseExprDoesNotMatch, ifElseExpr, expected))
+				}
+
 			}
 
 		}
