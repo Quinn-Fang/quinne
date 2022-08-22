@@ -45,7 +45,6 @@ type SymTable struct {
 	variableMap             map[string]*variables.Variable
 	functions               []*procedures.FFunction
 	executable              bool
-	executableStack         []bool
 	ifElseStack             []LogicSymbol
 	ifElseExprStack         []string
 	ifElseExprVariableStack []map[string]interface{}
@@ -280,7 +279,6 @@ func NewSymTable(prevSymTable *SymTable) *SymTable {
 		prev:                    prevSymTable,
 		variableMap:             make(map[string]*variables.Variable),
 		functions:               make([]*procedures.FFunction, 0),
-		executableStack:         make([]bool, 0),
 		ifElseStack:             make([]LogicSymbol, 0),
 		ifElseExprStack:         make([]string, 0),
 		ifElseExprVariableStack: make([]map[string]interface{}, 0),
