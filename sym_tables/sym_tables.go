@@ -46,7 +46,6 @@ type SymTable struct {
 	functions               []*procedures.FFunction
 	executable              bool
 	ifElseStack             []LogicSymbol
-	ifElseExprStack         []string
 	ifElseExprVariableStack []map[string]interface{}
 	hasTrueBranch           bool
 
@@ -280,7 +279,6 @@ func NewSymTable(prevSymTable *SymTable) *SymTable {
 		variableMap:             make(map[string]*variables.Variable),
 		functions:               make([]*procedures.FFunction, 0),
 		ifElseStack:             make([]LogicSymbol, 0),
-		ifElseExprStack:         make([]string, 0),
 		ifElseExprVariableStack: make([]map[string]interface{}, 0),
 		ifElseClauseList:        utils.NewQueue(),
 
