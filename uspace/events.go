@@ -84,15 +84,42 @@ func (this *Event) FillExpr() {
 	}
 }
 
+func (this *Event) FillExprV2(varNames []string) map[string]interface{} {
+	// fill in variables that have not been filled by user
+	ret := make(map[string]interface{})
+	symTable := this.GetSymTable()
+	for _, varName := range varNames {
+		if variable, err := symTable.GetVariableByName(varName); err != nil {
+			errInfo := fmt.Sprintf("Variable: '%s' does not exist.", varName)
+			panic(errInfo)
+		} else {
+			ret[varName] = variable.GetVariableValue()
+		}
+	}
+	return ret
+}
+
 func (this *Event) SetExpr(varMap map[string]interface{}) {
+	// varMap includes user defined functions and variables only
 	if ifElseBranch, ok := this.eventPointer.(*sym_tables.IfElseBranch); ok {
+		userVarMap := make(map[string]interface{})
+		systemVarNames := make([]string, 0)
 		for _, varName := range ifElseBranch.GetExprVarNames() {
-			if _, in := varMap[varName]; !in {
-				err := fmt.Sprintf("Variable: %+v Unset", varName)
-				panic(err)
+			if varValue, in := varMap[varName]; in {
+				userVarMap[varName] = varValue
+			} else {
+				systemVarNames = append(systemVarNames, varName)
 			}
 		}
-		res := utils.ParseExpr(ifElseBranch.GetExpr(), varMap)
+
+		if len(userVarMap) != len(varMap) {
+			panic("Not all provided variable are in expression")
+		}
+		systemVarMap := this.FillExprV2(systemVarNames)
+		allVarMap := utils.MergeMaps(userVarMap, systemVarMap)
+
+		// res := utils.ParseExpr(ifElseBranch.GetExpr(), varMap)
+		res := utils.ParseExprV2(ifElseBranch.GetExpr(), allVarMap)
 		ifElseBranch.SetJudgeRes(res)
 	} else {
 		panic("Not ifelse expr error ")

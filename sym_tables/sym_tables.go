@@ -8,6 +8,7 @@ import (
 	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/utils"
 	"github.com/Quinn-Fang/quinne/variables"
+	exprV2 "github.com/antonmedv/expr"
 )
 
 type ScopeContext struct {
@@ -347,6 +348,20 @@ func (this *SymTable) SetExecutable(isExecutable bool) {
 
 func (this *SymTable) GetExecutable() bool {
 	return this.executable
+}
+
+func (this *SymTable) JudgeIfElseExprV2(expr string, parameters map[string]interface{}) bool {
+	out, err := exprV2.Eval(expr, parameters)
+
+	if err != nil {
+		panic(err)
+	}
+
+	if ret, ok := out.(bool); ok {
+		return ret
+	} else {
+		panic("result is not bool")
+	}
 }
 
 func (this *SymTable) JudgeIfElseExpr(expr string, parameters map[string]interface{}) bool {

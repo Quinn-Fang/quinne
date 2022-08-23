@@ -12,6 +12,8 @@ import (
 func SourceFileHandler(antlrCtx antlr.ParserRuleContext) {
 	children := antlrCtx.GetChildren()
 
+	//	utils.PrintChildren(children)
+
 	for _, child := range children {
 		switch parserContext := child.(type) {
 		case *antlr.TerminalNodeImpl:

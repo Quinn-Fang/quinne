@@ -97,14 +97,7 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 	curSymTable := sym_tables.GetCurSymTable()
 	curStatement := curCursor.GetStatement()
 
-	//for _, child := range children {
-	//	fmt.Println("7----7")
-	//	fmt.Printf("%+v\n", child)
-	//	fmt.Println("7----7")
-	//}
-
 	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
-		//		fmt.Println("Gettting Function Name: ", terminalString)
 
 		var emptyValue interface{}
 		newReturnValue := variables.NewVariable(

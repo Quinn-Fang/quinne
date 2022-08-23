@@ -2,9 +2,10 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 func IsFunction(children []antlr.Tree) bool {
@@ -30,4 +31,21 @@ func GetTerminalNodeText(antlrTree antlr.Tree) (string, error) {
 	}
 
 	return "", errors.New("Unknown error ... ")
+}
+
+func PrintChildren(children []antlr.Tree) {
+	for _, v := range children {
+		switch parserContext := v.(type) {
+		case *antlr.TerminalNodeImpl:
+			{
+				terminalString, _ := GetTerminalNodeText(parserContext)
+				fmt.Printf("Terminal text : %+v\n", terminalString)
+			}
+		default:
+			{
+				fmt.Printf("--- %T ---\n", v)
+				PrintChildren(v.GetChildren())
+			}
+		}
+	}
 }

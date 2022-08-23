@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/Knetic/govaluate"
+	exprV2 "github.com/antonmedv/expr"
 )
 
 type Queue struct {
@@ -65,4 +66,25 @@ func ParseExpr(expr string, parameters map[string]interface{}) bool {
 	} else {
 		panic("result is not bool")
 	}
+}
+
+func ParseExprV2(expr string, parameters map[string]interface{}) bool {
+	out, err := exprV2.Eval(expr, parameters)
+
+	if err != nil {
+		panic(err)
+	}
+
+	if ret, ok := out.(bool); ok {
+		return ret
+	} else {
+		panic("result is not bool")
+	}
+}
+
+func MergeMaps(mapA map[string]interface{}, mapB map[string]interface{}) map[string]interface{} {
+	for k, v := range mapB {
+		mapA[k] = v
+	}
+	return mapA
 }
