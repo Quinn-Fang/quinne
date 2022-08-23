@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Quinn-Fang/quinne/procedures"
+	"github.com/Quinn-Fang/quinne/procedures/buildin"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/utils"
 )
@@ -88,13 +89,28 @@ func (this *Event) FillExprV2(varNames []string) map[string]interface{} {
 	// fill in variables that have not been filled by user
 	ret := make(map[string]interface{})
 	symTable := this.GetSymTable()
+	funcTable := buildin.GetSystemFuncTable()
+
 	for _, varName := range varNames {
-		if variable, err := symTable.GetVariableByName(varName); err != nil {
+		found := false
+		// first look up from system build in functions
+		if function, err := funcTable.GetFunctionByName(varName); err == nil {
+			found = true
+			ret[varName] = function
+		} else {
+			// then look up variable from symbol table
+			if variable, err := symTable.GetVariableByName(varName); err == nil {
+				found = true
+				ret[varName] = variable.GetVariableValue()
+			}
+
+		}
+
+		if !found {
 			errInfo := fmt.Sprintf("Variable: '%s' does not exist.", varName)
 			panic(errInfo)
-		} else {
-			ret[varName] = variable.GetVariableValue()
 		}
+
 	}
 	return ret
 }

@@ -22,7 +22,15 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	curSymTable := sym_tables.GetCurSymTable()
 	fFunction := curSymTable.GetLastFunction()
 	curNavigator := navigator.GetCurNavigator()
-	curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
+	if !curCursor.IsAppendingExpr() {
+		// regular function
+		curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
+	} else {
+		curCursor.PushExpr(fFunction.ToString())
+		curCursor.AddExprVarNames(fFunction.FName)
+	}
+
+	// curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
 
 	return nil
 }

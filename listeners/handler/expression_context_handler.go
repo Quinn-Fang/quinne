@@ -44,7 +44,8 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 			}
 		case *antlr.TerminalNodeImpl:
 			{
-				if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+				// if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+				if curCursor.IsAppendingExpr() {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 
 					curCursor.PushExpr(terminalString)
@@ -123,7 +124,8 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext) error {
 
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
-	} else if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+		// } else if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+	} else if curCursor.IsAppendingExpr() {
 		curCursor.PushExpr(terminalString)
 		curCursor.AddExprVarNames(terminalString)
 	}
@@ -216,7 +218,8 @@ func IntegerContextHandler(contextParser *parser.IntegerContext) error {
 
 			// curStatement.AddRightValue(curVariable)
 			// cursor.PrintStatement()
-		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+			// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+		} else if cursor.IsAppendingExpr() {
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
@@ -247,7 +250,8 @@ func StringContextHandler(contextParser *parser.String_Context) error {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
-		} else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+			// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+		} else if cursor.IsAppendingExpr() {
 			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)

@@ -1,6 +1,8 @@
 package procedures
 
 import (
+	"fmt"
+
 	"github.com/Quinn-Fang/quinne/variables"
 )
 
@@ -61,4 +63,15 @@ func (this *FFunction) SetReturnValue(returnValue interface{}) {
 
 func (this *FFunction) InitReturnValue(variable *variables.Variable) {
 	this.FReturn = variable
+}
+
+func (this *FFunction) ToString() string {
+	ret := this.FName
+	ret += "("
+	for _, variable := range this.FParams {
+		ret += fmt.Sprintf("%v", variable.GetVariableValue())
+	}
+	ret += ")"
+
+	return ret
 }

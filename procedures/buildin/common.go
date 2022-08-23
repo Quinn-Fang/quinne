@@ -1,10 +1,8 @@
 package buildin
 
 import (
+	"errors"
 	"fmt"
-	"reflect"
-
-	"github.com/Quinn-Fang/quinne/procedures"
 )
 
 var (
@@ -12,12 +10,12 @@ var (
 )
 
 type FuncTable struct {
-	functionMap map[string]*procedures.FFunction
+	functionMap map[string]interface{}
 }
 
 func NewFuncTable() *FuncTable {
 	newFuncTable := &FuncTable{
-		functionMap: make(map[string]*procedures.FFunction),
+		functionMap: make(map[string]interface{}),
 	}
 	return newFuncTable
 }
@@ -29,38 +27,27 @@ func SetFuncTable(funcTable *FuncTable) {
 func InitFuncTable() {
 	newFuncTable := NewFuncTable()
 	SetFuncTable(newFuncTable)
+
+	newFuncTable.AddFunction("len", GetLength)
 }
 
-func (this *FuncTable) AddFunction(fFunction *procedures.FFunction) {
-	if _, ok := this.functionMap[fFunction.GetFunctionName()]; ok {
+func GetSystemFuncTable() *FuncTable {
+	return curFuncTable
+}
+
+func (this *FuncTable) AddFunction(fName string, fFunction interface{}) {
+	if _, ok := this.functionMap[fName]; ok {
 		panic("Function already exists.")
 	} else {
-		this.functionMap[fFunction.GetFunctionName()] = fFunction
+		this.functionMap[fName] = fFunction
 	}
 }
 
-// Build in functions
-func GetLength(obj interface{}) int {
-	reflectType := reflect.TypeOf(obj)
-	switch reflectType.Kind() {
-	case reflect.Slice:
-		{
-			return reflect.ValueOf(obj).Len()
-		}
-	case reflect.Array:
-		{
-			return reflect.ValueOf(obj).Len()
-		}
-	case reflect.String:
-		{
-			return reflect.ValueOf(obj).Len()
-		}
-	case reflect.Map:
-		{
-			return reflect.ValueOf(obj).Len()
-		}
-	default:
-		errMsg := fmt.Sprintf("%+v %+v has no length.", obj, reflectType.Kind())
-		panic(errMsg)
+func (this *FuncTable) GetFunctionByName(fName string) (interface{}, error) {
+	if function, ok := this.functionMap[fName]; !ok {
+		errMsg := fmt.Sprintf("System function not found %+v \n", fName)
+		return nil, errors.New(errMsg)
+	} else {
+		return function, nil
 	}
 }

@@ -35,6 +35,7 @@ type Cursor struct {
 	curExpr         string
 	curExprVarNames []string
 	curIfElseClause *sym_tables.IfElseClause
+	appendingExpr   bool
 }
 
 type Statement struct {
@@ -63,6 +64,14 @@ func NewCursor() *Cursor {
 	}
 
 	return newCursor
+}
+
+func (this *Cursor) SetAppendingExpr(status bool) {
+	this.appendingExpr = status
+}
+
+func (this *Cursor) IsAppendingExpr() bool {
+	return this.appendingExpr
 }
 
 func (this *Cursor) SetIfElseClause(ifElseClause *sym_tables.IfElseClause) {

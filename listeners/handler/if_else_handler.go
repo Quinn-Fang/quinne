@@ -21,6 +21,7 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 		switch parserContext := child.(type) {
 		case *parser.BlockContext:
 			{
+				curCursor.SetAppendingExpr(false)
 				// Set up current block context without creating new sym table
 				curSymTable := sym_tables.GetCurSymTable()
 				if curSymTable.IfElseStackEmpty() {
@@ -113,6 +114,7 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext) error {
 					}
 
 					curCursor.SetCursorContext(sym_tables.ContextTypeIf)
+					curCursor.SetAppendingExpr(true)
 
 					curSymTable.PushIfElseStack(sym_tables.LogicSymbolIf)
 				} else if terminalString == string(sym_tables.LogicSymbolElse) {
