@@ -9,8 +9,8 @@ import (
 	"github.com/Quinn-Fang/quinne/uspace"
 )
 
-func Test_4(t *testing.T) {
-	eventHandler := quinne.NewEventHandler("data/sample_if_else.go")
+func Test_5(t *testing.T) {
+	eventHandler := quinne.NewEventHandler("data/sample_if_else_1.go")
 	event, err := eventHandler.GetNextEvent()
 	executedFunc := ""
 	for err == nil {
@@ -57,7 +57,7 @@ func Test_4(t *testing.T) {
 		fmt.Println()
 	}
 
-	if executedFunc != "bodyLessFunction_1" {
+	if executedFunc != "bodyLessFunction_2" {
 		t.Error("Wrong execution flow.")
 	}
 }
