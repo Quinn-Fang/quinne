@@ -4,6 +4,7 @@ import (
 	"github.com/Quinn-Fang/quinne/listeners"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/Quinn-Fang/quinne/procedures/buildin"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/uspace"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -43,6 +44,7 @@ func (this *EventHandler) GetNextEvent() (*uspace.Event, error) {
 
 	if err == nil {
 		if _, ok := event.GetEventContext().(*sym_tables.IfElseBranch); ok {
+			event.GetSymTable().IsExecutable()
 			return event, nil
 		}
 		executable := event.GetSymTable().IsExecutable()
@@ -62,6 +64,9 @@ func runListener(fileName string) {
 	input, _ := antlr.NewFileStream(fileName)
 	// Create First SymTable
 	sym_tables.NewEntryTable()
+	// Create Buildin Function Table
+	buildin.InitFuncTable()
+
 	// Create Cursor
 	navigator.InitCursor()
 	curNavigator := navigator.NewNavigator()

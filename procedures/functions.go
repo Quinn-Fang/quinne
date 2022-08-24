@@ -69,7 +69,12 @@ func (this *FFunction) ToString() string {
 	ret := this.FName
 	ret += "("
 	for _, variable := range this.FParams {
-		ret += fmt.Sprintf("%v", variable.GetVariableValue())
+		vValue := variable.GetVariableValue()
+		if _, ok := vValue.(string); ok {
+			ret += fmt.Sprintf("%q", vValue)
+		} else {
+			ret += fmt.Sprintf("%v", vValue)
+		}
 	}
 	ret += ")"
 

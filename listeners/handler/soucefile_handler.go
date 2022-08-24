@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures"
@@ -13,7 +12,7 @@ import (
 func SourceFileHandler(antlrCtx antlr.ParserRuleContext) {
 	children := antlrCtx.GetChildren()
 
-	utils.PrintChildren(children)
+	// utils.PrintChildren(children)
 
 	for _, child := range children {
 		switch parserContext := child.(type) {

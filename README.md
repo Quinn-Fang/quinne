@@ -1,7 +1,5 @@
 
 # Quinne
-**Note**:  This repo is not supposed to be used in production environment since it has not been fully tested, but development is on the way.
-
 **Goal**:  Daily used programming languages like Python, Java, C++ are general-purpose languages meant to serve most scenarios, with a price being too complicated for specific use cases within specific context. This project aims to provide an easier way for you to create your own programming language, thus your own way of describing something.
 
 Quinne is a golang grammared programming language framework, making it possible to create your own simple, customized, context-specific programming language  with a focus on being:
