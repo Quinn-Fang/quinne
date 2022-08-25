@@ -73,9 +73,10 @@ To manipulate this small program, you create a quinne handler, iterate through e
 				varMap["SWITCH_ON"] = false
 				event.SetExpr(varMap)
 
-				// by calling SetExpr with no arguments would filled variables automatically 
+				// by calling SetExpr with emptyMap would filled variables automatically 
                 // if already defined and can be accessed by scope rules
 				
+				// varMap := make(map[string]interface{}, 8)
                 // event.SetExpr()
 
 			}

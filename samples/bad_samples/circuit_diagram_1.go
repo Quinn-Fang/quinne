@@ -57,6 +57,9 @@ func main() {
 	bulb_1 := createBulb("Bulb 1")
 	bulb_2 := createBulb("Bulb 2")
 
+	bulb_1.prev = sSwitch
+	bulb_2.prev = sSwitch
+
 	sSwitch.onNode = bulb_1
 	sSwitch.offNode = bulb_2
 }
