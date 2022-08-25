@@ -2,6 +2,8 @@
 # Quinne
 **Goal**:  Daily used programming languages like Python, Java, C++ are general-purpose languages meant to serve most scenarios, with a price being too complicated for specific use cases within specific context. This project aims to provide an easier way for you to create your own programming language, thus your own way of describing something.
 
+- [Looking at programming language from a different aspect](https://medium.com/@quinnkunfang_5420/looking-at-programming-language-from-a-different-aspect-9e4544047c1e)
+
 Quinne is a golang grammared programming language framework, making it possible to create your own simple, customized, context-specific programming language  with a focus on being:
 * *Light*: Minimal dependencies (Antlr4 golang target mostly)
 * *Simpler*: Deal with essential parts of a program only (how if-else expression should be judged, how functions should be run, etc...) without worrying about most compiler details (variables, symbol tables, scopes ...) that need to be done but not closely related to what you want to do.
@@ -73,10 +75,10 @@ To manipulate this small program, you create a quinne handler, iterate through e
 				varMap["SWITCH_ON"] = false
 				event.SetExpr(varMap)
 
-				// by calling SetExpr with emptyMap would filled variables automatically 
+                // by calling SetExpr with emptyMap would filled variables automatically 
                 // if already defined and can be accessed by scope rules
-				
-				// varMap := make(map[string]interface{}, 8)
+                
+                // varMap := make(map[string]interface{}, 8)
                 // event.SetExpr()
 
 			}
