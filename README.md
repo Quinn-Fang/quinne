@@ -26,7 +26,7 @@ func main() {
 	if SWITCH_ON {
 		create_bulb("bulb-1")
 	} else {
-		create_bulb("buib-2")
+		create_bulb("bulb-2")
 	}
 }
  ```
@@ -73,10 +73,11 @@ To manipulate this small program, you create a quinne handler, iterate through e
 				varMap["SWITCH_ON"] = false
 				event.SetExpr(varMap)
 
-				// filled variables automatically if already defined and can be accessed
-				// by scope rules
+				// by calling SetExpr with no arguments would filled variables automatically 
+                // if already defined and can be accessed by scope rules
+				
+                // event.SetExpr()
 
-				//event.FillExpr()
 			}
 
 		}
