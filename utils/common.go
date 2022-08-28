@@ -19,6 +19,10 @@ func NewQueue() *Queue {
 	return newQueue
 }
 
+func (this *Queue) IsEmpty() bool {
+	return this.queue.Len() == 0
+}
+
 func (this *Queue) PushBack(item interface{}) {
 	this.queue.PushBack(item)
 }
@@ -37,6 +41,18 @@ func (this *Queue) GetBack() *list.Element {
 
 func (this *Queue) PopFront() (interface{}, error) {
 	item := this.queue.Front()
+	var ret interface{}
+	if item != nil {
+		ret = item.Value
+		this.queue.Remove(item)
+	} else {
+		return nil, errors.New("queue empty")
+	}
+	return ret, nil
+}
+
+func (this *Queue) PopBack() (interface{}, error) {
+	item := this.queue.Back()
 	var ret interface{}
 	if item != nil {
 		ret = item.Value
