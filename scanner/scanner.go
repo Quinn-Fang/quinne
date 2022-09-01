@@ -33,7 +33,7 @@ type Scanner struct {
 	lineNum       int
 	outerContext  *OuterContext
 	middleContext *MiddleContext
-	InnerContext  *InnerContext
+	innerContext  *InnerContext
 }
 
 func NewScanner() *Scanner {
@@ -41,15 +41,28 @@ func NewScanner() *Scanner {
 	return newScanner
 }
 
-func (this *Scanner) InitOuterContext(ocType consts.OCType) {
-	newOuterContext := OuterContext{
-		contextType: ocType,
+func (this *Scanner) ClearAllContext() {
+	var (
+		nilOuterContext  *OuterContext
+		nilMiddleContext *MiddleContext
+		nilInnerContext  *InnerContext
+	)
+
+	this.outerContext = nilOuterContext
+	this.middleContext = nilMiddleContext
+	this.innerContext = nilInnerContext
+}
+
+func (this *Scanner) SetOuterContext(ocType consts.OCType) {
+	if this.outerContext == nil {
+		panic("OuterContext not set !")
 	}
+
+	outerContext := this.outerContext
 	switch ocType {
 	case consts.OCTypeIf, consts.OCTypeElseIf, consts.OCTypeElse:
 		{
-			newOuterContext.context = NewIfElseContext
-			this.InitMiddleContext(consts.MCTypeExpr)
+			outerContext.contextType = ocType
 		}
 	default:
 		{
@@ -58,20 +71,29 @@ func (this *Scanner) InitOuterContext(ocType consts.OCType) {
 	}
 }
 
-func (this *Scanner) InitMiddleContext(mcType consts.MCType) {
-	newMiddleContext := MiddleContext{
+func (this *Scanner) GetOuterType() consts.OCType {
+	return this.outerContext.contextType
+}
+
+func (this *Scanner) SetMiddleContext(mcType consts.MCType) {
+	newMiddleContext := &MiddleContext{
 		contextType: mcType,
 	}
 	switch mcType {
 	case consts.MCTypeExpr:
 		{
 			newMiddleContext.context = NewExprContext()
+			this.middleContext = newMiddleContext
 		}
 	default:
 		{
 			panic(errorMCUnknownTypeMsg)
 		}
 	}
+}
+
+func (this *Scanner) GetMiddleType() consts.MCType {
+	return this.middleContext.contextType
 }
 
 func (this *Scanner) isOuterIfElse() bool {
@@ -120,13 +142,33 @@ func (this *Scanner) AppendExprVarName(exprVarName string) {
 }
 
 // called before entering if else branch block
-func (this *Scanner) ConsumeIfElseEvent() (consts.LogicContextType, *sym_tables.IfElseBranch) {
+func (this *Scanner) ConsumeIfElseEvent() (sym_tables.ContextType, *sym_tables.IfElseBranch) {
 	if !this.isOuterIfElse() && !this.isMiddleExpr() {
 		panic("not in if else outer context and expr middle context !")
 	}
 
 	ifElseContext, _ := this.outerContext.context.(*IfElseContext)
 	exprContext, _ := this.middleContext.context.(*ExprContext)
-	return ifElseContext.GetCurrentBranch(exprContext.exprString, exprContext.exprVarNames)
+	branchType, ifElseBranch := ifElseContext.GetCurrentBranch(exprContext.exprString, exprContext.exprVarNames)
+	var contextType sym_tables.ContextType
+	switch branchType {
+	case consts.OCTypeIf:
+		{
+			contextType = sym_tables.ContextTypeIf
+		}
+	case consts.OCTypeElseIf:
+		{
+			contextType = sym_tables.ContextTypeElseIf
+		}
+	case consts.OCTypeElse:
+		{
+			contextType = sym_tables.ContextTypeElse
+		}
+	default:
+		{
+			panic("Unknown if else context type !")
+		}
+	}
 
+	return contextType, ifElseBranch
 }

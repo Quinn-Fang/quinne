@@ -29,7 +29,7 @@ func (this *IfElseContext) toLogicSymbol(elem interface{}) sym_tables.LogicSymbo
 
 // check the internal queue and return currrent branch
 // context, as if, else-if, else
-func (this *IfElseContext) GetCurrentBranch(exprString string, exprVarNames []string) (consts.LogicContextType, *sym_tables.IfElseBranch) {
+func (this *IfElseContext) GetCurrentBranch(exprString string, exprVarNames []string) (consts.OCType, *sym_tables.IfElseBranch) {
 	// no if else event
 	if this.queue.IsEmpty() {
 		panic("if else queue Empty !")
@@ -41,7 +41,7 @@ func (this *IfElseContext) GetCurrentBranch(exprString string, exprVarNames []st
 	ifElseClause := curSymTable.GetLastIfElseClause()
 	firstSymbol, _ := this.queue.PopBack()
 
-	var curEventType consts.LogicContextType
+	var curEventType consts.OCType
 	var curEventContext *sym_tables.IfElseBranch
 
 	if this.toLogicSymbol(firstSymbol) == sym_tables.LogicSymbolIf {
@@ -58,7 +58,7 @@ func (this *IfElseContext) GetCurrentBranch(exprString string, exprVarNames []st
 			// add user space event
 			curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newIfBranch, curSymTable)
 
-			curEventType = consts.LogicContextTypeIf
+			curEventType = consts.OCTypeIf
 			curEventContext = newIfBranch
 
 		} else {
@@ -78,7 +78,7 @@ func (this *IfElseContext) GetCurrentBranch(exprString string, exprVarNames []st
 			// add user space event
 			curNavigator.AddEvent(uspace.EventTypeIfElseExpr, newElseIfBranch, curSymTable)
 
-			curEventType = consts.LogicContextTypeElseIf
+			curEventType = consts.OCTypeElseIf
 			curEventContext = newElseIfBranch
 		}
 	} else if this.toLogicSymbol(firstSymbol) == sym_tables.LogicSymbolElse {
@@ -88,7 +88,7 @@ func (this *IfElseContext) GetCurrentBranch(exprString string, exprVarNames []st
 
 		ifElseClause.AddBranch(newElseBranch)
 
-		curEventType = consts.LogicContextTypeElse
+		curEventType = consts.OCTypeElse
 		curEventContext = newElseBranch
 
 	} else {

@@ -5,6 +5,7 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures/buildin"
+	"github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/uspace"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -77,39 +78,41 @@ func runListener(fileName string) {
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 
 	// Create the Parser
-	p := parser.NewGoParser(stream)
+	goParser := parser.NewGoParser(stream)
 
 	//listen := GoListener{}
-	tree := p.SourceFile()
-	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(p, tree), tree)
+	ast := goParser.SourceFile()
+	newScanner := scanner.NewScanner()
+	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(goParser, ast, newScanner), ast)
 	// utils.PrintAllSymTale()
 	//curNavigator.PrintStack()
 
 	//curNavigator.PrintCodeSegments()
 }
 
-func TNewListener(fileName string) {
-	input, _ := antlr.NewFileStream(fileName)
-	// Create First SymTable
-	sym_tables.NewEntryTable()
-	// Create Cursor
-	navigator.InitCursor()
-	curNavigator := navigator.NewNavigator()
-	navigator.SetCurNavigator(curNavigator)
-
-	// Create the Lexer
-	lexer := parser.NewGoLexer(input)
-	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-
-	// Create the Parser
-	p := parser.NewGoParser(stream)
-
-	//listen := GoListener{}
-	tree := p.SourceFile()
-	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(p, tree), tree)
-	// utils.PrintAllSymTale()
-	//curNavigator.PrintStack()
-
-	//curNavigator.PrintCodeSegments()
-
-}
+//func TNewListener(fileName string) {
+//	input, _ := antlr.NewFileStream(fileName)
+//	// input, _ := antlr.NewInputStream(fileName)
+//	// Create First SymTable
+//	sym_tables.NewEntryTable()
+//	// Create Cursor
+//	navigator.InitCursor()
+//	curNavigator := navigator.NewNavigator()
+//	navigator.SetCurNavigator(curNavigator)
+//
+//	// Create the Lexer
+//	lexer := parser.NewGoLexer(input)
+//	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+//
+//	// Create the Parser
+//	p := parser.NewGoParser(stream)
+//
+//	//listen := GoListener{}
+//	tree := p.SourceFile()
+//	antlr.ParseTreeWalkerDefault.Walk(listeners.NewGoListener(p, tree), tree)
+//	// utils.PrintAllSymTale()
+//	//curNavigator.PrintStack()
+//
+//	//curNavigator.PrintCodeSegments()
+//
+//}
