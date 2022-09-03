@@ -10,6 +10,7 @@ import (
 	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) error {
@@ -27,41 +28,37 @@ func ExpressionStmtContextHandler(contextParser *parser.ExpressionStmtContext) e
 	return nil
 }
 
-//func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
-//	children := contextParser.GetChildren()
-//
-//	curCursor, _ := navigator.GetCursor()
-//	for _, child := range children {
-//		switch parserContext := child.(type) {
-//		case *parser.PrimaryExprContext:
-//			{
-//				PrimaryExprContextHandler(parserContext)
-//			}
-//		case *parser.ExpressionContext:
-//			{
-//				ExpressionContextHandler(parserContext)
-//			}
-//		case *antlr.TerminalNodeImpl:
-//			{
-//				// if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-//				if curCursor.IsAppendingExpr() {
-//					terminalString, _ := utils.GetTerminalNodeText(parserContext)
-//
-//					curCursor.PushExpr(terminalString)
-//				}
-//
-//				if scanner.GetMiddleType() == scannerConsts.MCTypeExpr {
-//					terminalString, _ := utils.GetTerminalNodeText(parserContext)
-//					scanner.PushExpr(terminalString)
-//				}
-//				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
-//				//fmt.Println(terminalString)
-//			}
-//		}
-//	}
-//
-//	return nil
-//}
+func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
+	children := contextParser.GetChildren()
+
+	curCursor, _ := navigator.GetCursor()
+	for _, child := range children {
+		switch parserContext := child.(type) {
+		case *parser.PrimaryExprContext:
+			{
+				PrimaryExprContextHandler(parserContext)
+			}
+		case *parser.ExpressionContext:
+			{
+				ExpressionContextHandler(parserContext)
+			}
+		case *antlr.TerminalNodeImpl:
+			{
+				// if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+				if curCursor.IsAppendingExpr() {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+
+					curCursor.PushExpr(terminalString)
+				}
+
+				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
+				//fmt.Println(terminalString)
+			}
+		}
+	}
+
+	return nil
+}
 
 func PrimaryExprContextHandler(contextParser *parser.PrimaryExprContext) error {
 	children := contextParser.GetChildren()

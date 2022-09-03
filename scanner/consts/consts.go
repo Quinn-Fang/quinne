@@ -8,7 +8,7 @@ type ICType int
 
 // indicators of the Line scope context
 const (
-	OCTypeDefault  OCType = 0
+	OCTypeUnSet    OCType = 0
 	OCTypeIf              = 1
 	OCTypeElseIf          = 2
 	OCTypeElse            = 3
@@ -16,12 +16,12 @@ const (
 )
 
 const (
-	MCTypeDefault MCType = 0
-	MCTypeExpr           = 1
+	MCTypeUnset MCType = 0
+	MCTypeExpr         = 1
 )
 
 const (
-	ICTypeDefault  ICType = 0
+	ICTypeUnset    ICType = 0
 	ICTypeFuncName        = 1
 	ICTypeFuncArgs        = 2
 )

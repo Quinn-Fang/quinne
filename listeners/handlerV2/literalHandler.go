@@ -7,6 +7,7 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
+	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
 )
@@ -31,9 +32,6 @@ func BasicLitContextHandler(contextParser *parser.BasicLitContext, scanner *scan
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		//fmt.Println("^^^^^^^^^^^^^^^^^^^^^^^^^")
-		//fmt.Printf("%T\n", child)
-		//fmt.Printf("%+v\n", child)
 		switch parserContext := child.(type) {
 		case *parser.String_Context:
 			{
@@ -65,6 +63,12 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 
 		//cursor.IncreaseIndex()
 		curSymTable := sym_tables.GetCurSymTable()
+
+		if scanner.GetMiddleType() == consts.MCTypeExpr {
+			scanner.AppendExpr(terminalString)
+		}
+
+		/////////////////////////////////////// should be removed ////////////////////////////////////////
 		if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
@@ -99,6 +103,11 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			cursor.GetIndex())
 		curSymTable := sym_tables.GetCurSymTable()
 
+		if scanner.GetMiddleType() == consts.MCTypeExpr {
+			scanner.AppendExpr(terminalString)
+		}
+
+		/////////////////////////////////////// should be removed ////////////////////////////////////////
 		if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)

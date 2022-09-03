@@ -14,8 +14,6 @@ import (
 func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scanner.Scanner) error {
 	// fmt.Println("Inside IfElseStmtContextHandler .........................")
 
-	curNavigator := navigator.GetCurNavigator()
-
 	curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
 
@@ -48,6 +46,9 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scan
 		case *antlr.TerminalNodeImpl:
 			{
 				terminalString, _ := utils.GetTerminalNodeText(child)
+				// set middle context to append expr for both
+				// if and else-if event and empty middle context for else
+				scanner.NewMiddleContext(scannerConsts.MCTypeExpr)
 				if terminalString == string(sym_tables.LogicSymbolIf) {
 					//if curSymTable.IfElseStackEmpty() {
 					//	// if event
@@ -62,26 +63,24 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scan
 
 					//curSymTable.PushIfElseStack(sym_tables.LogicSymbolIf)
 
-					scanner.AddIfElseEvent(sym_tables.LogicSymbolIf)
-					// set middle context to appeding expr status for both
-					// if and else-if event
-					scanner.SetMiddleContext(scannerConsts.MCTypeExpr)
-
 					if scanner.GetOuterType() == scannerConsts.OCTypeElse {
-						// else-if event
-						scanner.SetOuterContext(scannerConsts.OCTypeElseIf)
+						// else-if event, the previous else event has already created
+						// the outer context, so here only change the context type
+						scanner.SetOuterType(scannerConsts.OCTypeElseIf)
 					} else {
 						// if event
+						scanner.NewOuterContext(scannerConsts.OCTypeIf)
+						scanner.AddIfElseEvent(sym_tables.LogicSymbolIf)
 						// Create a new if-else clause and add it to current symbol table
 						newIfElseClause := sym_tables.NewIfElseClause()
 						curSymTable := sym_tables.GetCurSymTable()
 						curSymTable.AddIfElseClause(newIfElseClause)
-						scanner.SetOuterContext(scannerConsts.OCTypeIf)
+						scanner.SetOuterType(scannerConsts.OCTypeIf)
 					}
 				} else if terminalString == string(sym_tables.LogicSymbolElse) {
 					// else or else-if event
+					scanner.NewOuterContext(scannerConsts.OCTypeElse)
 					scanner.AddIfElseEvent(sym_tables.LogicSymbolElse)
-					scanner.SetOuterContext(scannerConsts.OCTypeElse)
 				}
 			}
 		}

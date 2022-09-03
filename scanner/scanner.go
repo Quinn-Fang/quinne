@@ -53,7 +53,23 @@ func (this *Scanner) ClearAllContext() {
 	this.innerContext = nilInnerContext
 }
 
-func (this *Scanner) SetOuterContext(ocType consts.OCType) {
+func (this *Scanner) NewOuterContext(ocType consts.OCType) {
+	newOuterContext := &OuterContext{}
+	switch ocType {
+	case consts.OCTypeIf, consts.OCTypeElseIf, consts.OCTypeElse:
+		{
+			newOuterContext.contextType = ocType
+			newOuterContext.context = NewIfElseContext()
+			this.outerContext = newOuterContext
+		}
+	default:
+		{
+			panic(errorOCUnknownTypeMsg)
+		}
+	}
+}
+
+func (this *Scanner) SetOuterType(ocType consts.OCType) {
 	if this.outerContext == nil {
 		panic("OuterContext not set !")
 	}
@@ -72,10 +88,13 @@ func (this *Scanner) SetOuterContext(ocType consts.OCType) {
 }
 
 func (this *Scanner) GetOuterType() consts.OCType {
+	if this.outerContext == nil {
+		return consts.OCTypeUnSet
+	}
 	return this.outerContext.contextType
 }
 
-func (this *Scanner) SetMiddleContext(mcType consts.MCType) {
+func (this *Scanner) NewMiddleContext(mcType consts.MCType) {
 	newMiddleContext := &MiddleContext{
 		contextType: mcType,
 	}
@@ -92,7 +111,26 @@ func (this *Scanner) SetMiddleContext(mcType consts.MCType) {
 	}
 }
 
+func (this *Scanner) SetMiddleType(mcType consts.MCType) {
+	if this.middleContext == nil {
+		panic("middleContext not set !")
+	}
+	switch mcType {
+	case consts.MCTypeExpr:
+		{
+			this.middleContext.contextType = mcType
+		}
+	default:
+		{
+			panic(errorMCUnknownTypeMsg)
+		}
+	}
+}
+
 func (this *Scanner) GetMiddleType() consts.MCType {
+	if this.middleContext == nil {
+		return consts.MCTypeUnset
+	}
 	return this.middleContext.contextType
 }
 

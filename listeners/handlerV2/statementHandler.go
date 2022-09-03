@@ -28,7 +28,7 @@ func StatementListHandler(contextParser *parser.StatementListContext, scanner *s
 		switch parserContext := v.(type) {
 		case *parser.StatementContext:
 			{
-				StatementHandler(parserContext)
+				StatementHandler(parserContext, scanner)
 			}
 
 		}

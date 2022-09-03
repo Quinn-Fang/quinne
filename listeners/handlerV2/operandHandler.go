@@ -8,6 +8,7 @@ import (
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/scanner"
+	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
 )
@@ -42,6 +43,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 	curCursor, _ := navigator.GetCursor()
 	curSymTable := sym_tables.GetCurSymTable()
 	curStatement := curCursor.GetStatement()
+
+	if scanner.GetMiddleType() == consts.MCTypeExpr {
+		scanner.AppendExpr(terminalString)
+		scanner.AppendExprVarName(terminalString)
+	}
 
 	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
 
