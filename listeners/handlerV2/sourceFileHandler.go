@@ -18,7 +18,6 @@ func SourceFileHandler(antlrCtx antlr.ParserRuleContext, scanner *scanner.Scanne
 			}
 		case *parser.FunctionDeclContext:
 			{
-				// FunctionDeclHandler(parserContext)
 				FunctionDeclHandler(parserContext, scanner)
 			}
 		}

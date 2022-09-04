@@ -66,22 +66,29 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 
 		if scanner.GetMiddleType() == consts.MCTypeExpr {
 			scanner.AppendExpr(terminalString)
-		}
-
-		/////////////////////////////////////// should be removed ////////////////////////////////////////
-		if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+		} else if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
-			// curStatement.AddRightValue(curVariable)
-			// cursor.PrintStatement()
-			// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-		} else if cursor.IsAppendingExpr() {
-			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 
 		}
+
+		/////////////////////////////////////// should be removed ////////////////////////////////////////
+		//if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+		//	curFunction := curSymTable.GetLastFunction()
+		//	curFunction.AddParam(curVariable)
+
+		//	// curStatement.AddRightValue(curVariable)
+		//	// cursor.PrintStatement()
+		//	// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+		//} else if cursor.IsAppendingExpr() {
+		//	cursor.PushExpr(terminalString)
+		//} else {
+		//	curStatement.AddRightValue(curVariable)
+
+		//}
 	}
 
 	return nil
@@ -105,19 +112,24 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 
 		if scanner.GetMiddleType() == consts.MCTypeExpr {
 			scanner.AppendExpr(terminalString)
-		}
-
-		/////////////////////////////////////// should be removed ////////////////////////////////////////
-		if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+		} else if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
-
-			// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-		} else if cursor.IsAppendingExpr() {
-			cursor.PushExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
+
+		/////////////////////////////////////// should be removed ////////////////////////////////////////
+		//if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+		//	curFunction := curSymTable.GetLastFunction()
+		//	curFunction.AddParam(curVariable)
+
+		//	// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
+		//} else if cursor.IsAppendingExpr() {
+		//	cursor.PushExpr(terminalString)
+		//} else {
+		//	curStatement.AddRightValue(curVariable)
+		//}
 
 	}
 

@@ -47,10 +47,7 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
 		scanner.AppendExpr(terminalString)
 		scanner.AppendExprVarName(terminalString)
-	}
-
-	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
-
+	} else if scanner.GetInnerType() == consts.ICTypeFuncName {
 		var emptyValue interface{}
 		newReturnValue := variables.NewVariable(
 			"",
@@ -65,7 +62,7 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 		newFunction := procedures.NewFunction(terminalString)
 		newFunction.InitReturnValue(newReturnValue)
 		curSymTable.AddFunction(newFunction)
-	} else if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+	} else if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 		variable, err := curSymTable.GetVariableByName(terminalString)
 		if err != nil {
 			errMsg := fmt.Sprintf("variable: %s does not exist", terminalString)
@@ -74,10 +71,37 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
-	} else if curCursor.IsAppendingExpr() {
-		curCursor.PushExpr(terminalString)
-		curCursor.AddExprVarNames(terminalString)
 	}
+
+	//if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {
+
+	//	var emptyValue interface{}
+	//	newReturnValue := variables.NewVariable(
+	//		"",
+	//		variables.VTypeFunctionReturned,
+	//		emptyValue,
+	//		curCursor.GetIndex())
+
+	//	curCursor.IncreaseIndex()
+
+	//	curStatement.AddRightValue(newReturnValue)
+
+	//	newFunction := procedures.NewFunction(terminalString)
+	//	newFunction.InitReturnValue(newReturnValue)
+	//	curSymTable.AddFunction(newFunction)
+	//} else if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+	//	variable, err := curSymTable.GetVariableByName(terminalString)
+	//	if err != nil {
+	//		errMsg := fmt.Sprintf("variable: %s does not exist", terminalString)
+	//		panic(errMsg)
+	//	}
+
+	//	curFunction := curSymTable.GetLastFunction()
+	//	curFunction.AddParam(variable)
+	//} else if curCursor.IsAppendingExpr() {
+	//	curCursor.PushExpr(terminalString)
+	//	curCursor.AddExprVarNames(terminalString)
+	//}
 
 	return nil
 }

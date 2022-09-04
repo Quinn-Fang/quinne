@@ -210,3 +210,43 @@ func (this *Scanner) ConsumeIfElseEvent() (sym_tables.ContextType, *sym_tables.I
 
 	return contextType, ifElseBranch
 }
+
+func (this *Scanner) NewInnerContext(icType consts.ICType) {
+	newInnerContext := &InnerContext{
+		contextType: icType,
+	}
+	switch icType {
+	case consts.ICTypeFuncName:
+		{
+			newInnerContext.context = NewFunctionContext()
+			this.innerContext = newInnerContext
+		}
+	default:
+		{
+			panic(errorICUnknownTypeMsg)
+		}
+	}
+}
+
+func (this *Scanner) SetInnerType(icType consts.ICType) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	switch icType {
+	case consts.ICTypeFuncName, consts.ICTypeFuncArgs, consts.ICTypeUnset:
+		{
+			this.innerContext.contextType = icType
+		}
+	default:
+		{
+			panic(errorICUnknownTypeMsg)
+		}
+	}
+}
+
+func (this *Scanner) GetInnerType() consts.ICType {
+	if this.innerContext == nil {
+		return consts.ICTypeUnset
+	}
+	return this.innerContext.contextType
+}

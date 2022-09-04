@@ -5,6 +5,7 @@ import (
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/scanner"
+	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/uspace"
 )
@@ -12,10 +13,16 @@ import (
 func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext *parser.ArgumentsContext, scanner *scanner.Scanner) error {
 	curCursor, _ := navigator.GetCursor()
 	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionName)
+	// use scanner instead
+	scanner.NewInnerContext(consts.ICTypeFuncName)
+	// scanner.SetInnerType(consts.ICTypeFuncName)
 
 	PrimaryExprContextHandler(operandContext, scanner)
 
 	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionArgs)
+
+	// use scanner instead
+	scanner.SetInnerType(consts.ICTypeFuncArgs)
 
 	ArgumentsContextHandler(argumentsContext, scanner)
 
@@ -33,6 +40,8 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	}
 
 	// curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
+
+	scanner.SetInnerType(consts.ICTypeUnset)
 
 	return nil
 }

@@ -12,8 +12,6 @@ import (
 )
 
 func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scanner.Scanner) error {
-	// fmt.Println("Inside IfElseStmtContextHandler .........................")
-
 	curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
 
