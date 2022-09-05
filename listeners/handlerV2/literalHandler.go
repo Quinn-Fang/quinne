@@ -64,15 +64,17 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 		//cursor.IncreaseIndex()
 		curSymTable := sym_tables.GetCurSymTable()
 
-		if scanner.GetMiddleType() == consts.MCTypeExpr {
-			scanner.AppendExpr(terminalString)
-		} else if scanner.GetInnerType() == consts.ICTypeFuncArgs {
+		if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
 		} else {
 			curStatement.AddRightValue(curVariable)
 
+		}
+
+		if scanner.GetMiddleType() == consts.MCTypeExpr {
+			scanner.AppendExpr(terminalString)
 		}
 
 		/////////////////////////////////////// should be removed ////////////////////////////////////////
@@ -110,13 +112,15 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			cursor.GetIndex())
 		curSymTable := sym_tables.GetCurSymTable()
 
-		if scanner.GetMiddleType() == consts.MCTypeExpr {
-			scanner.AppendExpr(terminalString)
-		} else if scanner.GetInnerType() == consts.ICTypeFuncArgs {
+		if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 		} else {
 			curStatement.AddRightValue(curVariable)
+		}
+
+		if scanner.GetMiddleType() == consts.MCTypeExpr {
+			scanner.AppendExpr(terminalString)
 		}
 
 		/////////////////////////////////////// should be removed ////////////////////////////////////////

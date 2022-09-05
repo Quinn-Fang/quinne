@@ -24,13 +24,23 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	// use scanner instead
 	scanner.SetInnerType(consts.ICTypeFuncArgs)
 
+	if scanner.GetMiddleType() == consts.MCTypeExpr {
+		scanner.AppendExpr("(")
+	}
 	ArgumentsContextHandler(argumentsContext, scanner)
+	if scanner.GetMiddleType() == consts.MCTypeExpr {
+		scanner.AppendExpr(")")
+	}
 
 	curCursor.SetCursorContext(sym_tables.ContextTypeDefault)
 
 	curSymTable := sym_tables.GetCurSymTable()
 	fFunction := curSymTable.GetLastFunction()
 	curNavigator := navigator.GetCurNavigator()
+	////////////////
+	//if scanner
+	////////////////
+
 	if !curCursor.IsAppendingExpr() {
 		// regular function
 		curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)

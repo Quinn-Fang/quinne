@@ -44,10 +44,7 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 	curSymTable := sym_tables.GetCurSymTable()
 	curStatement := curCursor.GetStatement()
 
-	if scanner.GetMiddleType() == consts.MCTypeExpr {
-		scanner.AppendExpr(terminalString)
-		scanner.AppendExprVarName(terminalString)
-	} else if scanner.GetInnerType() == consts.ICTypeFuncName {
+	if scanner.GetInnerType() == consts.ICTypeFuncName {
 		var emptyValue interface{}
 		newReturnValue := variables.NewVariable(
 			"",
@@ -71,6 +68,11 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
+	}
+
+	if scanner.GetMiddleType() == consts.MCTypeExpr {
+		scanner.AppendExpr(terminalString)
+		scanner.AppendExprVarName(terminalString)
 	}
 
 	//if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionName {

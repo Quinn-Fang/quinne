@@ -64,7 +64,6 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 			}
 		case *antlr.TerminalNodeImpl:
 			{
-				// if curCursor.GetCursorContext() == sym_tables.ContextTypeIf || curCursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
 				if curCursor.IsAppendingExpr() {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 
@@ -75,8 +74,6 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					scanner.AppendExpr(terminalString)
 				}
-				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
-				//fmt.Println(terminalString)
 			}
 		}
 	}
