@@ -1,14 +1,19 @@
 
 # Quinne
-**Goal**:  Daily used programming languages like Python, Java, C++ are general-purpose languages meant to serve most scenarios, with a price being too complicated for specific use cases within specific context. This project aims to provide an easier way for you to create your own programming language, thus your own way of describing something.
-
-- [Looking at programming language from a different aspect](https://medium.com/@quinnkunfang_5420/looking-at-programming-language-from-a-different-aspect-9e4544047c1e)
-
 Quinne is a golang grammared programming language framework, making it possible to create your own simple, customized, context-specific programming language  with a focus on being:
 * *Light*: Minimal dependencies (Antlr4 golang target mostly)
 * *Simpler*: Deal with essential parts of a program only (how if-else expression should be judged, how functions should be run, etc...) without worrying about most compiler details (variables, symbol tables, scopes ...) that need to be done but not closely related to what you want to do.
 * *Flexible*: Easy to define your own grammars when comes to specific usecases,  or under specific contexts.
 * *Expandable:* Possible to add new grammars, say lambda, try-catch to golang grammar and even execute other languages like c by simply just write it in the middle of your go program.
+
+**Goal**:  Daily used programming languages like Python, Java, C++ are general-purpose languages meant to serve most scenarios, with a price being too complicated for specific use cases within specific context. This project aims to provide an easier way for you to create your own programming language, thus your own way of describing something.
+
+**More Readings**:
+- [Looking at programming language from a different aspect](https://medium.com/@quinnkunfang_5420/looking-at-programming-language-from-a-different-aspect-9e4544047c1e)
+
+
+**General Design**: Parse the code stream and traverse ast, store essential data needed to provide a event-driven environment for the user to modify runtime
+execution flow.
 
 ## Getting started
 

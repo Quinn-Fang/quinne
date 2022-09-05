@@ -50,6 +50,7 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext) error {
 
 					curCursor.PushExpr(terminalString)
 				}
+
 				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
 				//fmt.Println(terminalString)
 			}
