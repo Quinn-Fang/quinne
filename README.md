@@ -101,3 +101,7 @@ To manipulate this small program, you create a quinne handler, iterate through e
 }
 
   ```
+
+## Docs:
+- [Introduction: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
+- [Examples: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
