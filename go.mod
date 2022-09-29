@@ -9,5 +9,5 @@ require (
 
 require (
 	github.com/antonmedv/expr v1.9.0
-	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e // indirect
+	golang.org/x/exp v0.0.0-20220929112958-4a82f8963a65 // indirect
 )

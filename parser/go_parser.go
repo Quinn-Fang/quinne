@@ -1,7 +1,6 @@
-// Code generated from ./GoParser.g4 by ANTLR 4.10.1. DO NOT EDIT.
+// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
 package parser // GoParser
-
 import (
 	"fmt"
 	"strconv"
@@ -548,7 +547,7 @@ func NewGoParser(input antlr.TokenStream) *GoParser {
 	this.RuleNames = staticData.ruleNames
 	this.LiteralNames = staticData.literalNames
 	this.SymbolicNames = staticData.symbolicNames
-	this.GrammarFileName = "GoParser.g4"
+	this.GrammarFileName = "java-escape"
 
 	return this
 }
@@ -1087,7 +1086,7 @@ func (p *GoParser) SourceFile() (localctx ISourceFileContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<GoParserFUNC)|(1<<GoParserCONST)|(1<<GoParserTYPE)|(1<<GoParserVAR))) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&34668552) != 0 {
 		p.SetState(211)
 		p.GetErrorHandler().Sync(p)
 		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 1, p.GetParserRuleContext()) {
@@ -1443,7 +1442,7 @@ func (p *GoParser) ImportDecl() (localctx IImportDeclContext) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		for _la == GoParserIDENTIFIER || _la == GoParserDOT || _la == GoParserRAW_STRING_LIT || _la == GoParserINTERPRETED_STRING_LIT {
+		for (int64((_la-27)) & ^0x3f) == 0 && ((int64(1)<<(_la-27))&6755399441057793) != 0 {
 			{
 				p.SetState(228)
 				p.ImportSpec()
@@ -2260,7 +2259,7 @@ func (p *GoParser) ConstSpec() (localctx IConstSpecContext) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<GoParserFUNC)|(1<<GoParserINTERFACE)|(1<<GoParserMAP)|(1<<GoParserSTRUCT)|(1<<GoParserCHAN)|(1<<GoParserIDENTIFIER)|(1<<GoParserL_PAREN))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(GoParserL_BRACKET-32))|(1<<(GoParserSTAR-32))|(1<<(GoParserRECEIVE-32)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-6917529022943457768) != 0 {
 			{
 				p.SetState(266)
 				p.Type_()
@@ -5447,12 +5446,12 @@ func (p *GoParser) Assign_op() (localctx IAssign_opContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if ((_la-51)&-(0x1f+1)) == 0 && ((1<<uint((_la-51)))&((1<<(GoParserOR-51))|(1<<(GoParserDIV-51))|(1<<(GoParserMOD-51))|(1<<(GoParserLSHIFT-51))|(1<<(GoParserRSHIFT-51))|(1<<(GoParserBIT_CLEAR-51))|(1<<(GoParserPLUS-51))|(1<<(GoParserMINUS-51))|(1<<(GoParserCARET-51))|(1<<(GoParserSTAR-51))|(1<<(GoParserAMPERSAND-51)))) != 0 {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&9077005048965234688) != 0 {
 		{
 			p.SetState(407)
 			_la = p.GetTokenStream().LA(1)
 
-			if !(((_la-51)&-(0x1f+1)) == 0 && ((1<<uint((_la-51)))&((1<<(GoParserOR-51))|(1<<(GoParserDIV-51))|(1<<(GoParserMOD-51))|(1<<(GoParserLSHIFT-51))|(1<<(GoParserRSHIFT-51))|(1<<(GoParserBIT_CLEAR-51))|(1<<(GoParserPLUS-51))|(1<<(GoParserMINUS-51))|(1<<(GoParserCARET-51))|(1<<(GoParserSTAR-51))|(1<<(GoParserAMPERSAND-51)))) != 0) {
+			if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&9077005048965234688) != 0) {
 				p.GetErrorHandler().RecoverInline(p)
 			} else {
 				p.GetErrorHandler().ReportMatch(p)
@@ -7084,7 +7083,7 @@ func (p *GoParser) ExprSwitchStmt() (localctx IExprSwitchStmtContext) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(467)
 				p.expression(0)
@@ -7111,7 +7110,7 @@ func (p *GoParser) ExprSwitchStmt() (localctx IExprSwitchStmtContext) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(474)
 				p.expression(0)
@@ -9113,7 +9112,7 @@ func (p *GoParser) ForStmt() (localctx IForStmtContext) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(586)
 				p.expression(0)
@@ -9132,7 +9131,7 @@ func (p *GoParser) ForStmt() (localctx IForStmtContext) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserRANGE-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183310598632) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(590)
 				p.RangeClause()
@@ -9387,7 +9386,7 @@ func (p *GoParser) ForClause() (localctx IForClauseContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 		{
 			p.SetState(605)
 
@@ -12103,7 +12102,7 @@ func (p *GoParser) Parameters() (localctx IParametersContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<GoParserFUNC)|(1<<GoParserINTERFACE)|(1<<GoParserMAP)|(1<<GoParserSTRUCT)|(1<<GoParserCHAN)|(1<<GoParserIDENTIFIER)|(1<<GoParserL_PAREN))) != 0) || (((_la-32)&-(0x1f+1)) == 0 && ((1<<uint((_la-32)))&((1<<(GoParserL_BRACKET-32))|(1<<(GoParserELLIPSIS-32))|(1<<(GoParserSTAR-32))|(1<<(GoParserRECEIVE-32)))) != 0) {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-6917524624896946664) != 0 {
 		{
 			p.SetState(712)
 			p.ParameterDecl()
@@ -12595,7 +12594,7 @@ func (p *GoParser) expression(_p int) (localctx IExpressionContext) {
 
 			_la = p.GetTokenStream().LA(1)
 
-			if !(((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57)))) != 0) {
+			if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115188075855872) != 0) {
 				var _ri = p.GetErrorHandler().RecoverInline(p)
 
 				localctx.(*ExpressionContext).unary_op = _ri
@@ -12641,7 +12640,7 @@ func (p *GoParser) expression(_p int) (localctx IExpressionContext) {
 
 					_la = p.GetTokenStream().LA(1)
 
-					if !(((_la-52)&-(0x1f+1)) == 0 && ((1<<uint((_la-52)))&((1<<(GoParserDIV-52))|(1<<(GoParserMOD-52))|(1<<(GoParserLSHIFT-52))|(1<<(GoParserRSHIFT-52))|(1<<(GoParserBIT_CLEAR-52))|(1<<(GoParserSTAR-52))|(1<<(GoParserAMPERSAND-52)))) != 0) {
+					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&7057140616089567232) != 0) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
 						localctx.(*ExpressionContext).mul_op = _ri
@@ -12672,7 +12671,7 @@ func (p *GoParser) expression(_p int) (localctx IExpressionContext) {
 
 					_la = p.GetTokenStream().LA(1)
 
-					if !(((_la-51)&-(0x1f+1)) == 0 && ((1<<uint((_la-51)))&((1<<(GoParserOR-51))|(1<<(GoParserPLUS-51))|(1<<(GoParserMINUS-51))|(1<<(GoParserCARET-51)))) != 0) {
+					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&2019864432875667456) != 0) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
 						localctx.(*ExpressionContext).add_op = _ri
@@ -12703,7 +12702,7 @@ func (p *GoParser) expression(_p int) (localctx IExpressionContext) {
 
 					_la = p.GetTokenStream().LA(1)
 
-					if !(((_la-45)&-(0x1f+1)) == 0 && ((1<<uint((_la-45)))&((1<<(GoParserEQUALS-45))|(1<<(GoParserNOT_EQUALS-45))|(1<<(GoParserLESS-45))|(1<<(GoParserLESS_OR_EQUALS-45))|(1<<(GoParserGREATER-45))|(1<<(GoParserGREATER_OR_EQUALS-45)))) != 0) {
+					if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&2216615441596416) != 0) {
 						var _ri = p.GetErrorHandler().RecoverInline(p)
 
 						localctx.(*ExpressionContext).rel_op = _ri
@@ -13997,7 +13996,7 @@ func (p *GoParser) Integer() (localctx IIntegerContext) {
 		p.SetState(815)
 		_la = p.GetTokenStream().LA(1)
 
-		if !(((_la-64)&-(0x1f+1)) == 0 && ((1<<uint((_la-64)))&((1<<(GoParserDECIMAL_LIT-64))|(1<<(GoParserBINARY_LIT-64))|(1<<(GoParserOCTAL_LIT-64))|(1<<(GoParserHEX_LIT-64))|(1<<(GoParserIMAGINARY_LIT-64))|(1<<(GoParserRUNE_LIT-64)))) != 0) {
+		if !((int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&399) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -14708,7 +14707,7 @@ func (p *GoParser) LiteralValue() (localctx ILiteralValueContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_CURLY-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115182237381096) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 		{
 			p.SetState(838)
 			p.ElementList()
@@ -16352,7 +16351,7 @@ func (p *GoParser) Slice_() (localctx ISlice_Context) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(906)
 				p.expression(0)
@@ -16367,7 +16366,7 @@ func (p *GoParser) Slice_() (localctx ISlice_Context) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(910)
 				p.expression(0)
@@ -16380,7 +16379,7 @@ func (p *GoParser) Slice_() (localctx ISlice_Context) {
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 			{
 				p.SetState(913)
 				p.expression(0)
@@ -16686,7 +16685,7 @@ func (p *GoParser) Arguments() (localctx IArgumentsContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	if (((_la-3)&-(0x1f+1)) == 0 && ((1<<uint((_la-3)))&((1<<(GoParserFUNC-3))|(1<<(GoParserINTERFACE-3))|(1<<(GoParserMAP-3))|(1<<(GoParserSTRUCT-3))|(1<<(GoParserCHAN-3))|(1<<(GoParserNIL_LIT-3))|(1<<(GoParserIDENTIFIER-3))|(1<<(GoParserL_PAREN-3))|(1<<(GoParserL_BRACKET-3)))) != 0) || (((_la-57)&-(0x1f+1)) == 0 && ((1<<uint((_la-57)))&((1<<(GoParserEXCLAMATION-57))|(1<<(GoParserPLUS-57))|(1<<(GoParserMINUS-57))|(1<<(GoParserCARET-57))|(1<<(GoParserSTAR-57))|(1<<(GoParserAMPERSAND-57))|(1<<(GoParserRECEIVE-57))|(1<<(GoParserDECIMAL_LIT-57))|(1<<(GoParserBINARY_LIT-57))|(1<<(GoParserOCTAL_LIT-57))|(1<<(GoParserHEX_LIT-57))|(1<<(GoParserFLOAT_LIT-57))|(1<<(GoParserIMAGINARY_LIT-57))|(1<<(GoParserRUNE_LIT-57))|(1<<(GoParserRAW_STRING_LIT-57))|(1<<(GoParserINTERPRETED_STRING_LIT-57)))) != 0) {
+	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-144115183311122920) != 0 || (int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&49567) != 0 {
 		p.SetState(937)
 		p.GetErrorHandler().Sync(p)
 		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 106, p.GetParserRuleContext()) {
