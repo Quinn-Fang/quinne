@@ -2,7 +2,7 @@
 
 package parser // GoParser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // BaseGoParserListener is a complete listener for a parse tree produced by GoParser.
 type BaseGoParserListener struct{}

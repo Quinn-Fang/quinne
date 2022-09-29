@@ -8,7 +8,7 @@ import (
 	"github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/uspace"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 type EventHandler struct {

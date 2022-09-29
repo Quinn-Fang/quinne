@@ -8,7 +8,7 @@ import (
 	"github.com/Quinn-Fang/quinne/scanner"
 	scannerConsts "github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scanner.Scanner) error {

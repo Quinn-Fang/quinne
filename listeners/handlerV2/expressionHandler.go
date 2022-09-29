@@ -7,7 +7,7 @@ import (
 	"github.com/Quinn-Fang/quinne/scanner"
 	scannerConsts "github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/variables"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 func ExpressionListContextHandler(contextParser *parser.ExpressionListContext, scanner *scanner.Scanner) error {

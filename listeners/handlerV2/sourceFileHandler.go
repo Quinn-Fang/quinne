@@ -3,7 +3,7 @@ package handlerV2
 import (
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 func SourceFileHandler(antlrCtx antlr.ParserRuleContext, scanner *scanner.Scanner) {
