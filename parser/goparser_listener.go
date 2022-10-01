@@ -304,6 +304,12 @@ type GoParserListener interface {
 	// EnterEos is called when entering the eos production.
 	EnterEos(c *EosContext)
 
+	// EnterLambda is called when entering the lambda production.
+	EnterLambda(c *LambdaContext)
+
+	// EnterLambdaIfStmt is called when entering the lambdaIfStmt production.
+	EnterLambdaIfStmt(c *LambdaIfStmtContext)
+
 	// ExitSourceFile is called when exiting the sourceFile production.
 	ExitSourceFile(c *SourceFileContext)
 
@@ -600,4 +606,10 @@ type GoParserListener interface {
 
 	// ExitEos is called when exiting the eos production.
 	ExitEos(c *EosContext)
+
+	// ExitLambda is called when exiting the lambda production.
+	ExitLambda(c *LambdaContext)
+
+	// ExitLambdaIfStmt is called when exiting the lambdaIfStmt production.
+	ExitLambdaIfStmt(c *LambdaIfStmtContext)
 }

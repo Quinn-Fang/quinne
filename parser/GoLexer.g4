@@ -36,6 +36,8 @@
 
 lexer grammar GoLexer;
 
+// Python
+LAMBDA: 'lambda';
 // Keywords
 
 BREAK                  : 'break' -> mode(NLSEMI);

@@ -378,3 +378,13 @@ eos:
 	| EOS
 	| {closingBracket()}?
 	;
+
+// lambdef: 'lambda' (varargslist)? ':' test;
+// lambda: 'lambda' identifierList ':' expressionList lambdaIfStmt?;
+lambda: LAMBDA identifierList COLON expressionList lambdaIfStmt?;
+lambdaIfStmt: 	IF ( expression
+			| eos expression
+			| simpleStmt eos expression
+			) (
+		ELSE (ifStmt | expression | eos expression | simpleStmt eos expression)
+	)?;
