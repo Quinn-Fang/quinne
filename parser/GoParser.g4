@@ -277,7 +277,8 @@ expression:
 		| GREATER_OR_EQUALS
 	) expression
 	| expression LOGICAL_AND expression
-	| expression LOGICAL_OR expression;
+	| expression LOGICAL_OR expression
+    | lambda;
 
 primaryExpr:
 	operand
@@ -381,10 +382,12 @@ eos:
 
 // lambdef: 'lambda' (varargslist)? ':' test;
 // lambda: 'lambda' identifierList ':' expressionList lambdaIfStmt?;
-lambda: LAMBDA identifierList COLON expressionList lambdaIfStmt?;
+
+varSpecList: varSpec (COMMA varSpec)*; 
+lambda: LAMBDA varSpecList COLON expressionList lambdaIfStmt?;
 lambdaIfStmt: 	IF ( expression
 			| eos expression
 			| simpleStmt eos expression
 			) (
-		ELSE (ifStmt | expression | eos expression | simpleStmt eos expression)
+		ELSE (lambdaIfStmt | expression | eos expression | simpleStmt eos expression)
 	)?;

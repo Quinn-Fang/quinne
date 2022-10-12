@@ -8,6 +8,18 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
+func IsLambda(children []antlr.Tree) bool {
+	if len(children) == 4 {
+		if _, ok := children[1].(*parser.IdentifierListContext); ok {
+			if _, ok := children[3].(*parser.ExpressionListContext); ok {
+				return true
+			}
+
+		}
+	}
+	return false
+}
+
 func IsFunction(children []antlr.Tree) bool {
 	if len(children) == 2 {
 		if _, ok := children[0].(*parser.PrimaryExprContext); ok {

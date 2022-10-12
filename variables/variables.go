@@ -15,6 +15,7 @@ const (
 	VTypeBool                       = 4
 	VTypeMap                        = 5
 	VTypeFunctionReturned           = 6
+	VTypeFunctionDecl               = 7
 )
 
 type Variable struct {

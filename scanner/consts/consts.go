@@ -21,9 +21,11 @@ const (
 )
 
 const (
-	ICTypeUnset    ICType = 0
-	ICTypeFuncName        = 1
-	ICTypeFuncArgs        = 2
+	ICTypeUnset        ICType = 0
+	ICTypeFuncName            = 1
+	ICTypeFuncArgs            = 2
+	ICTypeLambdaParams        = 3
+	ICTypeLambdaExpr          = 4
 )
 
 //type LogicContextType int

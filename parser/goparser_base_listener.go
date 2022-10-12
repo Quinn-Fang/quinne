@@ -614,6 +614,12 @@ func (s *BaseGoParserListener) EnterEos(ctx *EosContext) {}
 // ExitEos is called when production eos is exited.
 func (s *BaseGoParserListener) ExitEos(ctx *EosContext) {}
 
+// EnterVarSpecList is called when production varSpecList is entered.
+func (s *BaseGoParserListener) EnterVarSpecList(ctx *VarSpecListContext) {}
+
+// ExitVarSpecList is called when production varSpecList is exited.
+func (s *BaseGoParserListener) ExitVarSpecList(ctx *VarSpecListContext) {}
+
 // EnterLambda is called when production lambda is entered.
 func (s *BaseGoParserListener) EnterLambda(ctx *LambdaContext) {}
 

@@ -10,6 +10,20 @@ import (
 	"github.com/Quinn-Fang/quinne/uspace"
 )
 
+func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext *parser.ExpressionListContext,
+	lambdaIfStmt *parser.LambdaIfStmtContext, scanner *scanner.Scanner) error {
+	scanner.NewInnerContext(consts.ICTypeLambdaParams)
+	VarSpecListContextHandler(varSpecList, scanner)
+	scanner.SetInnerType(consts.ICTypeLambdaExpr)
+	ExpressionListContextHandler(expressionListContext, scanner)
+
+	// Optional if else statement of lambda statement
+	if lambdaIfStmt != nil {
+		LambdaIfElseStmtContextHandler(lambdaIfStmt, scanner)
+	}
+	return nil
+}
+
 func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext *parser.ArgumentsContext, scanner *scanner.Scanner) error {
 	curCursor, _ := navigator.GetCursor()
 	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionName)

@@ -6,10 +6,52 @@ import (
 	"github.com/Quinn-Fang/quinne/variables"
 )
 
+//type FFunctionDecl struct {
+//	fName   string
+//	fParams []*variables.Variable
+//	fReturn []variables.VTypeEnum
+//}
+
+// Lambda functions
+
+// Lambda declaration
+type LambdaDecl struct {
+	lExpr   string
+	lParams []string
+}
+
+// Actual lambda function
+type LambdaFunction struct {
+	lDecl   *LambdaDecl
+	lArgs   []*variables.Variable
+	lReturn []*variables.Variable
+}
+
+func NewLambdaDecl() *LambdaDecl {
+	newLambdaDecl := &LambdaDecl{}
+	return newLambdaDecl
+}
+
+func (this *LambdaDecl) AppendExpr(exprSubString string) {
+	this.lExpr += exprSubString
+}
+
+func (this *LambdaDecl) AddParam(paramName string) {
+	this.lParams = append(this.lParams, paramName)
+}
+
+type FDeclType int
+
+const (
+	FDeclTypeDefault FDeclType = 1
+	FDeclTypeLib               = 2
+)
+
 type FFunctionDecl struct {
 	fName   string
+	fType   FDeclType
 	fParams []*variables.Variable
-	fReturn []variables.VTypeEnum
+	fReturn *variables.Variable
 }
 
 func NewFunctionDecl(functionName string) *FFunctionDecl {
@@ -21,6 +63,30 @@ func NewFunctionDecl(functionName string) *FFunctionDecl {
 
 func (this *FFunctionDecl) GetFunctionName() string {
 	return this.fName
+}
+
+func (this *FFunctionDecl) SetFType(fType FDeclType) {
+	this.fType = fType
+}
+
+func (this *FFunctionDecl) GetFType() FDeclType {
+	return this.fType
+}
+
+func (this *FFunctionDecl) GetFParams() []*variables.Variable {
+	return this.fParams
+}
+
+func (this *FFunctionDecl) AddFParams(variable *variables.Variable) {
+	this.fParams = append(this.fParams, variable)
+}
+
+func (this *FFunctionDecl) SetFReturn(variable *variables.Variable) {
+	this.fReturn = variable
+}
+
+func (this *FFunctionDecl) GetFReturn() *variables.Variable {
+	return this.fReturn
 }
 
 type FFunction struct {

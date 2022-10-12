@@ -221,6 +221,11 @@ func (this *Scanner) NewInnerContext(icType consts.ICType) {
 			newInnerContext.context = NewFunctionContext()
 			this.innerContext = newInnerContext
 		}
+	case consts.ICTypeLambdaParams, consts.ICTypeLambdaExpr:
+		{
+			newInnerContext.context = NewLambdaContext()
+			this.innerContext = newInnerContext
+		}
 	default:
 		{
 			panic(errorICUnknownTypeMsg)
@@ -237,6 +242,10 @@ func (this *Scanner) SetInnerType(icType consts.ICType) {
 		{
 			this.innerContext.contextType = icType
 		}
+	case consts.ICTypeLambdaParams, consts.ICTypeLambdaExpr:
+		{
+			this.innerContext.contextType = icType
+		}
 	default:
 		{
 			panic(errorICUnknownTypeMsg)
@@ -249,4 +258,28 @@ func (this *Scanner) GetInnerType() consts.ICType {
 		return consts.ICTypeUnset
 	}
 	return this.innerContext.contextType
+}
+
+// Lambda context
+
+func (this *Scanner) AddLambdaParam(paramName string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	if !(this.innerContext.contextType == consts.ICTypeLambdaParams) {
+		panic("not lambda inner context!")
+	}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AddParam(paramName)
+}
+
+func (this *Scanner) AppendLambdaExpr(exprStrRaw string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	if !(this.innerContext.contextType == consts.ICTypeLambdaExpr) {
+		panic("not lambda inner context!")
+	}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AppendExprRaw(exprStrRaw)
 }

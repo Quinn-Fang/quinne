@@ -304,6 +304,9 @@ type GoParserListener interface {
 	// EnterEos is called when entering the eos production.
 	EnterEos(c *EosContext)
 
+	// EnterVarSpecList is called when entering the varSpecList production.
+	EnterVarSpecList(c *VarSpecListContext)
+
 	// EnterLambda is called when entering the lambda production.
 	EnterLambda(c *LambdaContext)
 
@@ -606,6 +609,9 @@ type GoParserListener interface {
 
 	// ExitEos is called when exiting the eos production.
 	ExitEos(c *EosContext)
+
+	// ExitVarSpecList is called when exiting the varSpecList production.
+	ExitVarSpecList(c *VarSpecListContext)
 
 	// ExitLambda is called when exiting the lambda production.
 	ExitLambda(c *LambdaContext)
