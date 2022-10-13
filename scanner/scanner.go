@@ -3,6 +3,7 @@ package scanner
 import (
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 const (
@@ -282,4 +283,15 @@ func (this *Scanner) AppendLambdaExpr(exprStrRaw string) {
 	}
 	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
 	lambdaContext.AppendExprRaw(exprStrRaw)
+}
+
+func (this *Scanner) AddLambdaParamToDecl(vType variables.VTypeEnum) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	if !(this.innerContext.contextType == consts.ICTypeLambdaParams) {
+		panic("not lambda inner context!")
+	}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AddLambdaDeclParams(vType)
 }

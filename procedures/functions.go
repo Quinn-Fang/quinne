@@ -17,7 +17,7 @@ import (
 // Lambda declaration
 type LambdaDecl struct {
 	lExpr   string
-	lParams []string
+	lParams []*variables.Variable
 }
 
 // Actual lambda function
@@ -28,7 +28,9 @@ type LambdaFunction struct {
 }
 
 func NewLambdaDecl() *LambdaDecl {
-	newLambdaDecl := &LambdaDecl{}
+	newLambdaDecl := &LambdaDecl{
+		lParams: make([]*variables.Variable, 0),
+	}
 	return newLambdaDecl
 }
 
@@ -36,8 +38,8 @@ func (this *LambdaDecl) AppendExpr(exprSubString string) {
 	this.lExpr += exprSubString
 }
 
-func (this *LambdaDecl) AddParam(paramName string) {
-	this.lParams = append(this.lParams, paramName)
+func (this *LambdaDecl) AddParam(param *variables.Variable) {
+	this.lParams = append(this.lParams, param)
 }
 
 type FDeclType int

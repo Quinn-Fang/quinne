@@ -28,3 +28,20 @@ func TypeOf(v interface{}) variables.VTypeEnum {
 		}
 	}
 }
+
+func StrToVType(vTypeString string) variables.VTypeEnum {
+	switch vTypeString {
+	case "int":
+		{
+			return variables.VTypeInt
+		}
+	case "string":
+		{
+			return variables.VTypeString
+		}
+	default:
+		{
+			panic("Unrecognized variable type!")
+		}
+	}
+}

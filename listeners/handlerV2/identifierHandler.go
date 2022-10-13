@@ -81,7 +81,10 @@ func VarSpecContextHandler(contextParser *parser.VarSpecContext, scanner *scanne
 			{
 				ExpressionListContextHandler(parserContext, scanner)
 			}
-
+		case *parser.Type_Context:
+			{
+				Type_ContextHandler(parserContext, scanner)
+			}
 		}
 	}
 

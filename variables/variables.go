@@ -18,6 +18,23 @@ const (
 	VTypeFunctionDecl               = 7
 )
 
+func StrToVType(vTypeString string) VTypeEnum {
+	switch vTypeString {
+	case "int":
+		{
+			return VTypeInt
+		}
+	case "string":
+		{
+			return VTypeString
+		}
+	default:
+		{
+			panic("Unrecognized variable type!")
+		}
+	}
+}
+
 type Variable struct {
 	vName                  string
 	vType                  VTypeEnum
