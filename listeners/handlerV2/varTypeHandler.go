@@ -1,8 +1,6 @@
 package handlerV2
 
 import (
-	"fmt"
-
 	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
@@ -33,7 +31,6 @@ func TypeNameContextHandler(contextParser *parser.TypeNameContext, scanner *scan
 				terminalString, _ := utils.GetTerminalNodeText(parserContext)
 				vType := variables.StrToVType(terminalString)
 				scanner.AddLambdaParamToDecl(vType)
-				fmt.Println("11111111")
 				//cursor.IncreaseIndex()
 			}
 		}

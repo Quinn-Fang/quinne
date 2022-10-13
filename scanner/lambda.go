@@ -49,6 +49,9 @@ func (this *LambdaContext) AddLambdaDeclParams(vType variables.VTypeEnum) {
 		)
 		this.lambdaDecl.AddParam(curVariable)
 	}
+	if len(this.lExprRaw) > 0 {
+		this.AppendExprRaw(",")
+	}
 	this.AppendExprRaw(strings.Join(this.lParams, ","))
 	this.lParams = make([]string, 0)
 }

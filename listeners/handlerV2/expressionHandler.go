@@ -81,19 +81,6 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 			}
 		case *parser.LambdaContext:
 			{
-				//fmt.Println("1111")
-				//terminalString, _ := utils.GetTerminalNodeText(parserContext)
-				//fmt.Println(terminalString)
-
-				///////////////////////////
-				//x, _ := utils.GetTerminalNodeText(parserContext.GetChildren()[0])
-				//x, _ = utils.GetTerminalNodeText(parserContext.GetChildren()[1])
-				//x, _ = utils.GetTerminalNodeText(parserContext.GetChildren()[2])
-				//x, _ = utils.GetTerminalNodeText(parserContext.GetChildren()[3])
-				//x, _ = utils.GetTerminalNodeText(parserContext.GetChildren()[4])
-				//fmt.Println(x)
-
-				/////////////////////////////
 				parserContextChildren := parserContext.GetChildren()
 				if len(parserContextChildren) == 4 {
 					// lambda expression without if else statement
