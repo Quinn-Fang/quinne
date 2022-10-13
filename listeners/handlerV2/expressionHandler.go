@@ -78,6 +78,11 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					scanner.AppendExpr(terminalString)
 				}
+
+				if scanner.GetInnerType() == scannerConsts.ICTypeLambdaExpr {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					scanner.AppendLambdaExpr(terminalString)
+				}
 			}
 		case *parser.LambdaContext:
 			{
