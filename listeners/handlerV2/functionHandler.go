@@ -1,6 +1,8 @@
 package handlerV2
 
 import (
+	"fmt"
+
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures"
@@ -16,12 +18,17 @@ func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext
 	VarSpecListContextHandler(varSpecList, scanner)
 	scanner.SetInnerType(consts.ICTypeLambdaExpr)
 	scanner.AppendLambdaExpr(":")
+	scanner.SetInnerType(consts.ICTypeLambdaRet)
 	ExpressionListContextHandler(expressionListContext, scanner)
 
 	// Optional if else statement of lambda statement
 	if lambdaIfStmt != nil {
+		scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 		LambdaIfElseStmtContextHandler(lambdaIfStmt, scanner)
 	}
+	entry := scanner.GetLambdaIfElseClauseEntry()
+	x := entry.ToExprList()
+	fmt.Println(x)
 	return nil
 }
 

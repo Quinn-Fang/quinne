@@ -79,9 +79,17 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					scanner.AppendExpr(terminalString)
 				}
 
-				if scanner.GetInnerType() == scannerConsts.ICTypeLambdaExpr {
+				//if scanner.GetInnerType() == scannerConsts.ICTypeLambdaIfExpr {
+				//	terminalString, _ := utils.GetTerminalNodeText(parserContext)
+				//	scanner.AppendLambdaExpr(terminalString)
+				//	scanner.AppendLambdaExprList(terminalString)
+				//}
+				if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
-					scanner.AppendLambdaExpr(terminalString)
+					scanner.AppendLambdaExprList(terminalString)
+				} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					scanner.SetLambdaReturnValue(terminalString)
 				}
 			}
 		case *parser.LambdaContext:

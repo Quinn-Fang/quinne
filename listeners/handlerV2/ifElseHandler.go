@@ -78,11 +78,23 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scan
 func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, scanner *scanner.Scanner) error {
 	// curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
+	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
+	newLambdaIfClauseCtx := scanner.NewLambdaIfElseClauseContext()
+	oldLambdaIfClauseCtx := scanner.GetLambdaIfElseClause()
+	if oldLambdaIfClauseCtx != nil {
+		oldLambdaIfClauseCtx.AddElseClause(oldLambdaIfClauseCtx)
+	} else {
+		newLambdaIfClauseCtx.SetBranchSymbol(sym_tables.LogicSymbolIf)
+		scanner.SetLambdaIfElseClauseContext(newLambdaIfClauseCtx)
+		scanner.SetLambdaIfElseClauseContextEntry(newLambdaIfClauseCtx)
+	}
+	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 
 	for _, child := range children {
 		switch parserContext := child.(type) {
 		case *parser.ExpressionContext:
 			{
+				// scanner.SetInnerType(consts.ICTypeLambdaIfExpr)
 				ExpressionContextHandler(parserContext, scanner)
 			}
 		case *parser.LambdaIfStmtContext:
@@ -92,8 +104,8 @@ func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, s
 		case *antlr.TerminalNodeImpl:
 			{
 				terminalString, _ := utils.GetTerminalNodeText(child)
-				if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
-					scanner.AppendLambdaExpr(terminalString)
+				if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
+					scanner.AppendLambdaExprList(terminalString)
 				}
 			}
 		}

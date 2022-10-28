@@ -70,6 +70,14 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
 			scanner.AppendLambdaExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfExpr {
+			scanner.AppendLambdaExprList(terminalString)
+			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
+			//lambdaIfElseContext.AppendIfExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
+			scanner.AppendLambdaExprList(terminalString)
+			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
+			//lambdaIfElseContext.AppendIfExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
@@ -103,6 +111,10 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			curFunction.AddParam(curVariable)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
 			scanner.AppendLambdaExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
+			scanner.AppendLambdaExprList(terminalString)
+			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
+			//lambdaIfElseContext.AppendIfExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}

@@ -6,6 +6,7 @@ const (
 	LogicSymbolError LogicSymbol = "logicSymbolError"
 	LogicSymbolIf                = "if"
 	LogicSymbolElse              = "else"
+	LogicSymbolNil               = "nil"
 )
 
 type BranchType int

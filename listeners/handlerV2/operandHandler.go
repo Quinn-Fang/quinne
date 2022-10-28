@@ -69,7 +69,17 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 		curFunction := curSymTable.GetLastFunction()
 		curFunction.AddParam(variable)
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
-		scanner.AppendLambdaExpr(terminalString)
+		scanner.AppendLambdaExprList(terminalString)
+	} else if scanner.GetInnerType() == consts.ICTypeLambdaIfExpr {
+		//scanner.AppendLambdaExprList(terminalString)
+		//curLambdaIfClauseCtx := scanner.GetLambdaIfElseClause()
+		//curLambdaIfClauseCtx.AppendIfExpr(terminalString)
+	} else if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
+		scanner.AppendLambdaExprList(terminalString)
+		//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
+		//lambdaIfElseContext.AppendIfExpr(terminalString)
+	} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+		scanner.SetLambdaReturnValue(terminalString)
 	}
 
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
