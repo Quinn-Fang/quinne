@@ -67,7 +67,8 @@ type LambdaContext struct {
 	lExprRaw string
 	// Target expr string, translated using left and right
 	// values
-	lExpr string
+	lExpr    string
+	lSubExpr string
 	// temporary logic, 0: return value for if condition,
 	// 1: if expression(true return value)
 	// 2: else expression(false return value)
@@ -100,6 +101,18 @@ func (this *LambdaContext) AppendExprList(exprStr string) {
 
 func (this *LambdaContext) SetLReturn(retValue string) {
 	this.lRet = retValue
+}
+
+func (this *LambdaContext) AppendSubExpr(subExpr string) {
+	this.lSubExpr += subExpr
+}
+
+func (this *LambdaContext) GetSubExpr() string {
+	return this.lSubExpr
+}
+
+func (this *LambdaContext) ClearSubExpr() {
+	this.lSubExpr = ""
 }
 
 func (this *LambdaContext) AddLambdaDeclParams(vType variables.VTypeEnum) {

@@ -90,6 +90,10 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 				} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					scanner.SetLambdaReturnValue(terminalString)
+				} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					lambdaContext := scanner.GetLambdaContext()
+					lambdaContext.AppendSubExpr(terminalString)
 				}
 			}
 		case *parser.LambdaContext:

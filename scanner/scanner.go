@@ -238,21 +238,22 @@ func (this *Scanner) SetInnerType(icType consts.ICType) {
 	if this.innerContext == nil {
 		panic("innerContext not set !")
 	}
-	switch icType {
-	case consts.ICTypeFuncName, consts.ICTypeFuncArgs, consts.ICTypeUnset:
-		{
-			this.innerContext.contextType = icType
-		}
-	case consts.ICTypeLambdaParams, consts.ICTypeLambdaExpr, consts.ICTypeLambdaIfClause,
-		consts.ICTypeLambdaIfExpr, consts.ICTypeLambdaRet:
-		{
-			this.innerContext.contextType = icType
-		}
-	default:
-		{
-			panic(errorICUnknownTypeMsg)
-		}
-	}
+	this.innerContext.contextType = icType
+	//switch icType {
+	//case consts.ICTypeFuncName, consts.ICTypeFuncArgs, consts.ICTypeUnset:
+	//	{
+	//		this.innerContext.contextType = icType
+	//	}
+	//case consts.ICTypeLambdaParams, consts.ICTypeLambdaExpr, consts.ICTypeLambdaIfClause,
+	//	consts.ICTypeLambdaIfExpr, consts.ICTypeLambdaRet:
+	//	{
+	//		this.innerContext.contextType = icType
+	//	}
+	//default:
+	//	{
+	//		panic(errorICUnknownTypeMsg)
+	//	}
+	//}
 }
 
 func (this *Scanner) GetInnerType() consts.ICType {
@@ -341,4 +342,16 @@ func (this *Scanner) SetLambdaIfElseClauseContextEntry(lIfElseContext *LambdaIfE
 func (this *Scanner) GetLambdaIfElseClauseEntry() *LambdaIfElseContext {
 	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
 	return lambdaContext.lIfElseClauseCtxEntry
+}
+
+func (this *Scanner) GetInnerContext() interface{} {
+	return this.innerContext.context
+}
+
+func (this *Scanner) GetLambdaContext() *LambdaContext {
+	if lambdaContext, ok := this.innerContext.context.(*LambdaContext); ok {
+		return lambdaContext
+	} else {
+		panic("innerContext is not LambdaContext")
+	}
 }

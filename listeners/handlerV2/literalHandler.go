@@ -74,10 +74,9 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 			scanner.AppendLambdaExprList(terminalString)
 			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
 			//lambdaIfElseContext.AppendIfExpr(terminalString)
-		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
-			scanner.AppendLambdaExprList(terminalString)
-			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
-			//lambdaIfElseContext.AppendIfExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaContext.AppendSubExpr(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
@@ -111,8 +110,10 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			curFunction.AddParam(curVariable)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
 			scanner.AppendLambdaExpr(terminalString)
-		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
-			scanner.AppendLambdaExprList(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
+			// scanner.AppendLambdaExprList(terminalString)
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaContext.AppendSubExpr(terminalString)
 			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
 			//lambdaIfElseContext.AppendIfExpr(terminalString)
 		} else {

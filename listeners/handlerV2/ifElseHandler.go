@@ -5,14 +5,14 @@ import (
 	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
-	"github.com/Quinn-Fang/quinne/scanner"
+	scannerPkg "github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	scannerConsts "github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
-func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scanner.Scanner) error {
+func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scannerPkg.Scanner) error {
 	curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
 
@@ -75,7 +75,7 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scan
 	return nil
 }
 
-func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, scanner *scanner.Scanner) error {
+func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, scanner *scannerPkg.Scanner) error {
 	// curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
 	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
@@ -95,7 +95,12 @@ func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, s
 		case *parser.ExpressionContext:
 			{
 				// scanner.SetInnerType(consts.ICTypeLambdaIfExpr)
+				scanner.SetInnerType(consts.ICTypeLambdaCondition)
 				ExpressionContextHandler(parserContext, scanner)
+				lambdaContext, _ := scanner.GetInnerContext().(*scannerPkg.LambdaContext)
+				lambdaContext.AppendExprList(lambdaContext.GetSubExpr())
+				lambdaContext.ClearSubExpr()
+				scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 			}
 		case *parser.LambdaIfStmtContext:
 			{
