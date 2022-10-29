@@ -136,6 +136,16 @@ func (this *LambdaContext) AddLambdaDeclParams(vType variables.VTypeEnum) {
 	this.lParams = make([]string, 0)
 }
 
+func (this *LambdaContext) ToTernaryExpr() string {
+	ret := ""
+	ret += this.lExprList[1]
+	ret += "?"
+	ret += this.lRet
+	ret += ":"
+	ret += this.lExprList[3]
+	return ret
+}
+
 func (this *LambdaContext) SetLambdaIfElseClause(lIfElseClause *LambdaIfElseContext) {
 	this.lIfElseClauseCtx = lIfElseClause
 }

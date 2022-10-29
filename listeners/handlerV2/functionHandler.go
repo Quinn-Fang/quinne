@@ -26,6 +26,8 @@ func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext
 		scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 		LambdaIfElseStmtContextHandler(lambdaIfStmt, scanner)
 	}
+	y := scanner.GetLambdaContext().ToTernaryExpr()
+	fmt.Println(y)
 	entry := scanner.GetLambdaIfElseClauseEntry()
 	x := entry.ToExprList()
 	fmt.Println(x)
