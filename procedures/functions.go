@@ -16,21 +16,40 @@ import (
 
 // Lambda declaration
 type LambdaDecl struct {
-	lExpr   string
-	lParams []*variables.Variable
+	lExpr        string
+	lTernaryExpr string
 }
 
 // Actual lambda function
-type LambdaFunction struct {
+type LambdaCall struct {
 	lDecl   *LambdaDecl
-	lArgs   []*variables.Variable
-	lReturn []*variables.Variable
+	lReturn *variables.Variable
+}
+
+func NewLambdaCall(lambdaDecl *LambdaDecl) *LambdaCall {
+	return &LambdaCall{
+		lDecl: lambdaDecl,
+	}
+}
+
+func (this *LambdaCall) GetLambdaExpr() string {
+	return this.lDecl.lExpr
+}
+
+func (this *LambdaCall) GetLambdaTernaryExpr() string {
+	return this.lDecl.lTernaryExpr
+}
+
+func (this *LambdaCall) GetReturnValue() *variables.Variable {
+	return this.lReturn
+}
+
+func (this *LambdaCall) SetReturnValue(newVariable *variables.Variable) {
+	this.lReturn = newVariable
 }
 
 func NewLambdaDecl() *LambdaDecl {
-	newLambdaDecl := &LambdaDecl{
-		lParams: make([]*variables.Variable, 0),
-	}
+	newLambdaDecl := &LambdaDecl{}
 	return newLambdaDecl
 }
 
@@ -38,8 +57,16 @@ func (this *LambdaDecl) AppendExpr(exprSubString string) {
 	this.lExpr += exprSubString
 }
 
-func (this *LambdaDecl) AddParam(param *variables.Variable) {
-	this.lParams = append(this.lParams, param)
+//func (this *LambdaDecl) AddParam(param *variables.Variable) {
+//	this.lParams = append(this.lParams, param)
+//}
+
+func (this *LambdaDecl) SetTernaryExpr(ternaryExpr string) {
+	this.lTernaryExpr = ternaryExpr
+}
+
+func (this *LambdaDecl) GetTernaryExpr() string {
+	return this.lTernaryExpr
 }
 
 type FDeclType int

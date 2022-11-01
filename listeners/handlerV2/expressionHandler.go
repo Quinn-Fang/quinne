@@ -1,11 +1,10 @@
 package handlerV2
 
 import (
-	"strconv"
-
 	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
+	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	scannerConsts "github.com/Quinn-Fang/quinne/scanner/consts"
@@ -112,11 +111,15 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 				cursor, _ := navigator.GetCursor()
 				terminalString, _ := utils.GetTerminalNodeText(child)
 				curStatement := cursor.GetStatement()
-				intVal, _ := strconv.Atoi(terminalString)
+				// intVal, _ := strconv.Atoi(terminalString)
+				lambadContext := scanner.GetLambdaContext()
+				lTernaryExpr := lambadContext.ToTernaryExpr()
+				newLambdaDecl := procedures.NewLambdaDecl()
+				newLambdaDecl.SetTernaryExpr(lTernaryExpr)
 				curVariable := variables.NewVariable(
 					"",
-					variables.VTypeFunctionDecl,
-					intVal,
+					variables.VTypeLambdaFunctionDecl,
+					newLambdaDecl,
 					cursor.GetIndex())
 
 				//cursor.IncreaseIndex()

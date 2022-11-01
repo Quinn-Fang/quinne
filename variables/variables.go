@@ -8,14 +8,16 @@ import (
 type VTypeEnum int
 
 const (
-	VTypeUndefined        VTypeEnum = 0
-	VTypeInt                        = 1
-	VTypeString                     = 2
-	VTypeFloat                      = 3
-	VTypeBool                       = 4
-	VTypeMap                        = 5
-	VTypeFunctionReturned           = 6
-	VTypeFunctionDecl               = 7
+	VTypeUndefined          VTypeEnum = 0
+	VTypeInt                          = 1
+	VTypeString                       = 2
+	VTypeFloat                        = 3
+	VTypeBool                         = 4
+	VTypeMap                          = 5
+	VTypeFunctionReturned             = 6
+	VTypeFunctionDecl                 = 7
+	VTypeLambdaFunctionDecl           = 8
+	VTypeInterface                    = 9
 )
 
 func StrToVType(vTypeString string) VTypeEnum {
@@ -124,3 +126,10 @@ func (this *Variable) GetVariableValue() interface{} {
 func (this *Variable) GetVariableIndex() int {
 	return this.vIndex
 }
+
+//func (this *Variable) EvalTernary() interface{} {
+//	lambdaDecl, _ := this.GetVariableValue().(*procedures.LambdaDecl)
+//
+//	varMap :=
+//	res := utils.ParseExprV2(lambdaDecl.GetTernaryExpr(), allVarMap)
+//}

@@ -1,12 +1,11 @@
 
-# Quinne
-Quinne is a golang grammared programming language framework, making it possible to create your own simple, customized, context-specific programming language  with a focus on being:
-* *Light*: Minimal dependencies (Antlr4 golang target mostly)
-* *Simpler*: Deal with essential parts of a program only (how if-else expression should be judged, how functions should be run, etc...) without worrying about most compiler details (variables, symbol tables, scopes ...) that need to be done but not closely related to what you want to do.
-* *Flexible*: Easy to define your own grammars when comes to specific usecases,  or under specific contexts.
-* *Expandable:* Possible to add new grammars, say lambda, try-catch to golang grammar and even execute other languages like c by simply just write it in the middle of your go program.
+# Quinne 
+Quinne is a framework to create a new Domain-Specific programming language(DSL)
 
-**Goal**:  Daily used programming languages like Python, Java, C++ are general-purpose languages meant to serve most scenarios, with a price being too complicated for specific use cases within specific context. This project aims to provide an easier way for you to create your own programming language, thus your own way of describing something.
+**Goal**:  To make it possible and easier to create a new domain specific language in a short time, with this newly created language in hand, development teams can have these advantages:
+1. Developers can communicate with other teams in this new, most likely, easier to understand language. Thus most misunderstandings can be eliminated, decompositions and abstractions can alse be done at the stage.
+2.  Protocals(Rules) can be set at this moment, any further changes can be described and applied in this new language, thus easier to know if any substantial code changes are required or exactly who to make these changes.
+3. With this new language describing the domain-specific logic, less documentation is required.
 
 **More Readings**:
 - [Looking at programming language from a different aspect](https://medium.com/@quinnkunfang_5420/looking-at-programming-language-from-a-different-aspect-9e4544047c1e)
@@ -105,3 +104,4 @@ To manipulate this small program, you create a quinne handler, iterate through e
 ## Docs:
 - [Introduction: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
 - [Examples: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
+

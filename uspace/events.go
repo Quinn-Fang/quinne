@@ -16,6 +16,7 @@ const (
 	EventTypeFunction               = 2
 	EventTypeFunctionDecl           = 3
 	EventTypeForLoop                = 4
+	EventTypeLambdaCall             = 5
 )
 
 type EventQueue struct {
