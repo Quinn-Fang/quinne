@@ -42,11 +42,13 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	// scanner.SetInnerType(consts.ICTypeFuncName)
 
 	PrimaryExprContextHandler(operandContext, scanner)
+	// scanner.SetInnerType(consts.ICTypeFuncArgs)
 
 	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionArgs)
 
 	// use scanner instead
-	scanner.SetInnerType(consts.ICTypeFuncArgs)
+	// already set in function name (operandName handler)
+	//scanner.SetInnerType(consts.ICTypeFuncArgs)
 
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
 		scanner.AppendExpr("(")
@@ -55,24 +57,32 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
 		scanner.AppendExpr(")")
 	}
+	curSymTable := sym_tables.GetCurSymTable()
+	var fFunction *procedures.FFunction
+	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+		if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
+			fFunction = curSymTable.GetLastFunction()
+		}
+	}
 
 	curCursor.SetCursorContext(sym_tables.ContextTypeDefault)
 
-	curSymTable := sym_tables.GetCurSymTable()
-	fFunction := curSymTable.GetLastFunction()
+	// fFunction := curSymTable.GetLastFunction()
 	curNavigator := navigator.GetCurNavigator()
 	////////////////
 	//if scanner
 	////////////////
 
-	if !curCursor.IsAppendingExpr() {
-		// regular function
-		curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
-	} else {
-		curCursor.PushExpr(fFunction.ToString())
-		curCursor.AddExprVarNames(fFunction.FName)
-	}
+	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
+		if !curCursor.IsAppendingExpr() {
+			// regular function
+			curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
+		} else {
+			curCursor.PushExpr(fFunction.ToString())
+			curCursor.AddExprVarNames(fFunction.FName)
+		}
 
+	}
 	// curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
 
 	scanner.SetInnerType(consts.ICTypeUnset)

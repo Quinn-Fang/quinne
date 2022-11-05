@@ -23,6 +23,7 @@ type LambdaDecl struct {
 // Actual lambda function
 type LambdaCall struct {
 	lDecl   *LambdaDecl
+	lArgs   []*variables.Variable
 	lReturn *variables.Variable
 }
 
@@ -30,6 +31,14 @@ func NewLambdaCall(lambdaDecl *LambdaDecl) *LambdaCall {
 	return &LambdaCall{
 		lDecl: lambdaDecl,
 	}
+}
+
+func (this *LambdaCall) GetArgs() []*variables.Variable {
+	return this.lArgs
+}
+
+func (this *LambdaCall) AddArgs(newArg *variables.Variable) {
+	this.lArgs = append(this.lArgs, newArg)
 }
 
 func (this *LambdaCall) GetLambdaExpr() string {

@@ -227,6 +227,11 @@ func (this *Scanner) NewInnerContext(icType consts.ICType) {
 			newInnerContext.context = NewLambdaContext()
 			this.innerContext = newInnerContext
 		}
+	case consts.ICTypeLambdaCall:
+		{
+			newInnerContext.context = NewLambdaCallContext()
+			this.innerContext = newInnerContext
+		}
 	default:
 		{
 			panic(errorICUnknownTypeMsg)

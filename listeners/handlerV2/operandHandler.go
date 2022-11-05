@@ -7,13 +7,14 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/procedures"
-	"github.com/Quinn-Fang/quinne/scanner"
+	scannerPkg "github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/uspace"
 	"github.com/Quinn-Fang/quinne/variables"
 )
 
-func OperandContextHandler(contextParser *parser.OperandContext, scanner *scanner.Scanner) error {
+func OperandContextHandler(contextParser *parser.OperandContext, scanner *scannerPkg.Scanner) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
@@ -37,7 +38,7 @@ func OperandContextHandler(contextParser *parser.OperandContext, scanner *scanne
 	return nil
 }
 
-func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner *scanner.Scanner) error {
+func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner *scannerPkg.Scanner) error {
 	children := contextParser.GetChildren()
 	terminalString, _ := utils.GetTerminalNodeText(children[0])
 	curCursor, _ := navigator.GetCursor()
@@ -45,20 +46,48 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 	curStatement := curCursor.GetStatement()
 
 	if scanner.GetInnerType() == consts.ICTypeFuncName {
-		var emptyValue interface{}
-		newReturnValue := variables.NewVariable(
-			"",
-			variables.VTypeFunctionReturned,
-			emptyValue,
-			curCursor.GetIndex())
+		symTable := sym_tables.GetCurSymTable()
+		// check if function has been defined
+		if variable, err := symTable.GetVariableByName(terminalString); err == nil {
+			// check if it is lambda call
+			if variable.GetVariableType() == variables.VTypeLambdaFunctionDecl {
+				var emptyValue interface{}
+				newReturnValue := variables.NewVariable(
+					"",
+					variables.VTypeLambdaReturned,
+					emptyValue,
+					-1,
+				)
+				lambdaDecl, _ := variable.GetVariableValue().(*procedures.LambdaDecl)
+				lambadCall := procedures.NewLambdaCall(lambdaDecl)
+				lambadCall.SetReturnValue(newReturnValue)
+				curNavigator := navigator.GetCurNavigator()
+				curNavigator.AddEvent(uspace.EventTypeLambdaCall, lambadCall, curSymTable)
+				curStatement.AddRightValue(newReturnValue)
 
-		curCursor.IncreaseIndex()
+				scanner.NewInnerContext(consts.ICTypeLambdaCall)
+				lambdaCallContext, _ := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
+				lambdaCallContext.SetLambdaCall(lambadCall)
+				lambdaCallContext.SetRetValue(newReturnValue)
+			}
+		} else {
+			var emptyValue interface{}
+			newReturnValue := variables.NewVariable(
+				"",
+				variables.VTypeFunctionReturned,
+				emptyValue,
+				curCursor.GetIndex())
 
-		curStatement.AddRightValue(newReturnValue)
+			curCursor.IncreaseIndex()
 
-		newFunction := procedures.NewFunction(terminalString)
-		newFunction.InitReturnValue(newReturnValue)
-		curSymTable.AddFunction(newFunction)
+			curStatement.AddRightValue(newReturnValue)
+
+			newFunction := procedures.NewFunction(terminalString)
+			newFunction.InitReturnValue(newReturnValue)
+			curSymTable.AddFunction(newFunction)
+			scanner.SetInnerType(consts.ICTypeFuncArgs)
+
+		}
 	} else if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 		variable, err := curSymTable.GetVariableByName(terminalString)
 		if err != nil {
@@ -82,6 +111,14 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 		//lambdaIfElseContext.AppendIfExpr(terminalString)
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
 		scanner.SetLambdaReturnValue(terminalString)
+	} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
+		variable, err := curSymTable.GetVariableByName(terminalString)
+		if err != nil {
+			errMsg := fmt.Sprintf("variable: %s does not exist", terminalString)
+			panic(errMsg)
+		}
+		lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
+		lambdaCallContext.AddArgs(variable)
 	}
 
 	if scanner.GetMiddleType() == consts.MCTypeExpr {

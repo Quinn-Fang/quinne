@@ -160,3 +160,23 @@ func (this *LambdaContext) NewLambdaIfElseClause() *LambdaIfElseContext {
 	lambdaIfElseContext := NewLambdaIfElseContext()
 	return lambdaIfElseContext
 }
+
+type LambdaCallContext struct {
+	lambdaCall *procedures.LambdaCall
+}
+
+func NewLambdaCallContext() *LambdaCallContext {
+	return &LambdaCallContext{}
+}
+
+func (this *LambdaCallContext) SetLambdaCall(lCall *procedures.LambdaCall) {
+	this.lambdaCall = lCall
+}
+
+func (this *LambdaCallContext) AddArgs(newArg *variables.Variable) {
+	this.lambdaCall.AddArgs(newArg)
+}
+
+func (this *LambdaCallContext) SetRetValue(retValue *variables.Variable) {
+	this.lambdaCall.SetReturnValue(retValue)
+}

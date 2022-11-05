@@ -18,6 +18,7 @@ const (
 	VTypeFunctionDecl                 = 7
 	VTypeLambdaFunctionDecl           = 8
 	VTypeInterface                    = 9
+	VTypeLambdaReturned               = 10
 )
 
 func StrToVType(vTypeString string) VTypeEnum {

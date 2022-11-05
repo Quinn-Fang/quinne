@@ -7,6 +7,7 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
+	scannerPkg "github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
@@ -77,6 +78,9 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
 			lambdaContext := scanner.GetLambdaContext()
 			lambdaContext.AppendSubExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
+			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
+			lambdaCallContext.AddArgs(curVariable)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
@@ -116,6 +120,9 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			lambdaContext.AppendSubExpr(terminalString)
 			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
 			//lambdaIfElseContext.AppendIfExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
+			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
+			lambdaCallContext.AddArgs(curVariable)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}

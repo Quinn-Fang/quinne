@@ -30,6 +30,7 @@ const (
 	ICTypeLambdaIfExpr           = 6
 	ICTypeLambdaIfClause         = 7
 	ICTypeLambdaCondition        = 8
+	ICTypeLambdaCall             = 9
 )
 
 //type LogicContextType int

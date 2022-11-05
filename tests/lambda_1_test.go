@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/Quinn-Fang/quinne/quinne"
+	"github.com/Quinn-Fang/quinne/uspace"
 )
 
 func Test_6(t *testing.T) {
@@ -12,6 +13,9 @@ func Test_6(t *testing.T) {
 	event, err := eventHandler.GetNextEvent()
 	for err == nil {
 		fmt.Printf("%+v\n", event)
+		if event.GetEventType() == uspace.EventTypeLambdaCall {
+			fmt.Println(event)
+		}
 		//if event.GetEventType() == uspace.EventTypeFunction {
 		//	// deal with how function show be executed here
 		//	// and provide the return value
