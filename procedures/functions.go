@@ -6,10 +6,101 @@ import (
 	"github.com/Quinn-Fang/quinne/variables"
 )
 
+//type FFunctionDecl struct {
+//	fName   string
+//	fParams []*variables.Variable
+//	fReturn []variables.VTypeEnum
+//}
+
+// Lambda functions
+
+// Lambda declaration
+type LambdaDecl struct {
+	lExpr        string
+	lTernaryExpr string
+	// specify parameters name and type
+	// without value
+	lParams []*variables.Variable
+}
+
+func (this *LambdaDecl) AddParam(param *variables.Variable) {
+	this.lParams = append(this.lParams, param)
+}
+
+// Actual lambda function
+type LambdaCall struct {
+	lDecl   *LambdaDecl
+	lArgs   []*variables.Variable
+	lReturn *variables.Variable
+}
+
+func NewLambdaCall(lambdaDecl *LambdaDecl) *LambdaCall {
+	return &LambdaCall{
+		lDecl: lambdaDecl,
+	}
+}
+
+func (this *LambdaCall) GetArgs() []*variables.Variable {
+	return this.lArgs
+}
+
+func (this *LambdaCall) GetParams() []*variables.Variable {
+	return this.lDecl.lParams
+}
+
+func (this *LambdaCall) AddArgs(newArg *variables.Variable) {
+	this.lArgs = append(this.lArgs, newArg)
+}
+
+func (this *LambdaCall) GetLambdaExpr() string {
+	return this.lDecl.lExpr
+}
+
+func (this *LambdaCall) GetLambdaTernaryExpr() string {
+	return this.lDecl.lTernaryExpr
+}
+
+func (this *LambdaCall) GetReturnValue() *variables.Variable {
+	return this.lReturn
+}
+
+func (this *LambdaCall) SetReturnValue(newVariable *variables.Variable) {
+	this.lReturn = newVariable
+}
+
+func NewLambdaDecl() *LambdaDecl {
+	newLambdaDecl := &LambdaDecl{}
+	return newLambdaDecl
+}
+
+func (this *LambdaDecl) AppendExpr(exprSubString string) {
+	this.lExpr += exprSubString
+}
+
+//func (this *LambdaDecl) AddParam(param *variables.Variable) {
+//	this.lParams = append(this.lParams, param)
+//}
+
+func (this *LambdaDecl) SetTernaryExpr(ternaryExpr string) {
+	this.lTernaryExpr = ternaryExpr
+}
+
+func (this *LambdaDecl) GetTernaryExpr() string {
+	return this.lTernaryExpr
+}
+
+type FDeclType int
+
+const (
+	FDeclTypeDefault FDeclType = 1
+	FDeclTypeLib               = 2
+)
+
 type FFunctionDecl struct {
 	fName   string
+	fType   FDeclType
 	fParams []*variables.Variable
-	fReturn []variables.VTypeEnum
+	fReturn *variables.Variable
 }
 
 func NewFunctionDecl(functionName string) *FFunctionDecl {
@@ -21,6 +112,30 @@ func NewFunctionDecl(functionName string) *FFunctionDecl {
 
 func (this *FFunctionDecl) GetFunctionName() string {
 	return this.fName
+}
+
+func (this *FFunctionDecl) SetFType(fType FDeclType) {
+	this.fType = fType
+}
+
+func (this *FFunctionDecl) GetFType() FDeclType {
+	return this.fType
+}
+
+func (this *FFunctionDecl) GetFParams() []*variables.Variable {
+	return this.fParams
+}
+
+func (this *FFunctionDecl) AddFParams(variable *variables.Variable) {
+	this.fParams = append(this.fParams, variable)
+}
+
+func (this *FFunctionDecl) SetFReturn(variable *variables.Variable) {
+	this.fReturn = variable
+}
+
+func (this *FFunctionDecl) GetFReturn() *variables.Variable {
+	return this.fReturn
 }
 
 type FFunction struct {

@@ -8,7 +8,7 @@ import (
 	"github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/uspace"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 type EventHandler struct {
@@ -44,6 +44,9 @@ func (this *EventHandler) GetNextEvent() (*uspace.Event, error) {
 	event, err := this.uNavigator.GetNextEvent()
 
 	if err == nil {
+		if event.GetEventType() == uspace.EventTypeLambdaCall {
+			event.SetLambdaExpr()
+		}
 		if _, ok := event.GetEventContext().(*sym_tables.IfElseBranch); ok {
 			event.GetSymTable().IsExecutable()
 			return event, nil

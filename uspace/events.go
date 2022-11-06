@@ -7,6 +7,7 @@ import (
 	"github.com/Quinn-Fang/quinne/procedures/buildin"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/utils"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 type EventType int
@@ -16,6 +17,7 @@ const (
 	EventTypeFunction               = 2
 	EventTypeFunctionDecl           = 3
 	EventTypeForLoop                = 4
+	EventTypeLambdaCall             = 5
 )
 
 type EventQueue struct {
@@ -45,6 +47,10 @@ func NewEvent(eventType EventType, curSymTable *sym_tables.SymTable) *Event {
 
 func (this *Event) GetSymTable() *sym_tables.SymTable {
 	return this.symTable
+}
+
+func (this *Event) GetVarByName(varName string) (*variables.Variable, error) {
+	return this.symTable.GetVariableByName(varName)
 }
 
 func (this *Event) SetEvent(eventPointer interface{}) {
@@ -140,6 +146,21 @@ func (this *Event) SetExpr(varMap map[string]interface{}) {
 	} else {
 		panic("Not ifelse expr error ")
 	}
+}
+
+func (this *Event) SetLambdaExpr() {
+	lambdaCall, _ := this.eventPointer.(*procedures.LambdaCall)
+	systemVarMap := make(map[string]interface{})
+	lArgs := lambdaCall.GetArgs()
+	lParams := lambdaCall.GetParams()
+	for i, variable := range lArgs {
+		systemVarMap[lParams[i].GetVariableName()] = variable.GetVariableValue()
+	}
+	lTernaryExpr := lambdaCall.GetLambdaTernaryExpr()
+	res := utils.ParseExprV2(lTernaryExpr, systemVarMap)
+	oldReturnValue := lambdaCall.GetReturnValue()
+	oldReturnValue.SetVariableValue(res)
+	lambdaCall.SetReturnValue(oldReturnValue)
 }
 
 func (this *Event) GetFunction(eventContext interface{}) *procedures.FFunction {

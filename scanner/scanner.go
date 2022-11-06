@@ -3,6 +3,7 @@ package scanner
 import (
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 const (
@@ -221,6 +222,16 @@ func (this *Scanner) NewInnerContext(icType consts.ICType) {
 			newInnerContext.context = NewFunctionContext()
 			this.innerContext = newInnerContext
 		}
+	case consts.ICTypeLambdaParams, consts.ICTypeLambdaExpr:
+		{
+			newInnerContext.context = NewLambdaContext()
+			this.innerContext = newInnerContext
+		}
+	case consts.ICTypeLambdaCall:
+		{
+			newInnerContext.context = NewLambdaCallContext()
+			this.innerContext = newInnerContext
+		}
 	default:
 		{
 			panic(errorICUnknownTypeMsg)
@@ -232,16 +243,22 @@ func (this *Scanner) SetInnerType(icType consts.ICType) {
 	if this.innerContext == nil {
 		panic("innerContext not set !")
 	}
-	switch icType {
-	case consts.ICTypeFuncName, consts.ICTypeFuncArgs, consts.ICTypeUnset:
-		{
-			this.innerContext.contextType = icType
-		}
-	default:
-		{
-			panic(errorICUnknownTypeMsg)
-		}
-	}
+	this.innerContext.contextType = icType
+	//switch icType {
+	//case consts.ICTypeFuncName, consts.ICTypeFuncArgs, consts.ICTypeUnset:
+	//	{
+	//		this.innerContext.contextType = icType
+	//	}
+	//case consts.ICTypeLambdaParams, consts.ICTypeLambdaExpr, consts.ICTypeLambdaIfClause,
+	//	consts.ICTypeLambdaIfExpr, consts.ICTypeLambdaRet:
+	//	{
+	//		this.innerContext.contextType = icType
+	//	}
+	//default:
+	//	{
+	//		panic(errorICUnknownTypeMsg)
+	//	}
+	//}
 }
 
 func (this *Scanner) GetInnerType() consts.ICType {
@@ -249,4 +266,97 @@ func (this *Scanner) GetInnerType() consts.ICType {
 		return consts.ICTypeUnset
 	}
 	return this.innerContext.contextType
+}
+
+// Lambda context
+
+func (this *Scanner) AddLambdaParam(paramName string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	if !(this.innerContext.contextType == consts.ICTypeLambdaParams) {
+		panic("not lambda inner context!")
+	}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AddParam(paramName)
+}
+
+func (this *Scanner) AppendLambdaExpr(exprStrRaw string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	if !(this.innerContext.contextType == consts.ICTypeLambdaExpr) {
+		panic("not lambda inner context!")
+	}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AppendExprRaw(exprStrRaw)
+}
+
+func (this *Scanner) AppendLambdaExprList(exprStr string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	//if !(this.innerContext.contextType == consts.ICTypeLambdaIfClause) {
+	//	panic("not lambda inner context!")
+	//}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AppendExprList(exprStr)
+}
+
+func (this *Scanner) SetLambdaReturnValue(retValue string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	//if !(this.innerContext.contextType == consts.ICTypeLambdaIfClause) {
+	//	panic("not lambda inner context!")
+	//}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.SetLReturn(retValue)
+}
+
+func (this *Scanner) AddLambdaParamToDecl(vType variables.VTypeEnum) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	if !(this.innerContext.contextType == consts.ICTypeLambdaParams) {
+		panic("not lambda inner context!")
+	}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AddLambdaDeclParams(vType)
+}
+
+func (this *Scanner) NewLambdaIfElseClauseContext() *LambdaIfElseContext {
+	return NewLambdaIfElseContext()
+}
+
+func (this *Scanner) SetLambdaIfElseClauseContext(lIfElseContext *LambdaIfElseContext) {
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.lIfElseClauseCtx = lIfElseContext
+}
+
+func (this *Scanner) GetLambdaIfElseClause() *LambdaIfElseContext {
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	return lambdaContext.lIfElseClauseCtx
+}
+
+func (this *Scanner) SetLambdaIfElseClauseContextEntry(lIfElseContext *LambdaIfElseContext) {
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.lIfElseClauseCtxEntry = lIfElseContext
+}
+
+func (this *Scanner) GetLambdaIfElseClauseEntry() *LambdaIfElseContext {
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	return lambdaContext.lIfElseClauseCtxEntry
+}
+
+func (this *Scanner) GetInnerContext() interface{} {
+	return this.innerContext.context
+}
+
+func (this *Scanner) GetLambdaContext() *LambdaContext {
+	if lambdaContext, ok := this.innerContext.context.(*LambdaContext); ok {
+		return lambdaContext
+	} else {
+		panic("innerContext is not LambdaContext")
+	}
 }

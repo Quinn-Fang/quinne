@@ -193,6 +193,19 @@ func (this *Statement) Assign() error {
 		leftValue := this.leftValues[i]
 		rightValue := this.rightValues[i]
 		rightValue.SetVariableName(leftValue)
+		// if right value is a lambda call then create an new variable calling lambda
+		// variable
+		//if rightValue.GetVariableType() == variables.VTypeLambdaFunctionDecl {
+		//	curSymTable := sym_tables.GetCurSymTable()
+		//	newVariable := variables.NewVariable(leftValue, variables.VTypeInterface, -1, -1)
+
+		//	lambdaDecl, _ := rightValue.GetVariableValue().(*procedures.LambdaDecl)
+		//	lambadCall := procedures.NewLambdaCall(lambdaDecl)
+		//	lambadCall.SetReturnValue(newVariable)
+		//	curNavigator.AddEvent(uspace.EventTypeLambdaCall, lambadCall, curSymTable)
+		//} else {
+		//	rightValue.SetVariableName(leftValue)
+		//}
 	}
 	return nil
 

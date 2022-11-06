@@ -7,6 +7,7 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
+	scannerPkg "github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
@@ -68,29 +69,25 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
+			scanner.AppendLambdaExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfExpr {
+			scanner.AppendLambdaExprList(terminalString)
+			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
+			//lambdaIfElseContext.AppendIfExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaContext.AppendSubExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
+			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
+			lambdaCallContext.AddArgs(curVariable)
 		} else {
 			curStatement.AddRightValue(curVariable)
-
 		}
 
 		if scanner.GetMiddleType() == consts.MCTypeExpr {
 			scanner.AppendExpr(terminalString)
 		}
-
-		/////////////////////////////////////// should be removed ////////////////////////////////////////
-		//if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
-		//	curFunction := curSymTable.GetLastFunction()
-		//	curFunction.AddParam(curVariable)
-
-		//	// curStatement.AddRightValue(curVariable)
-		//	// cursor.PrintStatement()
-		//	// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-		//} else if cursor.IsAppendingExpr() {
-		//	cursor.PushExpr(terminalString)
-		//} else {
-		//	curStatement.AddRightValue(curVariable)
-
-		//}
 	}
 
 	return nil
@@ -115,6 +112,17 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 		if scanner.GetInnerType() == consts.ICTypeFuncArgs {
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
+			scanner.AppendLambdaExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
+			// scanner.AppendLambdaExprList(terminalString)
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaContext.AppendSubExpr(terminalString)
+			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
+			//lambdaIfElseContext.AppendIfExpr(terminalString)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
+			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
+			lambdaCallContext.AddArgs(curVariable)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
@@ -122,18 +130,6 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 		if scanner.GetMiddleType() == consts.MCTypeExpr {
 			scanner.AppendExpr(terminalString)
 		}
-
-		/////////////////////////////////////// should be removed ////////////////////////////////////////
-		//if cursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
-		//	curFunction := curSymTable.GetLastFunction()
-		//	curFunction.AddParam(curVariable)
-
-		//	// } else if cursor.GetCursorContext() == sym_tables.ContextTypeIf || cursor.GetCursorContext() == sym_tables.ContextTypeElseIf {
-		//} else if cursor.IsAppendingExpr() {
-		//	cursor.PushExpr(terminalString)
-		//} else {
-		//	curStatement.AddRightValue(curVariable)
-		//}
 
 	}
 

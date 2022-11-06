@@ -1,7 +1,8 @@
-// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
+// Code generated from bck/GoParser.g4 by ANTLR 4.10.1. DO NOT EDIT.
 
 package parser // GoParser
-import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
+
+import "github.com/antlr/antlr4/runtime/Go/antlr"
 
 // GoParserListener is a complete listener for a parse tree produced by GoParser.
 type GoParserListener interface {
@@ -304,15 +305,6 @@ type GoParserListener interface {
 	// EnterEos is called when entering the eos production.
 	EnterEos(c *EosContext)
 
-	// EnterVarSpecList is called when entering the varSpecList production.
-	EnterVarSpecList(c *VarSpecListContext)
-
-	// EnterLambda is called when entering the lambda production.
-	EnterLambda(c *LambdaContext)
-
-	// EnterLambdaIfStmt is called when entering the lambdaIfStmt production.
-	EnterLambdaIfStmt(c *LambdaIfStmtContext)
-
 	// ExitSourceFile is called when exiting the sourceFile production.
 	ExitSourceFile(c *SourceFileContext)
 
@@ -609,13 +601,4 @@ type GoParserListener interface {
 
 	// ExitEos is called when exiting the eos production.
 	ExitEos(c *EosContext)
-
-	// ExitVarSpecList is called when exiting the varSpecList production.
-	ExitVarSpecList(c *VarSpecListContext)
-
-	// ExitLambda is called when exiting the lambda production.
-	ExitLambda(c *LambdaContext)
-
-	// ExitLambdaIfStmt is called when exiting the lambdaIfStmt production.
-	ExitLambdaIfStmt(c *LambdaIfStmtContext)
 }

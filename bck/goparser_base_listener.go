@@ -1,7 +1,8 @@
-// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
+// Code generated from bck/GoParser.g4 by ANTLR 4.10.1. DO NOT EDIT.
 
 package parser // GoParser
-import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
+
+import "github.com/antlr/antlr4/runtime/Go/antlr"
 
 // BaseGoParserListener is a complete listener for a parse tree produced by GoParser.
 type BaseGoParserListener struct{}
@@ -613,21 +614,3 @@ func (s *BaseGoParserListener) EnterEos(ctx *EosContext) {}
 
 // ExitEos is called when production eos is exited.
 func (s *BaseGoParserListener) ExitEos(ctx *EosContext) {}
-
-// EnterVarSpecList is called when production varSpecList is entered.
-func (s *BaseGoParserListener) EnterVarSpecList(ctx *VarSpecListContext) {}
-
-// ExitVarSpecList is called when production varSpecList is exited.
-func (s *BaseGoParserListener) ExitVarSpecList(ctx *VarSpecListContext) {}
-
-// EnterLambda is called when production lambda is entered.
-func (s *BaseGoParserListener) EnterLambda(ctx *LambdaContext) {}
-
-// ExitLambda is called when production lambda is exited.
-func (s *BaseGoParserListener) ExitLambda(ctx *LambdaContext) {}
-
-// EnterLambdaIfStmt is called when production lambdaIfStmt is entered.
-func (s *BaseGoParserListener) EnterLambdaIfStmt(ctx *LambdaIfStmtContext) {}
-
-// ExitLambdaIfStmt is called when production lambdaIfStmt is exited.
-func (s *BaseGoParserListener) ExitLambdaIfStmt(ctx *LambdaIfStmtContext) {}

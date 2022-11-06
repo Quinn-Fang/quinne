@@ -5,9 +5,11 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
+	"github.com/Quinn-Fang/quinne/scanner/consts"
 	scannerConsts "github.com/Quinn-Fang/quinne/scanner/consts"
+	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/variables"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 func ExpressionListContextHandler(contextParser *parser.ExpressionListContext, scanner *scanner.Scanner) error {
@@ -74,6 +76,70 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					scanner.AppendExpr(terminalString)
 				}
+
+				//if scanner.GetInnerType() == scannerConsts.ICTypeLambdaIfExpr {
+				//	terminalString, _ := utils.GetTerminalNodeText(parserContext)
+				//	scanner.AppendLambdaExpr(terminalString)
+				//	scanner.AppendLambdaExprList(terminalString)
+				//}
+				if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					scanner.AppendLambdaExprList(terminalString)
+				} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					scanner.SetLambdaReturnValue(terminalString)
+				} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
+					terminalString, _ := utils.GetTerminalNodeText(parserContext)
+					lambdaContext := scanner.GetLambdaContext()
+					lambdaContext.AppendSubExpr(terminalString)
+				}
+			}
+		case *parser.LambdaContext:
+			{
+				parserContextChildren := parserContext.GetChildren()
+				if len(parserContextChildren) == 4 {
+					// lambda expression without if else statement
+					LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
+						nil, scanner)
+				} else {
+					// lambda expression with if else statement
+					LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
+						parserContextChildren[4].(*parser.LambdaIfStmtContext), scanner)
+				}
+
+				cursor, _ := navigator.GetCursor()
+				terminalString, _ := utils.GetTerminalNodeText(child)
+				curStatement := cursor.GetStatement()
+				// intVal, _ := strconv.Atoi(terminalString)
+				lambdaContext := scanner.GetLambdaContext()
+				//lTernaryExpr := lambdaContext.ToTernaryExpr()
+				//newLambdaDecl := procedures.NewLambdaDecl()
+				//newLambdaDecl.SetTernaryExpr(lTernaryExpr)
+
+				lambdaDecl := lambdaContext.GetLambdaDecl()
+				lTernaryExpr := lambdaContext.ToTernaryExpr()
+				lambdaDecl.SetTernaryExpr(lTernaryExpr)
+				curVariable := variables.NewVariable(
+					"",
+					variables.VTypeLambdaFunctionDecl,
+					lambdaDecl,
+					cursor.GetIndex())
+
+				//cursor.IncreaseIndex()
+				curSymTable := sym_tables.GetCurSymTable()
+
+				if scanner.GetInnerType() == consts.ICTypeFuncArgs {
+					curFunction := curSymTable.GetLastFunction()
+					curFunction.AddParam(curVariable)
+
+				} else {
+					curStatement.AddRightValue(curVariable)
+				}
+
+				if scanner.GetMiddleType() == consts.MCTypeExpr {
+					scanner.AppendExpr(terminalString)
+				}
+
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import (
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
 	"github.com/Quinn-Fang/quinne/scanner"
+	"github.com/Quinn-Fang/quinne/scanner/consts"
 )
 
 func IdentifierListContextHandler(contextParser *parser.IdentifierListContext, scanner *scanner.Scanner) error {
@@ -21,8 +22,16 @@ func IdentifierListContextHandler(contextParser *parser.IdentifierListContext, s
 
 	curCursor, _ := navigator.GetCursor()
 	curStatement := curCursor.GetStatement()
-	for _, variableName := range identifierListStrings {
-		curStatement.AddLeftValue(variableName)
+	if scanner.GetInnerType() == consts.ICTypeLambdaParams {
+		// lambda
+		for _, variableName := range identifierListStrings {
+			scanner.AddLambdaParam(variableName)
+		}
+
+	} else {
+		for _, variableName := range identifierListStrings {
+			curStatement.AddLeftValue(variableName)
+		}
 	}
 
 	return nil
@@ -72,9 +81,26 @@ func VarSpecContextHandler(contextParser *parser.VarSpecContext, scanner *scanne
 			{
 				ExpressionListContextHandler(parserContext, scanner)
 			}
-
+		case *parser.Type_Context:
+			{
+				Type_ContextHandler(parserContext, scanner)
+			}
 		}
 	}
 
+	return nil
+}
+
+func VarSpecListContextHandler(contextParser *parser.VarSpecListContext, scanner *scanner.Scanner) error {
+	children := contextParser.GetChildren()
+
+	for _, child := range children {
+		switch parserContext := child.(type) {
+		case *parser.VarSpecContext:
+			{
+				VarSpecContextHandler(parserContext, scanner)
+			}
+		}
+	}
 	return nil
 }
