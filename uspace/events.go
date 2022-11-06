@@ -7,6 +7,7 @@ import (
 	"github.com/Quinn-Fang/quinne/procedures/buildin"
 	"github.com/Quinn-Fang/quinne/sym_tables"
 	"github.com/Quinn-Fang/quinne/utils"
+	"github.com/Quinn-Fang/quinne/variables"
 )
 
 type EventType int
@@ -46,6 +47,10 @@ func NewEvent(eventType EventType, curSymTable *sym_tables.SymTable) *Event {
 
 func (this *Event) GetSymTable() *sym_tables.SymTable {
 	return this.symTable
+}
+
+func (this *Event) GetVarByName(varName string) (*variables.Variable, error) {
+	return this.symTable.GetVariableByName(varName)
 }
 
 func (this *Event) SetEvent(eventPointer interface{}) {
