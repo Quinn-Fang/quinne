@@ -4,7 +4,6 @@ import (
 	"github.com/Quinn-Fang/quinne/listeners/utils"
 	"github.com/Quinn-Fang/quinne/navigator"
 	"github.com/Quinn-Fang/quinne/parser"
-	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/scanner"
 	"github.com/Quinn-Fang/quinne/scanner/consts"
 	scannerConsts "github.com/Quinn-Fang/quinne/scanner/consts"
@@ -112,14 +111,18 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 				terminalString, _ := utils.GetTerminalNodeText(child)
 				curStatement := cursor.GetStatement()
 				// intVal, _ := strconv.Atoi(terminalString)
-				lambadContext := scanner.GetLambdaContext()
-				lTernaryExpr := lambadContext.ToTernaryExpr()
-				newLambdaDecl := procedures.NewLambdaDecl()
-				newLambdaDecl.SetTernaryExpr(lTernaryExpr)
+				lambdaContext := scanner.GetLambdaContext()
+				//lTernaryExpr := lambdaContext.ToTernaryExpr()
+				//newLambdaDecl := procedures.NewLambdaDecl()
+				//newLambdaDecl.SetTernaryExpr(lTernaryExpr)
+
+				lambdaDecl := lambdaContext.GetLambdaDecl()
+				lTernaryExpr := lambdaContext.ToTernaryExpr()
+				lambdaDecl.SetTernaryExpr(lTernaryExpr)
 				curVariable := variables.NewVariable(
 					"",
 					variables.VTypeLambdaFunctionDecl,
-					newLambdaDecl,
+					lambdaDecl,
 					cursor.GetIndex())
 
 				//cursor.IncreaseIndex()

@@ -18,6 +18,13 @@ import (
 type LambdaDecl struct {
 	lExpr        string
 	lTernaryExpr string
+	// specify parameters name and type
+	// without value
+	lParams []*variables.Variable
+}
+
+func (this *LambdaDecl) AddParam(param *variables.Variable) {
+	this.lParams = append(this.lParams, param)
 }
 
 // Actual lambda function
@@ -35,6 +42,10 @@ func NewLambdaCall(lambdaDecl *LambdaDecl) *LambdaCall {
 
 func (this *LambdaCall) GetArgs() []*variables.Variable {
 	return this.lArgs
+}
+
+func (this *LambdaCall) GetParams() []*variables.Variable {
+	return this.lDecl.lParams
 }
 
 func (this *LambdaCall) AddArgs(newArg *variables.Variable) {

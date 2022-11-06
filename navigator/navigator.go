@@ -39,11 +39,6 @@ func (this *Navigator) AddEvent(eventType uspace.EventType, event interface{}, s
 
 func (this *Navigator) GetNextEvent() (*uspace.Event, error) {
 	event, err := this.eventQueue.PopFront()
-	//if event.GetEventType() == sym_tables.ContextTypeFuncDecl {
-	//	return this.GetNextEvent()
-	//} else if event.GetEventType() == sym_tables.ContextTypeForLoop {
-	//	return this.GetNextEvent()
-	//}
 	return event, err
 }
 

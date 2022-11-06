@@ -143,6 +143,21 @@ func (this *Event) SetExpr(varMap map[string]interface{}) {
 	}
 }
 
+func (this *Event) SetLambdaExpr() {
+	lambdaCall, _ := this.eventPointer.(*procedures.LambdaCall)
+	systemVarMap := make(map[string]interface{})
+	lArgs := lambdaCall.GetArgs()
+	lParams := lambdaCall.GetParams()
+	for i, variable := range lArgs {
+		systemVarMap[lParams[i].GetVariableName()] = variable.GetVariableValue()
+	}
+	lTernaryExpr := lambdaCall.GetLambdaTernaryExpr()
+	res := utils.ParseExprV2(lTernaryExpr, systemVarMap)
+	oldReturnValue := lambdaCall.GetReturnValue()
+	oldReturnValue.SetVariableValue(res)
+	lambdaCall.SetReturnValue(oldReturnValue)
+}
+
 func (this *Event) GetFunction(eventContext interface{}) *procedures.FFunction {
 	if fFunction, ok := eventContext.(*procedures.FFunction); ok {
 		return fFunction
