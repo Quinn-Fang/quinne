@@ -21,7 +21,7 @@ go get -u github.com/Quinn-Fang/quinne
 ```
 ## Examples
 ### 1. Graphs:
-#### Electronic circuit:
+#### Electronic circuit
 ```go
 package samples_001
 
@@ -57,7 +57,7 @@ func main() {
 ```
 
 ### 2. Directional programming
-#### Route planner
+#### Driving route planner
 ```go
 package directional
 
@@ -72,6 +72,59 @@ func main() {
 		driveToBackDoor()
 		openBackDoor()
 		driveToCompany()
+	}
+}
+
+```
+#### Login Design
+```go
+package directional
+
+func main() {
+	getUserPhoneNum()
+	checkUserExistance()
+	if exists {
+		ssoStatus := checkSSOStatus()
+		ssoLogin(ssoStatus)
+	} else {
+		createNewUser()
+		userStatusConfirm()
+		userLogin()
+	}
+}
+
+```
+
+#### Strategy design
+```go
+package directional
+
+func main() {
+	getUserInfo()
+	if isNewUser() {
+		expireDate := "2022-7-31"
+		amount = 3
+		sendCoupon(amount, expireDate)
+		if isDriver() {
+			amount = 10
+			expireDate := "2023-7-31"
+			sendCoupon(amount, expireDate)
+		}
+	} else {
+		if isUnderBadWeather() {
+			amount = 10
+			expireDate := "2023-7-31"
+			nodificationMsg := "Bad weather coming!"
+			sendCoupon(amount, expireDate)
+			sendNotification(nodificationMsg)
+		} else {
+
+		}
+
+		if OpenApp() {
+			time := getLocalTime()
+			sendMsgByTime(time)
+		}
 	}
 }
 
