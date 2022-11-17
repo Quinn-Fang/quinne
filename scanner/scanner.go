@@ -314,6 +314,17 @@ func (this *Scanner) SetLambdaReturnValue(retValue string) {
 	lambdaContext.SetLReturn(retValue)
 }
 
+func (this *Scanner) AppendLambdaReturnValue(retValue string) {
+	if this.innerContext == nil {
+		panic("innerContext not set !")
+	}
+	//if !(this.innerContext.contextType == consts.ICTypeLambdaIfClause) {
+	//	panic("not lambda inner context!")
+	//}
+	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+	lambdaContext.AppendLReturn(retValue)
+}
+
 func (this *Scanner) AddLambdaParamToDecl(vType variables.VTypeEnum) {
 	if this.innerContext == nil {
 		panic("innerContext not set !")

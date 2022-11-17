@@ -141,7 +141,7 @@ func (this *Event) SetExpr(varMap map[string]interface{}) {
 		allVarMap := utils.MergeMaps(userVarMap, systemVarMap)
 
 		// res := utils.ParseExpr(ifElseBranch.GetExpr(), varMap)
-		res := utils.ParseExprV2(ifElseBranch.GetExpr(), allVarMap)
+		res := utils.ParseExprV2Bool(ifElseBranch.GetExpr(), allVarMap)
 		ifElseBranch.SetJudgeRes(res)
 	} else {
 		panic("Not ifelse expr error ")
