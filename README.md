@@ -1,4 +1,3 @@
-
 # Quinne 
 Quinne is a framework to create a new Domain-Specific programming language(DSL)
 
@@ -20,43 +19,22 @@ Quinne is a framework to create a new Domain-Specific programming language(DSL)
 go get -u github.com/Quinn-Fang/quinne
 ```
 ## Examples
-### 1. Graphs:
-#### Electronic circuit
+### 1. Directional programming
+#### Building Cloud Service Components(K8S)
 ```go
-package samples_001
+package main
 
 func main() {
-	create_battery()
-	create_switch()
-	if SWITCH_ON {
-		create_bulb("bulb-1")
-	} else {
-		create_bulb("bulb-2")
-	}
+	Platform := "aws"
+	Authenticate()
+	Ret := CreateEKSCluster("EKSCluster-1", 3)
+	additionalNodeCount := lambda currentNode, expectedNode int: expectedNode-currentNode if expectedNode > currentNode else 0
+	currentNodeCount := getCurrentNodeCount()
+	expectedNodeCount := 6
+	additionalNode := additionalNodeCount(currentNodeCount, expectedNodeCount)
+	expandEKSCluster(additionalNode)
 }
 ```
-
-#### Trees(Database index storage)
-```go
-package graph
-
-func main() {
-	searchForTreeNodeWithValue(36)
-	if treeNodeExists {
-		if rearrangeRequired {
-			rearrangeTreeStructure()
-			insertNewValue()
-		} else {
-			insertNewValue()
-		}
-	} else {
-		createTreeNode()
-	}
-}
-
-```
-
-### 2. Directional programming
 #### Driving route planner
 ```go
 package directional
@@ -76,6 +54,7 @@ func main() {
 }
 
 ```
+
 #### Login Design
 ```go
 package directional
@@ -130,7 +109,44 @@ func main() {
 
 ```
 
+### 2. Graphs:
+#### Electronic circuit
+```go
+package samples_001
+
+func main() {
+	create_battery()
+	create_switch()
+	if SWITCH_ON {
+		create_bulb("bulb-1")
+	} else {
+		create_bulb("bulb-2")
+	}
+}
+```
+
+#### Trees(Database index storage)
+```go
+package graph
+
+func main() {
+	searchForTreeNodeWithValue(36)
+	if treeNodeExists {
+		if rearrangeRequired {
+			rearrangeTreeStructure()
+			insertNewValue()
+		} else {
+			insertNewValue()
+		}
+	} else {
+		createTreeNode()
+	}
+}
+
+```
+
 ## Docs:
 - [Introduction: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
 - [Examples: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
+
 
