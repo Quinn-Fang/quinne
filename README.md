@@ -35,6 +35,7 @@ func main() {
 	expandEKSCluster(additionalNode)
 }
 ```
+- [Full example here  ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/infra_example_1.md)
 #### Driving route planner
 ```go
 package directional
@@ -148,5 +149,4 @@ func main() {
 ## Docs:
 - [Introduction: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
 - [Examples: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
-
 
