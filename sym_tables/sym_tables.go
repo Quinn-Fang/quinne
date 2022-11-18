@@ -300,6 +300,23 @@ func (this *SymTable) AddVariable(newVariable *variables.Variable) error {
 	}
 }
 
+//func (this *SymTable) GetVariableByName(variableName string) (*variables.Variable, error) {
+//	// look for the variable up chain
+//	if this == rootSymTable {
+//		return variables.NewEmptyVariable(), errors.New("variable does not exist")
+//	}
+//	if variable, ok := this.variableMap[variableName]; !ok {
+//		prevSymTable := this.GetPrev()
+//		if parentVariable, err := prevSymTable.GetVariableByName(variableName); err != nil {
+//			return variables.NewEmptyVariable(), err
+//		} else {
+//			return parentVariable, nil
+//		}
+//	} else {
+//		return variable, nil
+//	}
+//}
+
 func (this *SymTable) GetVariableByName(variableName string) (*variables.Variable, error) {
 	// look for the variable up chain
 	if this == rootSymTable {

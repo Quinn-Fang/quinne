@@ -103,6 +103,10 @@ func (this *LambdaContext) AppendExprList(exprStr string) {
 	this.lExprList = append(this.lExprList, exprStr)
 }
 
+func (this *LambdaContext) AppendLReturn(retValue string) {
+	this.lRet += retValue
+}
+
 func (this *LambdaContext) SetLReturn(retValue string) {
 	this.lRet = retValue
 }

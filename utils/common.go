@@ -84,7 +84,7 @@ func ParseExpr(expr string, parameters map[string]interface{}) bool {
 	}
 }
 
-func ParseExprV2(expr string, parameters map[string]interface{}) bool {
+func ParseExprV2Bool(expr string, parameters map[string]interface{}) bool {
 	out, err := exprV2.Eval(expr, parameters)
 
 	if err != nil {
@@ -96,6 +96,16 @@ func ParseExprV2(expr string, parameters map[string]interface{}) bool {
 	} else {
 		panic("result is not bool")
 	}
+}
+
+func ParseExprV2(expr string, parameters map[string]interface{}) interface{} {
+	out, err := exprV2.Eval(expr, parameters)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return out
 }
 
 func MergeMaps(mapA map[string]interface{}, mapB map[string]interface{}) map[string]interface{} {
