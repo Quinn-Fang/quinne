@@ -1,12 +1,13 @@
+
 # Quinne 
 Quinne is a framework to create a new Domain-Specific programming language(DSL)
 
-***Goal***:  To make it possible and easier to create a new domain specific language in a short time, with this newly created language in hand, development teams can have these advantages:
-1. ***Efficient comunication***:  Developers can communicate with other teams in this new, domain-specific, easier to understand language, most misunderstandings can be eliminated. 
-2. ***Clean task decomposition***: With DSL, clean logic branches, less-parameter function calls, it's natural to express complicated bussiness logic by directional-programming. Abstractions, task decompositions, development time estimations can be done at this stage.
-3. ***Formalized protocal***: Protocals(Rules) can be agreed when logic has been discribed in DSL, any further changes can be applied to this new language, thus easier to know if any substantial code changes are required or exactly who to make these changes, developers and non-developers can reach agreement faster.
-4.  ***Less documentations and tests***: With DSL itself expressing bussioness logic already, less documentation is required, overlap test cases can be significantly eliminated.  
-5. ***Customized Grammar***: With Golang's basic grammar combined with Python style try-catch, lamba grammar, developer's can write shorter programs with enhanced functionalities by using functional programming.
+***Goal***:  To make it easier to create a new domain-specific language for your own purposes, with this new language, you can get these advantages:
+1. ***Efficient communication***:  Developers can communicate with other teams in this new,  less complicated, easier-to-understand language, so participators from different teams can reach an agreement shortly.
+2. ***Declarative Programming***: Most Business rule engines can be created by using logic branches and functions(actions) in a declarative manner, which is a better way to express solutions to difficult problems and domain experts can easily read and verify a set of rules.
+3. ***Knowledge Centralization***: You can build a repository of knowledge, which is executable and strongly tied to the backend code and data, so it will be the most up-to-date version of business logic and can be served as documentation.
+4.  ***Logic and Code Separation***: Code and data reside in the actual backend realization and business logic resides in the frontend DSL, meaning domain experts can focus on domain problems and developers can focus on code design and optimization.
+5. ***Customized Grammar***: With Golang's basic grammar combined with python style try-catch, and Lamba grammar, developers can write shorter programs with enhanced functionalities by using functional programming.
 
 **More Readings**:
 - [Looking at programming language from a different aspect](https://medium.com/@quinnkunfang_5420/looking-at-programming-language-from-a-different-aspect-9e4544047c1e)
@@ -149,4 +150,5 @@ func main() {
 ## Docs:
 - [Introduction: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
 - [Examples: ](https://github.com/Quinn-Fang/quinne/blob/master/Documents/info.md)
+
 
