@@ -336,29 +336,29 @@ func (this *Scanner) AddLambdaParamToDecl(vType variables.VTypeEnum) {
 	lambdaContext.AddLambdaDeclParams(vType)
 }
 
-func (this *Scanner) NewLambdaIfElseClauseContext() *LambdaIfElseContext {
-	return NewLambdaIfElseContext()
-}
+//func (this *Scanner) NewLambdaIfElseClauseContext() *LambdaIfElseContext {
+//	return NewLambdaIfElseContext()
+//}
 
-func (this *Scanner) SetLambdaIfElseClauseContext(lIfElseContext *LambdaIfElseContext) {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	lambdaContext.lIfElseClauseCtx = lIfElseContext
-}
+//func (this *Scanner) SetLambdaIfElseClauseContext(lIfElseContext *LambdaIfElseContext) {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	lambdaContext.lIfElseClauseCtx = lIfElseContext
+//}
+//
+//func (this *Scanner) GetLambdaIfElseClause() *LambdaIfElseContext {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	return lambdaContext.lIfElseClauseCtx
+//}
 
-func (this *Scanner) GetLambdaIfElseClause() *LambdaIfElseContext {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	return lambdaContext.lIfElseClauseCtx
-}
-
-func (this *Scanner) SetLambdaIfElseClauseContextEntry(lIfElseContext *LambdaIfElseContext) {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	lambdaContext.lIfElseClauseCtxEntry = lIfElseContext
-}
-
-func (this *Scanner) GetLambdaIfElseClauseEntry() *LambdaIfElseContext {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	return lambdaContext.lIfElseClauseCtxEntry
-}
+//func (this *Scanner) SetLambdaIfElseClauseContextEntry(lIfElseContext *LambdaIfElseContext) {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	lambdaContext.lIfElseClauseCtxEntry = lIfElseContext
+//}
+//
+//func (this *Scanner) GetLambdaIfElseClauseEntry() *LambdaIfElseContext {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	return lambdaContext.lIfElseClauseCtxEntry
+//}
 
 func (this *Scanner) GetInnerContext() interface{} {
 	return this.innerContext.context

@@ -28,9 +28,9 @@ func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext
 	}
 	y := scanner.GetLambdaContext().ToTernaryExpr()
 	fmt.Println(y)
-	entry := scanner.GetLambdaIfElseClauseEntry()
-	x := entry.ToExprList()
-	fmt.Println(x)
+	//entry := scanner.GetLambdaIfElseClauseEntry()
+	//x := entry.ToExprList()
+	//fmt.Println(x)
 	return nil
 }
 

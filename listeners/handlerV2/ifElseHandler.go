@@ -79,15 +79,18 @@ func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, s
 	// curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
 	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
-	newLambdaIfClauseCtx := scanner.NewLambdaIfElseClauseContext()
-	oldLambdaIfClauseCtx := scanner.GetLambdaIfElseClause()
-	if oldLambdaIfClauseCtx != nil {
-		oldLambdaIfClauseCtx.AddElseClause(oldLambdaIfClauseCtx)
-	} else {
-		newLambdaIfClauseCtx.SetBranchSymbol(sym_tables.LogicSymbolIf)
-		scanner.SetLambdaIfElseClauseContext(newLambdaIfClauseCtx)
-		scanner.SetLambdaIfElseClauseContextEntry(newLambdaIfClauseCtx)
-	}
+	//newLambdaIfClauseCtx := scanner.NewLambdaIfElseClauseContext()
+
+	//scanner.SetLambdaIfElseClauseContext(newLambdaIfClauseCtx)
+
+	//oldLambdaIfClauseCtx := scanner.GetLambdaIfElseClause()
+	//if oldLambdaIfClauseCtx != nil {
+	//	oldLambdaIfClauseCtx.AddElseClause(oldLambdaIfClauseCtx)
+	//} else {
+	//	newLambdaIfClauseCtx.SetBranchSymbol(sym_tables.LogicSymbolIf)
+	//	scanner.SetLambdaIfElseClauseContext(newLambdaIfClauseCtx)
+	//	// scanner.SetLambdaIfElseClauseContextEntry(newLambdaIfClauseCtx)
+	//}
 	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 
 	for _, child := range children {
