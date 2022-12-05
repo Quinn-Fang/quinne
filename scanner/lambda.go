@@ -61,10 +61,10 @@ type LambdaContext struct {
 	lRet    string
 	// Right value, parts after : ,
 	// usually expression if condition else condition
-	lExprRaw string
+	//lExprRaw string
 	// Target expr string, translated using left and right
 	// values
-	lExpr    string
+	//lExpr    string
 	lSubExpr string
 	// temporary logic, 0: return value for if condition,
 	// 1: if expression(true return value)
