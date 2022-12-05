@@ -1,8 +1,6 @@
 package scanner
 
 import (
-	"strings"
-
 	"github.com/Quinn-Fang/quinne/procedures"
 	"github.com/Quinn-Fang/quinne/variables"
 )
@@ -94,9 +92,9 @@ func (this *LambdaContext) AddParam(paramName string) {
 	this.lParams = append(this.lParams, paramName)
 }
 
-func (this *LambdaContext) AppendExprRaw(exprRaw string) {
-	this.lExprRaw += exprRaw
-}
+//func (this *LambdaContext) AppendExprRaw(exprRaw string) {
+//	this.lExprRaw += exprRaw
+//}
 
 func (this *LambdaContext) AppendExprList(exprStr string) {
 	this.lExprList = append(this.lExprList, exprStr)
@@ -106,9 +104,9 @@ func (this *LambdaContext) AppendLReturn(retValue string) {
 	this.lRet += retValue
 }
 
-func (this *LambdaContext) SetLReturn(retValue string) {
-	this.lRet = retValue
-}
+//func (this *LambdaContext) SetLReturn(retValue string) {
+//	this.lRet = retValue
+//}
 
 func (this *LambdaContext) AppendSubExpr(subExpr string) {
 	this.lSubExpr += subExpr
@@ -136,10 +134,10 @@ func (this *LambdaContext) AddLambdaDeclParams(vType variables.VTypeEnum) {
 		)
 		this.lambdaDecl.AddParam(curVariable)
 	}
-	if len(this.lExprRaw) > 0 {
-		this.AppendExprRaw(",")
-	}
-	this.AppendExprRaw(strings.Join(this.lParams, ","))
+	//if len(this.lExprRaw) > 0 {
+	//	this.AppendExprRaw(",")
+	//}
+	//this.AppendExprRaw(strings.Join(this.lParams, ","))
 	this.lParams = make([]string, 0)
 }
 

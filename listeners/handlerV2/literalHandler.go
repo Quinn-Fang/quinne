@@ -70,7 +70,7 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 			curFunction.AddParam(curVariable)
 
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
-			scanner.AppendLambdaExpr(terminalString)
+			//scanner.AppendLambdaExpr(terminalString)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfExpr {
 			scanner.AppendLambdaExprList(terminalString)
 			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
@@ -113,7 +113,7 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
-			scanner.AppendLambdaExpr(terminalString)
+			//scanner.AppendLambdaExpr(terminalString)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
 			// scanner.AppendLambdaExprList(terminalString)
 			lambdaContext := scanner.GetLambdaContext()
