@@ -12,6 +12,21 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
+func LambdaExpressionContextHandler(contextParser *parser.LambdaExpressionContext, scanner *scanner.Scanner) error {
+	children := contextParser.GetChildren()
+	if len(children) == 1 {
+		ExpressionListContextHandler(children[0].(*parser.ExpressionListContext), scanner)
+	} else if len(children) == 2 {
+		ExpressionListContextHandler(children[0].(*parser.ExpressionListContext), scanner)
+		scanner.SetInnerType(consts.ICTypeLambdaIfClause)
+		LambdaIfElseStmtContextHandler(children[1].(*parser.LambdaIfStmtContext), scanner)
+	} else {
+		panic("Children length not correct.")
+	}
+	return nil
+
+}
+
 func ExpressionListContextHandler(contextParser *parser.ExpressionListContext, scanner *scanner.Scanner) error {
 	children := contextParser.GetChildren()
 	splitter := ","
@@ -98,15 +113,16 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 		case *parser.LambdaContext:
 			{
 				parserContextChildren := parserContext.GetChildren()
-				if len(parserContextChildren) == 4 {
-					// lambda expression without if else statement
-					LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
-						nil, scanner)
-				} else {
-					// lambda expression with if else statement
-					LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
-						parserContextChildren[4].(*parser.LambdaIfStmtContext), scanner)
-				}
+				//if len(parserContextChildren) == 4 {
+				//	// lambda expression without if else statement
+				//	LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
+				//		nil, scanner)
+				//} else {
+				//	// lambda expression with if else statement
+				//	LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
+				//		parserContextChildren[4].(*parser.LambdaIfStmtContext), scanner)
+				//}
+				LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.LambdaExpressionContext), scanner)
 
 				cursor, _ := navigator.GetCursor()
 				terminalString, _ := utils.GetTerminalNodeText(child)

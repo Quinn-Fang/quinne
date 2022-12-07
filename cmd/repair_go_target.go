@@ -8,7 +8,7 @@ import (
 
 func RepairGoCode() {
 	// lines := []string{"4106", "17100", "17150", "17201"}
-	lines := []string{"4135", "17151", "17848", "17899"}
+	lines := []string{"4138", "17154", "17957", "18008"}
 
 	for _, line := range lines {
 		// cmdString := "sed -i \"%ss/closingBracket/p.closingBracket/\" ./parser/go_parser.go"
