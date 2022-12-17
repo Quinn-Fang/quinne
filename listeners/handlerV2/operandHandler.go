@@ -112,6 +112,9 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
 		// scanner.SetLambdaReturnValue(terminalString)
 		scanner.AppendLambdaReturnValue(terminalString)
+		lambdaContext := scanner.GetLambdaContext()
+		lambdaDecl := lambdaContext.GetLambdaDecl()
+		lambdaDecl.AppendRet(terminalString)
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
 		variable, err := curSymTable.GetVariableByName(terminalString)
 		if err != nil {

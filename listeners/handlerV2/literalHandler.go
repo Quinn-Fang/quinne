@@ -81,6 +81,13 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
 			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
 			lambdaCallContext.AddArgs(curVariable)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+			// scanner.SetLambdaReturnValue(terminalString)
+			scanner.AppendLambdaReturnValue(terminalString)
+			// Set return value for the current lambda expression
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaDecl := lambdaContext.GetLambdaDecl()
+			lambdaDecl.AppendRet(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
@@ -123,6 +130,13 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
 			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
 			lambdaCallContext.AddArgs(curVariable)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+			// scanner.SetLambdaReturnValue(terminalString)
+			scanner.AppendLambdaReturnValue(terminalString)
+			// Set return value for the current lambda expression
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaDecl := lambdaContext.GetLambdaDecl()
+			lambdaDecl.AppendRet(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}

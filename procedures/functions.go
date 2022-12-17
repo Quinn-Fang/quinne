@@ -14,13 +14,23 @@ import (
 
 // Lambda functions
 
+// lambdaExpression, return value + if else stmt
+type LambdaExpression struct {
+	lReturn string
+	lIfCond *variables.Variable
+	// else stmt exists if LambdaExpression is not Nil
+	lNextExpression *LambdaExpression
+}
+
 // Lambda declaration
 type LambdaDecl struct {
 	lExpr        string
 	lTernaryExpr string
 	// specify parameters name and type
 	// without value
-	lParams []*variables.Variable
+	lParams          []*variables.Variable
+	lFirstExpression *LambdaExpression
+	lLastExpression  *LambdaExpression
 }
 
 func (this *LambdaDecl) AddParam(param *variables.Variable) {
@@ -69,8 +79,32 @@ func (this *LambdaCall) SetReturnValue(newVariable *variables.Variable) {
 }
 
 func NewLambdaDecl() *LambdaDecl {
-	newLambdaDecl := &LambdaDecl{}
+	newLambdaExpression := &LambdaExpression{}
+	newLambdaDecl := &LambdaDecl{
+		lFirstExpression: newLambdaExpression,
+		lLastExpression:  newLambdaExpression,
+	}
 	return newLambdaDecl
+}
+
+func (this *LambdaDecl) NewLambdaExpression() *LambdaExpression {
+	newLambdaExpression := &LambdaExpression{}
+	this.lLastExpression.lNextExpression = newLambdaExpression
+	this.lLastExpression = newLambdaExpression
+	return newLambdaExpression
+}
+
+//func (this *LambdaDecl) SetRet(retValue string) {
+//	this.lLastExpression.lReturn = retValue
+//}
+
+func (this *LambdaDecl) AppendRet(retValue string) {
+	this.lLastExpression.lReturn += retValue
+}
+
+func (this *LambdaDecl) SetIfCond(ifCond string) {
+	newStringVariable := variables.NewVariable("", variables.VTypeString, ifCond, -1)
+	this.lLastExpression.lIfCond = newStringVariable
 }
 
 func (this *LambdaDecl) AppendExpr(exprSubString string) {

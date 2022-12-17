@@ -15,8 +15,10 @@ import (
 func LambdaExpressionContextHandler(contextParser *parser.LambdaExpressionContext, scanner *scanner.Scanner) error {
 	children := contextParser.GetChildren()
 	if len(children) == 1 {
+		scanner.SetInnerType(consts.ICTypeLambdaRet)
 		ExpressionListContextHandler(children[0].(*parser.ExpressionListContext), scanner)
 	} else if len(children) == 2 {
+		scanner.SetInnerType(consts.ICTypeLambdaRet)
 		ExpressionListContextHandler(children[0].(*parser.ExpressionListContext), scanner)
 		scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 		LambdaIfElseStmtContextHandler(children[1].(*parser.LambdaIfStmtContext), scanner)
@@ -92,11 +94,6 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					scanner.AppendExpr(terminalString)
 				}
 
-				//if scanner.GetInnerType() == scannerConsts.ICTypeLambdaIfExpr {
-				//	terminalString, _ := utils.GetTerminalNodeText(parserContext)
-				//	scanner.AppendLambdaExpr(terminalString)
-				//	scanner.AppendLambdaExprList(terminalString)
-				//}
 				if scanner.GetInnerType() == consts.ICTypeLambdaIfClause {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					scanner.AppendLambdaExprList(terminalString)
@@ -104,6 +101,11 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					// scanner.SetLambdaReturnValue(terminalString)
 					scanner.AppendLambdaReturnValue(terminalString)
+					// Set return value for the current lambda expression
+					lambdaContext := scanner.GetLambdaContext()
+					lambdaDecl := lambdaContext.GetLambdaDecl()
+					lambdaDecl.AppendRet(terminalString)
+
 				} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
 					terminalString, _ := utils.GetTerminalNodeText(parserContext)
 					lambdaContext := scanner.GetLambdaContext()
@@ -113,25 +115,12 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 		case *parser.LambdaContext:
 			{
 				parserContextChildren := parserContext.GetChildren()
-				//if len(parserContextChildren) == 4 {
-				//	// lambda expression without if else statement
-				//	LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
-				//		nil, scanner)
-				//} else {
-				//	// lambda expression with if else statement
-				//	LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.ExpressionListContext),
-				//		parserContextChildren[4].(*parser.LambdaIfStmtContext), scanner)
-				//}
 				LambdaHandler(parserContextChildren[1].(*parser.VarSpecListContext), parserContextChildren[3].(*parser.LambdaExpressionContext), scanner)
 
 				cursor, _ := navigator.GetCursor()
 				terminalString, _ := utils.GetTerminalNodeText(child)
 				curStatement := cursor.GetStatement()
-				// intVal, _ := strconv.Atoi(terminalString)
 				lambdaContext := scanner.GetLambdaContext()
-				//lTernaryExpr := lambdaContext.ToTernaryExpr()
-				//newLambdaDecl := procedures.NewLambdaDecl()
-				//newLambdaDecl.SetTernaryExpr(lTernaryExpr)
 
 				lambdaDecl := lambdaContext.GetLambdaDecl()
 				lTernaryExpr := lambdaContext.ToTernaryExpr()
@@ -142,7 +131,6 @@ func ExpressionContextHandler(contextParser *parser.ExpressionContext, scanner *
 					lambdaDecl,
 					cursor.GetIndex())
 
-				//cursor.IncreaseIndex()
 				curSymTable := sym_tables.GetCurSymTable()
 
 				if scanner.GetInnerType() == consts.ICTypeFuncArgs {

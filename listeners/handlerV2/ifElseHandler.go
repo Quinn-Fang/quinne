@@ -76,21 +76,7 @@ func IfElseStmtContextHandler(contextParser *parser.IfStmtContext, scanner *scan
 }
 
 func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, scanner *scannerPkg.Scanner) error {
-	// curCursor, _ := navigator.GetCursor()
 	children := contextParser.GetChildren()
-	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
-	//newLambdaIfClauseCtx := scanner.NewLambdaIfElseClauseContext()
-
-	//scanner.SetLambdaIfElseClauseContext(newLambdaIfClauseCtx)
-
-	//oldLambdaIfClauseCtx := scanner.GetLambdaIfElseClause()
-	//if oldLambdaIfClauseCtx != nil {
-	//	oldLambdaIfClauseCtx.AddElseClause(oldLambdaIfClauseCtx)
-	//} else {
-	//	newLambdaIfClauseCtx.SetBranchSymbol(sym_tables.LogicSymbolIf)
-	//	scanner.SetLambdaIfElseClauseContext(newLambdaIfClauseCtx)
-	//	// scanner.SetLambdaIfElseClauseContextEntry(newLambdaIfClauseCtx)
-	//}
 	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 
 	for _, child := range children {
@@ -102,12 +88,21 @@ func LambdaIfElseStmtContextHandler(contextParser *parser.LambdaIfStmtContext, s
 				ExpressionContextHandler(parserContext, scanner)
 				lambdaContext, _ := scanner.GetInnerContext().(*scannerPkg.LambdaContext)
 				lambdaContext.AppendExprList(lambdaContext.GetSubExpr())
+				// add if condition to cur lambda expression
+				lambdaDecl := lambdaContext.GetLambdaDecl()
+				lambdaDecl.SetIfCond(lambdaContext.GetSubExpr())
 				lambdaContext.ClearSubExpr()
 				scanner.SetInnerType(consts.ICTypeLambdaIfClause)
 			}
-		case *parser.LambdaIfStmtContext:
+		case *parser.LambdaExpressionContext:
 			{
-				LambdaIfElseStmtContextHandler(parserContext, scanner)
+
+				scanner.SetInnerType(consts.ICTypeLambdaExpression)
+				lambdaContext, _ := scanner.GetInnerContext().(*scannerPkg.LambdaContext)
+				lambdaContext.AppendExprList(lambdaContext.GetSubExpr())
+				lambdaDecl := lambdaContext.GetLambdaDecl()
+				lambdaDecl.NewLambdaExpression()
+				LambdaExpressionContextHandler(parserContext, scanner)
 			}
 		case *antlr.TerminalNodeImpl:
 			{

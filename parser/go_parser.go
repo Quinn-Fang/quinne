@@ -529,7 +529,7 @@ func goparserParserInit() {
 		0, 990, 991, 3, 140, 70, 0, 991, 997, 1, 0, 0, 0, 992, 993, 3, 40, 20,
 		0, 993, 994, 3, 196, 98, 0, 994, 995, 3, 140, 70, 0, 995, 997, 1, 0, 0,
 		0, 996, 988, 1, 0, 0, 0, 996, 989, 1, 0, 0, 0, 996, 992, 1, 0, 0, 0, 997,
-		1010, 1, 0, 0, 0, 998, 1008, 5, 13, 0, 0, 999, 1009, 3, 204, 102, 0, 1000,
+		1010, 1, 0, 0, 0, 998, 1008, 5, 13, 0, 0, 999, 1009, 3, 202, 101, 0, 1000,
 		1009, 3, 140, 70, 0, 1001, 1002, 3, 196, 98, 0, 1002, 1003, 3, 140, 70,
 		0, 1003, 1009, 1, 0, 0, 0, 1004, 1005, 3, 40, 20, 0, 1005, 1006, 3, 196,
 		98, 0, 1006, 1007, 3, 140, 70, 0, 1007, 1009, 1, 0, 0, 0, 1008, 999, 1,
@@ -17761,10 +17761,10 @@ func (s *LambdaIfStmtContext) ELSE() antlr.TerminalNode {
 	return s.GetToken(GoParserELSE, 0)
 }
 
-func (s *LambdaIfStmtContext) LambdaIfStmt() ILambdaIfStmtContext {
+func (s *LambdaIfStmtContext) LambdaExpression() ILambdaExpressionContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(ILambdaIfStmtContext); ok {
+		if _, ok := ctx.(ILambdaExpressionContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -17774,7 +17774,7 @@ func (s *LambdaIfStmtContext) LambdaIfStmt() ILambdaIfStmtContext {
 		return nil
 	}
 
-	return t.(ILambdaIfStmtContext)
+	return t.(ILambdaExpressionContext)
 }
 
 func (s *LambdaIfStmtContext) GetRuleContext() antlr.RuleContext {
@@ -17873,7 +17873,7 @@ func (p *GoParser) LambdaIfStmt() (localctx ILambdaIfStmtContext) {
 		case 1:
 			{
 				p.SetState(999)
-				p.LambdaIfStmt()
+				p.LambdaExpression()
 			}
 
 		case 2:

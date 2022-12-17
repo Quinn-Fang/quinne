@@ -397,5 +397,5 @@ lambdaIfStmt: IF ( expression
 			| eos expression
 			| simpleStmt eos expression
 			) (
-		ELSE (lambdaIfStmt | expression | eos expression | simpleStmt eos expression)
+		ELSE (lambdaExpression | expression | eos expression | simpleStmt eos expression)
 	)?;

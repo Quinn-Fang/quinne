@@ -17,8 +17,10 @@ func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext
 	VarSpecListContextHandler(varSpecList, scanner)
 	scanner.SetInnerType(consts.ICTypeLambdaExpr)
 	//scanner.AppendLambdaExpr(":")
-	scanner.SetInnerType(consts.ICTypeLambdaRet)
+	// scanner.SetInnerType(consts.ICTypeLambdaRet)
 	// ExpressionListContextHandler(expressionListContext, scanner)
+
+	scanner.SetInnerType(consts.ICTypeLambdaExpression)
 	LambdaExpressionContextHandler(expressionListContext, scanner)
 
 	// Optional if else statement of lambda statement
