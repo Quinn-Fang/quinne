@@ -16,10 +16,31 @@ import (
 
 // lambdaExpression, return value + if else stmt
 type LambdaExpression struct {
+	// string for now, mostly for expr engine
 	lReturn string
+	// make it a pointer so it's easier to check wether succeeding
+	// if condition exists
 	lIfCond *variables.Variable
+	// make it a pointer so to check wether succeeding Lambda Expression
+	// exists.
 	// else stmt exists if LambdaExpression is not Nil
 	lNextExpression *LambdaExpression
+}
+
+func (this *LambdaExpression) GetIfCond() *variables.Variable {
+	return this.lIfCond
+}
+
+func (this *LambdaExpression) GetIfCondStr() string {
+	return this.lIfCond.GetVariableValue().(string)
+}
+
+func (this *LambdaExpression) GetNextExpression() *LambdaExpression {
+	return this.lNextExpression
+}
+
+func (this *LambdaExpression) GetReturnValueString() string {
+	return this.lReturn
 }
 
 // Lambda declaration
@@ -92,6 +113,10 @@ func (this *LambdaDecl) NewLambdaExpression() *LambdaExpression {
 	this.lLastExpression.lNextExpression = newLambdaExpression
 	this.lLastExpression = newLambdaExpression
 	return newLambdaExpression
+}
+
+func (this *LambdaDecl) GetFirstLambdaExpression() *LambdaExpression {
+	return this.lFirstExpression
 }
 
 //func (this *LambdaDecl) SetRet(retValue string) {

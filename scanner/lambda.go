@@ -141,13 +141,54 @@ func (this *LambdaContext) AddLambdaDeclParams(vType variables.VTypeEnum) {
 	this.lParams = make([]string, 0)
 }
 
+//func (this *LambdaContext) ToTernaryExpr() string {
+//	ret := ""
+//	ret += this.lExprList[1]
+//	ret += "?"
+//	ret += this.lRet
+//	ret += ":"
+//	ret += this.lExprList[3]
+//	return ret
+//}
+
 func (this *LambdaContext) ToTernaryExpr() string {
+	// simple: ifcond?return:else
+	// clustered: ifcond?(ifcond?return:else):(ifcond?return:else)
+	lambdaDecl := this.GetLambdaDecl()
+	lambdaExpression := lambdaDecl.GetFirstLambdaExpression()
+	if lambdaExpression == nil {
+		panic("lambda expression does not exists!")
+	}
+
+	return ToLambdaExpressionString(lambdaExpression)
+}
+
+func ToLambdaExpressionString(lExpr *procedures.LambdaExpression) string {
+	if lExpr == nil {
+		// The caller of this function should've checked nullable of
+		// lambda expression already.
+		panic("LambdaExpression is nil !")
+	}
 	ret := ""
-	ret += this.lExprList[1]
-	ret += "?"
-	ret += this.lRet
-	ret += ":"
-	ret += this.lExprList[3]
+	lambdaReturnStr := lExpr.GetReturnValueString()
+	ret += lambdaReturnStr
+	ifCond := lExpr.GetIfCond()
+	if ifCond == nil {
+		// No more succeeding if condition
+		return ret
+	}
+	// if condition exists.
+	ifCondStr := lExpr.GetIfCondStr()
+	ret = ifCondStr + "?" + ret
+
+	// if ifCond is not nil and no more else, then we lose default
+	// value, so next lambdaExpression(else) must exists.
+	if lExpr.GetNextExpression() == nil {
+		panic("No more succeeding LambdaExpression(else)!")
+	}
+
+	// LambdaExpression exists.
+	ret += ":" + ToLambdaExpressionString(lExpr.GetNextExpression())
 	return ret
 }
 
