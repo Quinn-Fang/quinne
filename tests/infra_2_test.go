@@ -9,7 +9,7 @@ import (
 )
 
 func Test_Infra_2(t *testing.T) {
-	eventHandler := quinne.NewEventHandler("data/infra/infra_sample_1.go")
+	eventHandler := quinne.NewEventHandler("data/infra/infra_sample_2.go")
 	event, err := eventHandler.GetNextEvent()
 	for err == nil {
 		fmt.Printf("%+v\n", event)
@@ -59,7 +59,7 @@ func Test_Infra_2(t *testing.T) {
 					//fmt.Println(result)
 
 					// set currentNode Number as function return value
-					fFunction.SetReturnValue(2)
+					fFunction.SetReturnValue(6)
 				}
 			case "CreateEKSCluster":
 				{
@@ -120,7 +120,14 @@ func Test_Infra_2(t *testing.T) {
 					params := fFunction.GetParams()
 					// check params here
 					additionalNodeCount := params[0]
-					fmt.Println(additionalNodeCount)
+					fmt.Println(additionalNodeCount.GetVariableValue())
+					expected := 5
+					retValue := additionalNodeCount.GetVariableValue().(int)
+
+					if retValue != expected {
+						errMsg := fmt.Sprintf(funcReturnNotEqual, retValue, expected)
+						t.Error(errMsg)
+					}
 					// params := NewScalingConfig(additionalNodeCount)
 
 					//req, resp := client.UpdateClusterConfigRequest(params)

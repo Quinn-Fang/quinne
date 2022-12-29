@@ -189,7 +189,7 @@ func ToLambdaExpressionString(lExpr *procedures.LambdaExpression) string {
 
 	// LambdaExpression exists.
 	ret += ":" + ToLambdaExpressionString(lExpr.GetNextExpression())
-	return ret
+	return "(" + ret + ")"
 }
 
 //func (this *LambdaContext) SetLambdaIfElseClause(lIfElseClause *LambdaIfElseContext) {
