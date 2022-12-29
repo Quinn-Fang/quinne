@@ -384,10 +384,18 @@ eos:
 // lambda: 'lambda' identifierList ':' expressionList lambdaIfStmt?;
 
 varSpecList: varSpec (COMMA varSpec)*; 
-lambda: LAMBDA varSpecList COLON expressionList lambdaIfStmt?;
-lambdaIfStmt: 	IF ( expression
+//lambda: LAMBDA varSpecList COLON expressionList lambdaIfStmt?;
+//lambdaIfStmt: 	IF ( expression
+//			| eos expression
+//			| simpleStmt eos expression
+//			) (
+//		ELSE (lambdaIfStmt | expression | eos expression | simpleStmt eos expression)
+//	)?;
+lambda: LAMBDA varSpecList COLON lambdaExpression;
+lambdaExpression: expressionList lambdaIfStmt?;
+lambdaIfStmt: IF ( expression
 			| eos expression
 			| simpleStmt eos expression
 			) (
-		ELSE (lambdaIfStmt | expression | eos expression | simpleStmt eos expression)
+		ELSE (lambdaExpression | expression | eos expression | simpleStmt eos expression)
 	)?;

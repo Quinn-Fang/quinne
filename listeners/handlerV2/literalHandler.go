@@ -70,7 +70,7 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 			curFunction.AddParam(curVariable)
 
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
-			scanner.AppendLambdaExpr(terminalString)
+			//scanner.AppendLambdaExpr(terminalString)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaIfExpr {
 			scanner.AppendLambdaExprList(terminalString)
 			//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
@@ -81,6 +81,13 @@ func IntegerContextHandler(contextParser *parser.IntegerContext, scanner *scanne
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
 			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
 			lambdaCallContext.AddArgs(curVariable)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+			// scanner.SetLambdaReturnValue(terminalString)
+			scanner.AppendLambdaReturnValue(terminalString)
+			// Set return value for the current lambda expression
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaDecl := lambdaContext.GetLambdaDecl()
+			lambdaDecl.AppendRet(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}
@@ -113,7 +120,7 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 			curFunction := curSymTable.GetLastFunction()
 			curFunction.AddParam(curVariable)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
-			scanner.AppendLambdaExpr(terminalString)
+			//scanner.AppendLambdaExpr(terminalString)
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
 			// scanner.AppendLambdaExprList(terminalString)
 			lambdaContext := scanner.GetLambdaContext()
@@ -123,6 +130,13 @@ func StringContextHandler(contextParser *parser.String_Context, scanner *scanner
 		} else if scanner.GetInnerType() == consts.ICTypeLambdaCall {
 			lambdaCallContext := scanner.GetInnerContext().(*scannerPkg.LambdaCallContext)
 			lambdaCallContext.AddArgs(curVariable)
+		} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
+			// scanner.SetLambdaReturnValue(terminalString)
+			scanner.AppendLambdaReturnValue(terminalString)
+			// Set return value for the current lambda expression
+			lambdaContext := scanner.GetLambdaContext()
+			lambdaDecl := lambdaContext.GetLambdaDecl()
+			lambdaDecl.AppendRet(terminalString)
 		} else {
 			curStatement.AddRightValue(curVariable)
 		}

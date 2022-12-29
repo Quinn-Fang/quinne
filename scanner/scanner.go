@@ -281,16 +281,16 @@ func (this *Scanner) AddLambdaParam(paramName string) {
 	lambdaContext.AddParam(paramName)
 }
 
-func (this *Scanner) AppendLambdaExpr(exprStrRaw string) {
-	if this.innerContext == nil {
-		panic("innerContext not set !")
-	}
-	if !(this.innerContext.contextType == consts.ICTypeLambdaExpr) {
-		panic("not lambda inner context!")
-	}
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	lambdaContext.AppendExprRaw(exprStrRaw)
-}
+//func (this *Scanner) AppendLambdaExpr(exprStrRaw string) {
+//	if this.innerContext == nil {
+//		panic("innerContext not set !")
+//	}
+//	if !(this.innerContext.contextType == consts.ICTypeLambdaExpr) {
+//		panic("not lambda inner context!")
+//	}
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	lambdaContext.AppendExprRaw(exprStrRaw)
+//}
 
 func (this *Scanner) AppendLambdaExprList(exprStr string) {
 	if this.innerContext == nil {
@@ -303,16 +303,16 @@ func (this *Scanner) AppendLambdaExprList(exprStr string) {
 	lambdaContext.AppendExprList(exprStr)
 }
 
-func (this *Scanner) SetLambdaReturnValue(retValue string) {
-	if this.innerContext == nil {
-		panic("innerContext not set !")
-	}
-	//if !(this.innerContext.contextType == consts.ICTypeLambdaIfClause) {
-	//	panic("not lambda inner context!")
-	//}
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	lambdaContext.SetLReturn(retValue)
-}
+//func (this *Scanner) SetLambdaReturnValue(retValue string) {
+//	if this.innerContext == nil {
+//		panic("innerContext not set !")
+//	}
+//	//if !(this.innerContext.contextType == consts.ICTypeLambdaIfClause) {
+//	//	panic("not lambda inner context!")
+//	//}
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	lambdaContext.SetLReturn(retValue)
+//}
 
 func (this *Scanner) AppendLambdaReturnValue(retValue string) {
 	if this.innerContext == nil {
@@ -336,29 +336,29 @@ func (this *Scanner) AddLambdaParamToDecl(vType variables.VTypeEnum) {
 	lambdaContext.AddLambdaDeclParams(vType)
 }
 
-func (this *Scanner) NewLambdaIfElseClauseContext() *LambdaIfElseContext {
-	return NewLambdaIfElseContext()
-}
+//func (this *Scanner) NewLambdaIfElseClauseContext() *LambdaIfElseContext {
+//	return NewLambdaIfElseContext()
+//}
 
-func (this *Scanner) SetLambdaIfElseClauseContext(lIfElseContext *LambdaIfElseContext) {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	lambdaContext.lIfElseClauseCtx = lIfElseContext
-}
+//func (this *Scanner) SetLambdaIfElseClauseContext(lIfElseContext *LambdaIfElseContext) {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	lambdaContext.lIfElseClauseCtx = lIfElseContext
+//}
+//
+//func (this *Scanner) GetLambdaIfElseClause() *LambdaIfElseContext {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	return lambdaContext.lIfElseClauseCtx
+//}
 
-func (this *Scanner) GetLambdaIfElseClause() *LambdaIfElseContext {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	return lambdaContext.lIfElseClauseCtx
-}
-
-func (this *Scanner) SetLambdaIfElseClauseContextEntry(lIfElseContext *LambdaIfElseContext) {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	lambdaContext.lIfElseClauseCtxEntry = lIfElseContext
-}
-
-func (this *Scanner) GetLambdaIfElseClauseEntry() *LambdaIfElseContext {
-	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
-	return lambdaContext.lIfElseClauseCtxEntry
-}
+//func (this *Scanner) SetLambdaIfElseClauseContextEntry(lIfElseContext *LambdaIfElseContext) {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	lambdaContext.lIfElseClauseCtxEntry = lIfElseContext
+//}
+//
+//func (this *Scanner) GetLambdaIfElseClauseEntry() *LambdaIfElseContext {
+//	lambdaContext, _ := this.innerContext.context.(*LambdaContext)
+//	return lambdaContext.lIfElseClauseCtxEntry
+//}
 
 func (this *Scanner) GetInnerContext() interface{} {
 	return this.innerContext.context

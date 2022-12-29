@@ -310,6 +310,9 @@ type GoParserListener interface {
 	// EnterLambda is called when entering the lambda production.
 	EnterLambda(c *LambdaContext)
 
+	// EnterLambdaExpression is called when entering the lambdaExpression production.
+	EnterLambdaExpression(c *LambdaExpressionContext)
+
 	// EnterLambdaIfStmt is called when entering the lambdaIfStmt production.
 	EnterLambdaIfStmt(c *LambdaIfStmtContext)
 
@@ -615,6 +618,9 @@ type GoParserListener interface {
 
 	// ExitLambda is called when exiting the lambda production.
 	ExitLambda(c *LambdaContext)
+
+	// ExitLambdaExpression is called when exiting the lambdaExpression production.
+	ExitLambdaExpression(c *LambdaExpressionContext)
 
 	// ExitLambdaIfStmt is called when exiting the lambdaIfStmt production.
 	ExitLambdaIfStmt(c *LambdaIfStmtContext)

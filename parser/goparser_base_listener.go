@@ -626,6 +626,12 @@ func (s *BaseGoParserListener) EnterLambda(ctx *LambdaContext) {}
 // ExitLambda is called when production lambda is exited.
 func (s *BaseGoParserListener) ExitLambda(ctx *LambdaContext) {}
 
+// EnterLambdaExpression is called when production lambdaExpression is entered.
+func (s *BaseGoParserListener) EnterLambdaExpression(ctx *LambdaExpressionContext) {}
+
+// ExitLambdaExpression is called when production lambdaExpression is exited.
+func (s *BaseGoParserListener) ExitLambdaExpression(ctx *LambdaExpressionContext) {}
+
 // EnterLambdaIfStmt is called when production lambdaIfStmt is entered.
 func (s *BaseGoParserListener) EnterLambdaIfStmt(ctx *LambdaIfStmtContext) {}
 
