@@ -16,47 +16,14 @@ func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext
 	scanner.NewInnerContext(consts.ICTypeLambdaParams)
 	VarSpecListContextHandler(varSpecList, scanner)
 	scanner.SetInnerType(consts.ICTypeLambdaExpr)
-	//scanner.AppendLambdaExpr(":")
-	// scanner.SetInnerType(consts.ICTypeLambdaRet)
-	// ExpressionListContextHandler(expressionListContext, scanner)
 
 	scanner.SetInnerType(consts.ICTypeLambdaExpression)
 	LambdaExpressionContextHandler(expressionListContext, scanner)
 
-	// Optional if else statement of lambda statement
-	//if lambdaIfStmt != nil {
-	//	scanner.SetInnerType(consts.ICTypeLambdaIfClause)
-	//	LambdaIfElseStmtContextHandler(lambdaIfStmt, scanner)
-	//}
 	y := scanner.GetLambdaContext().ToTernaryExpr()
 	fmt.Println(y)
-	//entry := scanner.GetLambdaIfElseClauseEntry()
-	//x := entry.ToExprList()
-	//fmt.Println(x)
 	return nil
 }
-
-//func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext *parser.ExpressionListContext,
-//	lambdaIfStmt *parser.LambdaIfStmtContext, scanner *scanner.Scanner) error {
-//	scanner.NewInnerContext(consts.ICTypeLambdaParams)
-//	VarSpecListContextHandler(varSpecList, scanner)
-//	scanner.SetInnerType(consts.ICTypeLambdaExpr)
-//	//scanner.AppendLambdaExpr(":")
-//	scanner.SetInnerType(consts.ICTypeLambdaRet)
-//	ExpressionListContextHandler(expressionListContext, scanner)
-//
-//	// Optional if else statement of lambda statement
-//	if lambdaIfStmt != nil {
-//		scanner.SetInnerType(consts.ICTypeLambdaIfClause)
-//		LambdaIfElseStmtContextHandler(lambdaIfStmt, scanner)
-//	}
-//	y := scanner.GetLambdaContext().ToTernaryExpr()
-//	fmt.Println(y)
-//	//entry := scanner.GetLambdaIfElseClauseEntry()
-//	//x := entry.ToExprList()
-//	//fmt.Println(x)
-//	return nil
-//}
 
 func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext *parser.ArgumentsContext, scanner *scanner.Scanner) error {
 	curCursor, _ := navigator.GetCursor()

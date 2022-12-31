@@ -6,12 +6,6 @@ import (
 	"github.com/Quinn-Fang/quinne/variables"
 )
 
-//type FFunctionDecl struct {
-//	fName   string
-//	fParams []*variables.Variable
-//	fReturn []variables.VTypeEnum
-//}
-
 // Lambda functions
 
 // lambdaExpression, return value + if else stmt
@@ -135,10 +129,6 @@ func (this *LambdaDecl) SetIfCond(ifCond string) {
 func (this *LambdaDecl) AppendExpr(exprSubString string) {
 	this.lExpr += exprSubString
 }
-
-//func (this *LambdaDecl) AddParam(param *variables.Variable) {
-//	this.lParams = append(this.lParams, param)
-//}
 
 func (this *LambdaDecl) SetTernaryExpr(ternaryExpr string) {
 	this.lTernaryExpr = ternaryExpr

@@ -100,17 +100,10 @@ func OperandNameContextHandler(contextParser *parser.OperandNameContext, scanner
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaExpr {
 		scanner.AppendLambdaExprList(terminalString)
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaIfExpr {
-		//scanner.AppendLambdaExprList(terminalString)
-		//curLambdaIfClauseCtx := scanner.GetLambdaIfElseClause()
-		//curLambdaIfClauseCtx.AppendIfExpr(terminalString)
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaCondition {
 		lambdaContext := scanner.GetLambdaContext()
 		lambdaContext.AppendSubExpr(terminalString)
-		//scanner.AppendLambdaExprList(terminalString)
-		//lambdaIfElseContext := scanner.GetLambdaIfElseClause()
-		//lambdaIfElseContext.AppendIfExpr(terminalString)
 	} else if scanner.GetInnerType() == consts.ICTypeLambdaRet {
-		// scanner.SetLambdaReturnValue(terminalString)
 		scanner.AppendLambdaReturnValue(terminalString)
 		lambdaContext := scanner.GetLambdaContext()
 		lambdaDecl := lambdaContext.GetLambdaDecl()
