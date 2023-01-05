@@ -13,6 +13,7 @@ import (
 )
 
 func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext *parser.LambdaExpressionContext, scanner *scanner.Scanner) error {
+	// For Lambda definition, lambda should be called in the form of a regular function.
 	scanner.NewInnerContext(consts.ICTypeLambdaParams)
 	VarSpecListContextHandler(varSpecList, scanner)
 	scanner.SetInnerType(consts.ICTypeLambdaExpr)
@@ -28,18 +29,17 @@ func LambdaHandler(varSpecList *parser.VarSpecListContext, expressionListContext
 func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext *parser.ArgumentsContext, scanner *scanner.Scanner) error {
 	curCursor, _ := navigator.GetCursor()
 	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionName)
-	// use scanner instead
 	scanner.NewInnerContext(consts.ICTypeFuncName)
-	// scanner.SetInnerType(consts.ICTypeFuncName)
 
 	PrimaryExprContextHandler(operandContext, scanner)
+
+	// curCursor.SetCursorContext(sym_tables.ContextTypeFunctionArgs)
 	// scanner.SetInnerType(consts.ICTypeFuncArgs)
 
-	curCursor.SetCursorContext(sym_tables.ContextTypeFunctionArgs)
-
-	// use scanner instead
-	// already set in function name (operandName handler)
-	//scanner.SetInnerType(consts.ICTypeFuncArgs)
+	// Here we do not know whether it is function call or lambda call,
+	// in operand handler, see if function name has been defined, if so,
+	// it a lambda call, otherwise it it a function call. So the function
+	// arg or lambdacall inner type should be set there.
 
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
 		scanner.AppendExpr("(")
@@ -50,19 +50,19 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	}
 	curSymTable := sym_tables.GetCurSymTable()
 	var fFunction *procedures.FFunction
-	if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
-		if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
-			fFunction = curSymTable.GetLastFunction()
-		}
-	}
+	// if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
+	//if scanner.GetInnerType() == consts.ICTypeFuncArgs {
+	//	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
+	//		fFunction = curSymTable.GetLastFunction()
+	//	}
+	//}
 
+	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
+		fFunction = curSymTable.GetLastFunction()
+	}
 	curCursor.SetCursorContext(sym_tables.ContextTypeDefault)
 
-	// fFunction := curSymTable.GetLastFunction()
 	curNavigator := navigator.GetCurNavigator()
-	////////////////
-	//if scanner
-	////////////////
 
 	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
 		if !curCursor.IsAppendingExpr() {

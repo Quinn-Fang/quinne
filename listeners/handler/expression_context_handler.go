@@ -179,9 +179,6 @@ func BasicLitContextHandler(contextParser *parser.BasicLitContext) error {
 	children := contextParser.GetChildren()
 
 	for _, child := range children {
-		//fmt.Println("^^^^^^^^^^^^^^^^^^^^^^^^^")
-		//fmt.Printf("%T\n", child)
-		//fmt.Printf("%+v\n", child)
 		switch parserContext := child.(type) {
 		case *parser.String_Context:
 			{
