@@ -43,26 +43,33 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
 		scanner.AppendExpr(")")
 	}
+
 	curSymTable := sym_tables.GetCurSymTable()
-	var fFunction *procedures.FFunction
-
 	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
-		fFunction = curSymTable.GetLastFunction()
+		fFunction := curSymTable.GetLastFunction()
+		curNavigator := navigator.GetCurNavigator()
+		curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
 	}
-	curCursor.SetCursorContext(sym_tables.ContextTypeDefault)
+	//curSymTable := sym_tables.GetCurSymTable()
+	//var fFunction *procedures.FFunction
 
-	curNavigator := navigator.GetCurNavigator()
+	//if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
+	//	fFunction = curSymTable.GetLastFunction()
+	//}
+	//curCursor.SetCursorContext(sym_tables.ContextTypeDefault)
 
-	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
-		if !curCursor.IsAppendingExpr() {
-			// regular function
-			curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
-		} else {
-			curCursor.PushExpr(fFunction.ToString())
-			curCursor.AddExprVarNames(fFunction.FName)
-		}
+	//curNavigator := navigator.GetCurNavigator()
 
-	}
+	//if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
+	//	if !curCursor.IsAppendingExpr() {
+	//		// regular function
+	//		curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
+	//	} else {
+	//		curCursor.PushExpr(fFunction.ToString())
+	//		curCursor.AddExprVarNames(fFunction.FName)
+	//	}
+
+	//}
 
 	scanner.SetInnerType(consts.ICTypeUnset)
 
