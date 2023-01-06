@@ -163,8 +163,8 @@ func (this *Event) SetLambdaExpr() {
 	lambdaCall.SetReturnValue(oldReturnValue)
 }
 
-func (this *Event) GetFunction(eventContext interface{}) *procedures.FFunction {
-	if fFunction, ok := eventContext.(*procedures.FFunction); ok {
+func (this *Event) GetFunction(eventContext interface{}) *procedures.FunctionCall {
+	if fFunction, ok := eventContext.(*procedures.FunctionCall); ok {
 		return fFunction
 	} else {
 		panic("Getting function from event error")

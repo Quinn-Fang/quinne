@@ -141,57 +141,57 @@ const (
 	FDeclTypeLib               = 2
 )
 
-type FFunctionDecl struct {
+type FunctionCallDecl struct {
 	fName   string
 	fType   FDeclType
 	fParams []*variables.Variable
 	fReturn *variables.Variable
 }
 
-func NewFunctionDecl(functionName string) *FFunctionDecl {
-	newFunctionDecl := &FFunctionDecl{
+func NewFunctionDecl(functionName string) *FunctionCallDecl {
+	newFunctionDecl := &FunctionCallDecl{
 		fName: functionName,
 	}
 	return newFunctionDecl
 }
 
-func (this *FFunctionDecl) GetFunctionName() string {
+func (this *FunctionCallDecl) GetFunctionName() string {
 	return this.fName
 }
 
-func (this *FFunctionDecl) SetFType(fType FDeclType) {
+func (this *FunctionCallDecl) SetFType(fType FDeclType) {
 	this.fType = fType
 }
 
-func (this *FFunctionDecl) GetFType() FDeclType {
+func (this *FunctionCallDecl) GetFType() FDeclType {
 	return this.fType
 }
 
-func (this *FFunctionDecl) GetFParams() []*variables.Variable {
+func (this *FunctionCallDecl) GetFParams() []*variables.Variable {
 	return this.fParams
 }
 
-func (this *FFunctionDecl) AddFParams(variable *variables.Variable) {
+func (this *FunctionCallDecl) AddFParams(variable *variables.Variable) {
 	this.fParams = append(this.fParams, variable)
 }
 
-func (this *FFunctionDecl) SetFReturn(variable *variables.Variable) {
+func (this *FunctionCallDecl) SetFReturn(variable *variables.Variable) {
 	this.fReturn = variable
 }
 
-func (this *FFunctionDecl) GetFReturn() *variables.Variable {
+func (this *FunctionCallDecl) GetFReturn() *variables.Variable {
 	return this.fReturn
 }
 
-type FFunction struct {
+type FunctionCall struct {
 	FName    string
 	FParams  []*variables.Variable
 	FReturn  *variables.Variable
 	Assigned bool
 }
 
-func NewFunction(functionName string) *FFunction {
-	newFunction := &FFunction{
+func NewFunction(functionName string) *FunctionCall {
+	newFunction := &FunctionCall{
 		FName:    functionName,
 		FParams:  make([]*variables.Variable, 0),
 		Assigned: false,
@@ -200,32 +200,32 @@ func NewFunction(functionName string) *FFunction {
 	return newFunction
 }
 
-func (this *FFunction) GetFunctionName() string {
+func (this *FunctionCall) GetFunctionName() string {
 	return this.FName
 }
 
-func (this *FFunction) GetParams() []*variables.Variable {
+func (this *FunctionCall) GetParams() []*variables.Variable {
 	return this.FParams
 }
 
-func (this *FFunction) AddParam(param *variables.Variable) {
+func (this *FunctionCall) AddParam(param *variables.Variable) {
 	this.FParams = append(this.FParams, param)
 }
 
-func (this *FFunction) GetReturnValue() interface{} {
+func (this *FunctionCall) GetReturnValue() interface{} {
 	return this.FReturn.GetVariableValue()
 }
 
-func (this *FFunction) SetReturnValue(returnValue interface{}) {
+func (this *FunctionCall) SetReturnValue(returnValue interface{}) {
 	fReturnVar := this.FReturn
 	fReturnVar.SetVariableValue(returnValue)
 }
 
-func (this *FFunction) InitReturnValue(variable *variables.Variable) {
+func (this *FunctionCall) InitReturnValue(variable *variables.Variable) {
 	this.FReturn = variable
 }
 
-func (this *FFunction) ToString() string {
+func (this *FunctionCall) ToString() string {
 	ret := this.FName
 	ret += "("
 	for _, variable := range this.FParams {

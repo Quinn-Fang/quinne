@@ -44,7 +44,7 @@ type SymTable struct {
 	prev                    *SymTable
 	children                []*SymTable
 	variableMap             map[string]*variables.Variable
-	functions               []*procedures.FFunction
+	functions               []*procedures.FunctionCall
 	executable              bool
 	ifElseStack             []LogicSymbol
 	ifElseExprVariableStack []map[string]interface{}
@@ -62,7 +62,7 @@ func (this *SymTable) IsExecutable() bool {
 		return true
 	}
 
-	functionDecl, ok := this.curScope.GetScopeContext().(*procedures.FFunctionDecl)
+	functionDecl, ok := this.curScope.GetScopeContext().(*procedures.FunctionCallDecl)
 	if ok {
 		if functionDecl.GetFunctionName() == "main" {
 			if this.GetExecutable() != true {
@@ -278,7 +278,7 @@ func NewSymTable(prevSymTable *SymTable) *SymTable {
 	newSymTable = &SymTable{
 		prev:                    prevSymTable,
 		variableMap:             make(map[string]*variables.Variable),
-		functions:               make([]*procedures.FFunction, 0),
+		functions:               make([]*procedures.FunctionCall, 0),
 		ifElseStack:             make([]LogicSymbol, 0),
 		ifElseExprVariableStack: make([]map[string]interface{}, 0),
 		ifElseClauseList:        utils.NewQueue(),
@@ -338,16 +338,16 @@ func (this *SymTable) GetVariables() map[string]*variables.Variable {
 	return this.variableMap
 }
 
-func (this *SymTable) AddFunction(newFunction *procedures.FFunction) error {
+func (this *SymTable) AddFunction(newFunction *procedures.FunctionCall) error {
 	this.functions = append(this.functions, newFunction)
 	return nil
 }
 
-func (this *SymTable) GetFunctions() []*procedures.FFunction {
+func (this *SymTable) GetFunctions() []*procedures.FunctionCall {
 	return this.functions
 }
 
-func (this *SymTable) GetLastFunction() *procedures.FFunction {
+func (this *SymTable) GetLastFunction() *procedures.FunctionCall {
 	return this.functions[len(this.functions)-1]
 }
 
