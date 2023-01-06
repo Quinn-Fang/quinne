@@ -113,10 +113,6 @@ func (this *LambdaDecl) GetFirstLambdaExpression() *LambdaExpression {
 	return this.lFirstExpression
 }
 
-//func (this *LambdaDecl) SetRet(retValue string) {
-//	this.lLastExpression.lReturn = retValue
-//}
-
 func (this *LambdaDecl) AppendRet(retValue string) {
 	this.lLastExpression.lReturn += retValue
 }

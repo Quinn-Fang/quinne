@@ -53,7 +53,6 @@ func EnterBlockHandler(blockContext *sym_tables.ScopeContext, scanner *scanner.S
 }
 
 func ExitBlockHandler(scanner *scanner.Scanner) {
-	// 	fmt.Println("EXITING BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 	curSymTable := sym_tables.GetCurSymTable()
 	// Navigator start
 	// 1: Extend the last code block

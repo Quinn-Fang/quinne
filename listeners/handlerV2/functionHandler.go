@@ -33,14 +33,9 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 
 	PrimaryExprContextHandler(operandContext, scanner)
 
-	// curCursor.SetCursorContext(sym_tables.ContextTypeFunctionArgs)
-	// scanner.SetInnerType(consts.ICTypeFuncArgs)
-
-	// Here we do not know whether it is function call or lambda call,
-	// in operand handler, see if function name has been defined, if so,
-	// it a lambda call, otherwise it it a function call. So the function
-	// arg or lambdacall inner type should be set there.
-
+	// Here wether it is a function call or a lambda call is determined in
+	// the operand name handler, by looking up it's definition in current
+	// symbol table.
 	if scanner.GetMiddleType() == consts.MCTypeExpr {
 		scanner.AppendExpr("(")
 	}
@@ -50,12 +45,6 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 	}
 	curSymTable := sym_tables.GetCurSymTable()
 	var fFunction *procedures.FFunction
-	// if curCursor.GetCursorContext() == sym_tables.ContextTypeFunctionArgs {
-	//if scanner.GetInnerType() == consts.ICTypeFuncArgs {
-	//	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
-	//		fFunction = curSymTable.GetLastFunction()
-	//	}
-	//}
 
 	if !(scanner.GetInnerType() == consts.ICTypeLambdaCall) {
 		fFunction = curSymTable.GetLastFunction()
@@ -74,7 +63,6 @@ func FunctionHandler(operandContext *parser.PrimaryExprContext, argumentsContext
 		}
 
 	}
-	// curNavigator.AddEvent(uspace.EventTypeFunction, fFunction, curSymTable)
 
 	scanner.SetInnerType(consts.ICTypeUnset)
 
